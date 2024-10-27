@@ -3,16 +3,39 @@ import RecentInteractionsTable from "@/components/dashboard/RecentInteractionsTa
 import SatisfactionScoreChart from "@/components/dashboard/SatisfactionScorceChart";
 import SystemLogStatusTable from "@/components/dashboard/SystemLogStatusTable";
 import TotalCallsChart from "@/components/dashboard/TotalCallsChart";
-import Box from "@/components/general/Box";
 import MainLayout from "@/components/general/MainLayout";
 import Row from "@/components/general/Row";
-import { Flex, Layout } from 'antd';
-
-const { Content } = Layout;
-
+import { secondsToString } from "@/helpers/GeneralHelper";
+import { useCallRecords } from "@/hooks/useCallRecords";
+import { useTicketList } from "@/hooks/useTicketList";
+import { Layout } from 'antd';
 
 export default function Home() {
 
+  const { ticketList, loading: ticketLoading, error: ticketError } = useTicketList();
+  // [
+  //   {
+  //     "_id": "ticketId1",
+  //     "user_id": "userId1",
+  //     "description": "Internet connection is slow.",
+  //     "status": "open",
+  //     "created_at": "2024-10-22",
+  //     "assigned_to": "userId2"  // Optional, might be null if not assigned
+  //   },
+  //   ...
+  // ]
+  const { callRecords, loading: callLoading, error: callError } = useCallRecords();
+  // [
+  //   {
+  //     "_id": "callRecordId1",
+  //     "call_id": 1,
+  //     "phone_number": "+60123456789",
+  //     "call_duration": 320,  // Duration in seconds
+  //     "call_time": "2024-10-25T10:00:00.000Z",
+  //     "caller_name": "John Doe"
+  //   },
+  //   ...
+  // ]
 
 
   return (
@@ -23,7 +46,6 @@ export default function Home() {
 
 
       <div style={{ marginBottom: "30px" }}></div>
-
       <Layout>
         <Row>
           <div style={{
@@ -36,7 +58,7 @@ export default function Home() {
             <div style={{
               marginTop: 20,
             }}>
-              <AverageCallTimeChart />
+              <AverageCallTimeChart callRecords={callRecords} />
             </div>
           </div>
           <div style={{
@@ -45,13 +67,13 @@ export default function Home() {
             padding: 20
           }}>
             <p>Total Calls</p>
-            <TotalCallsChart />
+            <TotalCallsChart callRecords={callRecords}/>
           </div>
         </Row>
         <div style={{ marginTop: "30px" }}></div>
         <Row>
           <div style={{
-            width: "30%",
+            width: "40%",
             marginRight: "30px"
           }}>
             <div style={{
@@ -67,8 +89,8 @@ export default function Home() {
               backgroundColor: "white",
               padding: 20
             }}>
-              <p>Recent Interactions</p>
-              <RecentInteractionsTable />
+              <p>System Log/Status</p>
+              <SystemLogStatusTable />
             </div>
           </div>
           <div style={{
@@ -76,8 +98,9 @@ export default function Home() {
             backgroundColor: "white",
             padding: 20
           }}>
-            <p>System Log/Status</p>
-            <SystemLogStatusTable />
+            
+            <p>Recent Interactions</p>
+              <RecentInteractionsTable callRecords={callRecords} />
           </div>
 
         </Row>

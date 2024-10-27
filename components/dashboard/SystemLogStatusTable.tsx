@@ -28,11 +28,6 @@ const SystemLogStatusTable = () => {
 
             <Row>
                 <div style={{
-                    width: "10%"
-                }}>
-                    <p style={{ color: "#6E6E6E" }}>No</p>
-                </div>
-                <div style={{
                     flex: 1
                 }}>
                     <p style={{ color: "#6E6E6E" }}>Event Description</p>
@@ -56,11 +51,6 @@ const SystemLogStatusTable = () => {
                     return (
                         <>
                             <Row>
-                                <div style={{
-                                    width: "10%"
-                                }}>
-                                    <p><b>{index + 1}</b></p>
-                                </div>
                                 <div style={{
                                     flex: 1
                                 }}>
