@@ -2,6 +2,19 @@ import { Ticket } from "@/types/TicketType";
 import { Row } from "antd";
 
 const SystemLogStatusTable = ({ tickets }: { tickets: Ticket[] }) => {
+    const formatDate = (dateTimeString) => {
+        const date = new Date(dateTimeString);
+        const options = { 
+            year: 'numeric', 
+            month: '2-digit', 
+            day: '2-digit', 
+            hour: 'numeric', 
+            minute: '2-digit', 
+            hour12: true 
+        };
+        return date.toLocaleString('en-US', options);
+    }
+
 
     const data = [
         {
@@ -74,7 +87,7 @@ const SystemLogStatusTable = ({ tickets }: { tickets: Ticket[] }) => {
                                     marginLeft: "10px",
                                     flex: 1
                                 }}>
-                                    <p style={{fontSize: "16px"}}>{item.created_at}</p>
+                                    <p style={{ fontSize: "16px" }}>{formatDate(item.created_at)}</p>
                                 </div>
                             </Row>
                             <div style={{
