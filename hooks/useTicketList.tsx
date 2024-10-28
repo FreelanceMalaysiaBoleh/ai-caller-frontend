@@ -8,7 +8,7 @@ export const useTicketList = () => {
     useEffect(() => {
         const fetchTicketList = async () => {
             try {
-                const response = await fetch(`${process.env.BACKEND_URL}/api/tickets`, {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/tickets`, {
                     method: 'GET',
                 });
 

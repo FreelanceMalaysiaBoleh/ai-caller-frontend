@@ -8,7 +8,7 @@ export const useCallRecords = () => {
     useEffect(() => {
         const fetchTicketList = async () => {
             try {
-                const response = await fetch(`${process.env.BACKEND_URL}/api/call-records`, {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/call-records`, {
                     method: 'GET',
                 });
 

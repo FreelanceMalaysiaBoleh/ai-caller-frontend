@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 import "@/styles/globals.css";
 import { ConfigProvider } from "antd";
 import type { AppProps } from "next/app";
@@ -6,7 +8,8 @@ import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 
 export default function App({ Component, pageProps }: AppProps) {
-
+  console.log("what the fuck is going on here:", process.env.NEXT_PUBLIC_BACKEND_URL);
+  console.log(process.env.API_URL);
   return (
     <ConfigProvider
       theme={{
