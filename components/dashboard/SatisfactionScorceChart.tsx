@@ -1,35 +1,28 @@
+import { Ticket } from '@/types/TicketType';
 import { ResponsiveContainer, PieChart, Pie, Legend, Tooltip, BarChart, CartesianGrid, XAxis, YAxis, Bar, AreaChart, Area } from 'recharts';
 
-const SatisfactionScoreChart = () => {
+const SatisfactionScoreChart = ({ ticketList }: { ticketList: Ticket[] }) => {
 
-    const data = [
-        {
-            "score": "1",
-            "value": 20
-        },
-        {
-            "score": "2",
-            "value": 40
-        },
-        {
-            "score": "3",
-            "value": 60
-        },
-        {
-            "score": "4",
-            "value": 50
-        },
-        {
-            "score": "5",
-            "value": 80
-        },
-    ];
+
+    const separateTicketsByStatus = (tickets: Ticket[]) => {
+        const statusCounts = tickets.reduce((acc, ticket) => {
+            acc[ticket.status] = (acc[ticket.status] || 0) + 1;
+            return acc;
+        }, {} as Record<string, number>);
+
+        return Object.entries(statusCounts).map(([status, value]) => ({
+            status,
+            value
+        }));
+    };
+
+    const data = separateTicketsByStatus(ticketList);
 
     return (
         <ResponsiveContainer width="100%" height="100%" minHeight={300}>
             <BarChart width={730} height={250} data={data}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="score" />
+                <XAxis dataKey="status" />
                 <YAxis />
                 <Tooltip />
                 <Legend />

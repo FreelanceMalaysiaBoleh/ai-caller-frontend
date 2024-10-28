@@ -1,6 +1,7 @@
+import { Ticket } from "@/types/TicketType";
 import { Row } from "antd";
 
-const SystemLogStatusTable = () => {
+const SystemLogStatusTable = ({ tickets }: { tickets: Ticket[] }) => {
 
     const data = [
         {
@@ -28,14 +29,15 @@ const SystemLogStatusTable = () => {
 
             <Row>
                 <div style={{
-                    flex: 1
+                    width: "60%"
                 }}>
-                    <p style={{ color: "#6E6E6E" }}>Event Description</p>
+                    <p style={{ color: "#6E6E6E" }}>Description</p>
                 </div>
                 <div style={{
+                    marginLeft: "10px",
                     flex: 1
                 }}>
-                    <p style={{ color: "#6E6E6E" }}>Time Created</p>
+                    <p style={{ color: "#6E6E6E" }}>Status</p>
                 </div>
             </Row>
 
@@ -47,19 +49,20 @@ const SystemLogStatusTable = () => {
             }}></div>
 
             {
-                data.map((item, index) => {
+                tickets.map((item, index) => {
                     return (
                         <>
                             <Row>
                                 <div style={{
-                                    flex: 1
+                                    width: "60%"
                                 }}>
-                                    <p><b>{item.description}</b></p>
+                                    <p style={{fontSize: "16px"}}><b>{item.description}</b></p>
                                 </div>
                                 <div style={{
+                                    marginLeft: "10px",
                                     flex: 1
                                 }}>
-                                    <p><b>{item.timestamp}</b></p>
+                                    <p style={{fontSize: "16px"}}>{item.status}</p>
                                 </div>
                             </Row>
                             <div style={{

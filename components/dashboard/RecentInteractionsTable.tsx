@@ -85,20 +85,17 @@ const RecentInteractionsTable = ({ callRecords }: { callRecords: CallRecords[] }
                                     width: "35%",
 
                                 }}>
-                                    <p><b>{item.phone_number}</b></p>
-                                    <p><b>+60123456789</b></p>
+                                    <p style={{fontSize: "16px"}}><b>{item.phone_number}</b></p>
                                 </div>
                                 <div style={{
                                     flex: 1
                                 }}>
-                                    <p><b>{item.caller_name}</b></p>
-                                    <p><b>Jacob Jacobsen</b></p>
+                                    <p style={{fontSize: "16px"}}><b>{item.caller_name}</b></p>
                                 </div>
                                 <div style={{
                                     flex: 1
                                 }}>
-                                    <p><b>{secondsToString(item.call_duration)}</b></p>
-                                    <p><b>{secondsToString(5000)}</b></p>
+                                    <p style={{fontSize: "16px"}}><b>{secondsToString(item.call_duration)}</b></p>
                                 </div>
                             </Row>
                             <div style={{
