@@ -39,6 +39,18 @@ const SystemLogStatusTable = ({ tickets }: { tickets: Ticket[] }) => {
                 }}>
                     <p style={{ color: "#6E6E6E" }}>Status</p>
                 </div>
+                <div style={{
+                    marginLeft: "10px",
+                    flex: 1
+                }}>
+                    <p style={{ color: "#6E6E6E" }}>Name</p>
+                </div>
+                <div style={{
+                    marginLeft: "10px",
+                    flex: 1
+                }}>
+                    <p style={{ color: "#6E6E6E" }}>Date</p>
+                </div>
             </Row>
 
             <div style={{
@@ -63,6 +75,18 @@ const SystemLogStatusTable = ({ tickets }: { tickets: Ticket[] }) => {
                                     flex: 1
                                 }}>
                                     <p style={{fontSize: "16px"}}>{item.status}</p>
+                                </div>
+                                <div style={{
+                                    marginLeft: "10px",
+                                    flex: 1
+                                }}>
+                                    <p style={{fontSize: "16px"}}>{item.user_name}</p>
+                                </div>
+                                <div style={{
+                                    marginLeft: "10px",
+                                    flex: 1
+                                }}>
+                                    <p style={{fontSize: "16px"}}>{item.created_at}</p>
                                 </div>
                             </Row>
                             <div style={{
