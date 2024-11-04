@@ -3,20 +3,20 @@ import { Row } from "antd";
 
 const SystemLogStatusTable = ({ tickets }: { tickets: Ticket[] }) => {
 
-    const data = [
-        {
-            description: "Ticket Update",
-            timestamp: "3 minutes ago"
-        },
-        {
-            description: "User complaint received",
-            timestamp: "1 hour ago"
-        },
-        {
-            description: "Call failed",
-            timestamp: "2 weeks ago"
-        }
-    ]
+    // const data = [
+    //     {
+    //         description: "Ticket Update",
+    //         timestamp: "3 minutes ago"
+    //     },
+    //     {
+    //         description: "User complaint received",
+    //         timestamp: "1 hour ago"
+    //     },
+    //     {
+    //         description: "Call failed",
+    //         timestamp: "2 weeks ago"
+    //     }
+    // ]
 
     return (
         <div>
@@ -49,7 +49,7 @@ const SystemLogStatusTable = ({ tickets }: { tickets: Ticket[] }) => {
             }}></div>
 
             {
-                tickets.map((item, index) => {
+                tickets.map((item) => {
                     return (
                         <>
                             <Row>

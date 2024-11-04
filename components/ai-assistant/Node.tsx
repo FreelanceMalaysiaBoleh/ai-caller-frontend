@@ -1,3 +1,4 @@
+import { LegacyRef } from "react";
 import { useDrag } from "react-dnd";
 
 export interface NodeProps {
@@ -36,7 +37,7 @@ const Node = ({
 
     return (
         <div
-            ref={drag as any}
+            ref={(drag as unknown) as LegacyRef<HTMLDivElement>}
             style={{
                 cursor: "grab",
                 opacity: isDragging ? 0.5 : 1,

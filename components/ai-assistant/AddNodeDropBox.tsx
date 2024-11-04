@@ -2,8 +2,9 @@ import { useDrop } from "react-dnd";
 import { CgAddR } from "react-icons/cg";
 import { ItemTypes } from "./Node";
 import { NodeState } from "./Board";
+import { LegacyRef } from "react";
 
-const AddNodeDropBox = ({ id, fillNode, tree }: { id: string, tree:any, fillNode: (id:string, itemId: string, tree: NodeState[])=>void }) => {
+const AddNodeDropBox = ({ id, fillNode, tree }: { id: string, tree: NodeState[], fillNode: (id: string, itemId: string, tree: NodeState[]) => void }) => {
 
     const [{ isOver }, drop] = useDrop(
         () => ({
@@ -17,12 +18,12 @@ const AddNodeDropBox = ({ id, fillNode, tree }: { id: string, tree:any, fillNode
         }),
         [id, tree]
     )
-    
+
     return (
-        <>  
+        <>
             <div style={{ border: "solid 1px", height: "20px" }}></div>
             <div
-                ref={drop as any}
+                ref={(drop as unknown) as LegacyRef<HTMLDivElement>}
                 style={{
                     cursor: "default",
                     borderRadius: 20,

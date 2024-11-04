@@ -1,13 +1,13 @@
 import { defaultStyleValues, StyleProps } from '@/types/StyleProps';
-import { Flex, Layout } from 'antd';
+import { Layout } from 'antd';
 
 const { Content } = Layout;
 
 const Row = ({
     children,
-    styling =  defaultStyleValues
+    styling = defaultStyleValues
 }: {
-    children: any,
+    children: JSX.Element,
     styling?: StyleProps
 }) => {
     return (
@@ -15,7 +15,7 @@ const Row = ({
             display: "flex",
             flexDirection: "row",
             borderRadius: styling.borderRadius!,
-            
+
             paddingTop: styling.paddingTop!,
             paddingBottom: styling.paddingBottom!,
             paddingLeft: styling.paddingLeft!,
@@ -24,7 +24,7 @@ const Row = ({
             marginTop: styling.marginTop!,
             marginBottom: styling.marginBottom!,
             marginLeft: styling.marginLeft!,
-            marginRight: styling.marginRight!,  
+            marginRight: styling.marginRight!,
         }}>
             {children}
         </Content>

@@ -1,5 +1,5 @@
 import { CallRecords } from '@/types/CallRecordType';
-import { ResponsiveContainer, PieChart, Pie, Legend, Tooltip } from 'recharts';
+import { ResponsiveContainer, PieChart, Pie, Tooltip } from 'recharts';
 
 const TotalCallsChart = ({ callRecords }: { callRecords: CallRecords[] }) => {
 

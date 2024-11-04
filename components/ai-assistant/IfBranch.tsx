@@ -1,5 +1,4 @@
 import { Input } from "antd";
-import AddNodeDropBox from "./AddNodeDropBox";
 
 interface IfBranchProps {
     condition?: string,

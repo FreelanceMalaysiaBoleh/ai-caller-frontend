@@ -1,5 +1,5 @@
 import { CallRecords } from '@/types/CallRecordType';
-import { XAxis, YAxis, CartesianGrid, Legend, AreaChart, Area, ResponsiveContainer, ReferenceLine } from 'recharts';
+import { XAxis, YAxis, CartesianGrid, Legend, AreaChart, Area, ResponsiveContainer } from 'recharts';
 
 
 const AverageCallTimeChart = ({ callRecords }: { callRecords: CallRecords[] }) => {
