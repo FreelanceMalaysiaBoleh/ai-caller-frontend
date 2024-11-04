@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import PhoneCall from "../../public/images/phonecall.png"
 import AddNewButton from "./AddNewButton";
 import AddNodeDropBox from "./AddNodeDropBox";
@@ -127,8 +127,8 @@ const Board = () => {
         }
 
         return treeObj.map((item, index) => {
-            let truePath: JSX.Element[] = []
-            let falsePath: JSX.Element[] = []
+            const truePath: JSX.Element[] = []
+            const falsePath: JSX.Element[] = []
 
             if (item.type == "if") {
                 item.true!.map((node) => {
@@ -139,6 +139,7 @@ const Board = () => {
                 })
 
                 return <IfBranch
+                    key={`${index}1`}
                     truePath={truePath}
                     falsePath={falsePath}
                     condition={item.condition}
@@ -146,7 +147,7 @@ const Board = () => {
                 />
 
             } else if (item.type == "connector") {
-                return <IfConnector />
+                return <IfConnector key={`${index}2`} />
             } else {
                 return createNode(item, 0, index, treeObj)
             }

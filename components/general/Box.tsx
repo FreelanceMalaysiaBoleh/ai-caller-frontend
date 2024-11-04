@@ -1,5 +1,5 @@
 import { defaultStyleValues, StyleProps } from '@/types/StyleProps';
-import { Flex, Layout } from 'antd';
+import { Layout } from 'antd';
 
 const { Content } = Layout;
 
@@ -8,13 +8,9 @@ const Box = ({
     children,
     styling = defaultStyleValues
 }: {
-    children: any,
+    children: JSX.Element,
     styling?: StyleProps
 }) => {
-
-    let contentWidth = `${styling.grid! * 8.3333}%`
-
-    console.log(contentWidth);
 
     return (
         <Content style={{

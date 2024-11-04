@@ -1,10 +1,10 @@
 import React from 'react'
 import SidebarNav from '../dashboard/SidebarNav';
-import { Flex, Layout } from 'antd';
+import { Layout } from 'antd';
 
 const { Content } = Layout;
 
-const MainLayout = ({ children }: any) => {
+const MainLayout = ({ children }: { children: JSX.Element }) => {
 
     return (
         <Layout style={{

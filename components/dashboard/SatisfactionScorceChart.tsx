@@ -1,5 +1,5 @@
 import { Ticket } from '@/types/TicketType';
-import { ResponsiveContainer, PieChart, Pie, Legend, Tooltip, BarChart, CartesianGrid, XAxis, YAxis, Bar, AreaChart, Area } from 'recharts';
+import { ResponsiveContainer, Legend, Tooltip, BarChart, CartesianGrid, XAxis, YAxis, Bar } from 'recharts';
 
 const SatisfactionScoreChart = ({ ticketList }: { ticketList: Ticket[] }) => {
 
