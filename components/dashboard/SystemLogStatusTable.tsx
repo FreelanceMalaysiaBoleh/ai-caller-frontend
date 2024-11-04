@@ -1,15 +1,17 @@
 import { Ticket } from "@/types/TicketType";
 import { Row } from "antd";
 
+type dateParams = "numeric" | "2-digit" | undefined; 
+
 const SystemLogStatusTable = ({ tickets }: { tickets: Ticket[] }) => {
-    const formatDate = (dateTimeString) => {
+    const formatDate = (dateTimeString: string) => {
         const date = new Date(dateTimeString);
         const options = { 
-            year: 'numeric', 
-            month: '2-digit', 
-            day: '2-digit', 
-            hour: 'numeric', 
-            minute: '2-digit', 
+            year: 'numeric' as dateParams, 
+            month: '2-digit' as "numeric" | "2-digit" | "long" | "short" | "narrow" | undefined, 
+            day: '2-digit' as dateParams, 
+            hour: 'numeric' as dateParams, 
+            minute: '2-digit' as dateParams, 
             hour12: true 
         };
         return date.toLocaleString('en-US', options);
