@@ -7,7 +7,7 @@ const Row = ({
     children,
     styling = defaultStyleValues
 }: {
-    children: JSX.Element,
+    children: React.ReactNode,
     styling?: StyleProps
 }) => {
     return (

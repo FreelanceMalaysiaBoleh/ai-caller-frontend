@@ -4,7 +4,7 @@ import { Layout } from 'antd';
 
 const { Content } = Layout;
 
-const MainLayout = ({ children }: { children: JSX.Element }) => {
+const MainLayout = ({ children }: { children: React.ReactNode }) => {
 
     return (
         <Layout style={{

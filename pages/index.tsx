@@ -108,7 +108,6 @@ export default function Home() {
 
   return (
     <MainLayout>
-      <div>
         <h1>Welcome back, Peter Lim!</h1>
         <div style={{ marginBottom: "10px" }}></div>
         <p>Have a look at what&apos;s going on</p>
@@ -117,7 +116,6 @@ export default function Home() {
         <div style={{ marginBottom: "30px" }}></div>
         <Layout>
           <Row>
-            <div>
               <div style={{
                 width: "60%",
                 backgroundColor: "white",
@@ -139,11 +137,9 @@ export default function Home() {
                 <p>Total Calls</p>
                 <TotalCallsChart callRecords={callRecords} />
               </div>
-            </div>
           </Row>
           <div style={{ marginTop: "30px" }}></div>
           <Row>
-            <div>
               <div style={{
                 width: "40%",
                 marginRight: "30px"
@@ -174,13 +170,11 @@ export default function Home() {
                 <p>Recent Interactions</p>
                 <RecentInteractionsTable callRecords={callRecords} />
               </div>
-            </div>
           </Row>
         </Layout>
         <div style={{
           marginBottom: "40px"
         }}></div>
-      </div>
     </MainLayout >
   );
 }
