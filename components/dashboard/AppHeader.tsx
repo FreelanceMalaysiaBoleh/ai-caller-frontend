@@ -1,13 +1,10 @@
-import { Layout, Menu } from 'antd';
+import { Layout } from 'antd';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 import logo from "../../public/images/logo.png"
 
 const { Header } = Layout;
 
 const AppHeader = () => {
-    const router = useRouter();
-
     return (
         <Header
             style={{

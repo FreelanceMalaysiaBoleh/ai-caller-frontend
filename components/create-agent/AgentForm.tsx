@@ -1,8 +1,6 @@
 import { FieldErrors, FormProvider, useForm, UseFormRegister } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from "yup";
-import ImageUpload from "./ImageUpload";
-import { useState } from "react";
 import Page1 from "./Page1";
 import Page2 from "./Page2";
 
@@ -51,11 +49,8 @@ const AgentForm = ({ page, setPage }: { page: number, setPage: (index: number) =
 
 
     const {
-        reset,
         handleSubmit,
-        control,
         register,
-        setValue,
         formState: { errors },
     } = form
 

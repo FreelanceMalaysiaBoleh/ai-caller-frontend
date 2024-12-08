@@ -6,7 +6,7 @@ const Page2 = ({
     errors,
     setPage
 }: {
-    form: UseFormReturn<AgentFormTypes, any, undefined>,
+    form: UseFormReturn<AgentFormTypes, unknown, undefined>,
     handleSubmitForm: () => void,
     register: UseFormRegister<AgentFormTypes>,
     errors: FieldErrors<AgentFormTypes>,

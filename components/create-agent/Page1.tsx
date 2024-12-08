@@ -1,4 +1,4 @@
-import { FieldErrors, FormProvider, UseFormRegister, UseFormReturn } from "react-hook-form";
+import { FieldErrors, UseFormRegister, UseFormReturn } from "react-hook-form";
 import ImageUpload from "./ImageUpload";
 import { AgentFormTypes, FormInput, FormSelect } from "./AgentForm";
 
@@ -7,7 +7,7 @@ const Page1 = ({
     errors,
     setPage
 }: {
-    form: UseFormReturn<AgentFormTypes, any, undefined>,
+    form: UseFormReturn<AgentFormTypes, unknown, undefined>,
     handleSubmitForm: () => void,
     register: UseFormRegister<AgentFormTypes>,
     errors: FieldErrors<AgentFormTypes>,

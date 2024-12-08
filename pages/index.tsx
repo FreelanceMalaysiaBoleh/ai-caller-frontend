@@ -1,7 +1,7 @@
 import MainLayout from "@/components/general/MainLayout";
 
-import { useCallRecords } from "@/hooks/useCallRecords";
-import { useTicketList } from "@/hooks/useTicketList";
+// import { useCallRecords } from "@/hooks/useCallRecords";
+// import { useTicketList } from "@/hooks/useTicketList";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa6";
@@ -9,10 +9,10 @@ import { FaPlus } from "react-icons/fa6";
 export default function Home() {
 
   const [isHovered, setIsHovered] = useState(false);
-  const { ticketList } = useTicketList();
+  // const { ticketList } = useTicketList();
   // const ticketList = ticketssample;
 
-  const { callRecords } = useCallRecords();
+  // const { callRecords } = useCallRecords();
   // const callRecords = samplecallrecords;
 
   const router = useRouter();
