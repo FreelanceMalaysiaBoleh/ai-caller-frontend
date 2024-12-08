@@ -1,6 +1,7 @@
 import React from 'react'
 import SidebarNav from '../dashboard/SidebarNav';
 import { Layout } from 'antd';
+import AppHeader from '../dashboard/AppHeader';
 
 const { Content } = Layout;
 
@@ -10,14 +11,15 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
         <Layout style={{
             minHeight: '100vh',
         }}>
+            <AppHeader />
             <SidebarNav />
             <Layout style={{
-                marginTop: 35,
+                marginTop: 70,
                 paddingLeft: 400,
                 paddingRight: 100
             }}>
                 <Content style={{
-                    backgroundColor: "#F5F5F5",
+                    backgroundColor: "#2C2C2C",
                 }}>{children}</Content>
             </Layout>
         </Layout>

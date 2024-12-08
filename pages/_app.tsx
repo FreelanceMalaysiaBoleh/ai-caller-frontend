@@ -1,4 +1,5 @@
 import "@/styles/globals.css";
+import "@/styles/fonts.css";
 import { ConfigProvider } from "antd";
 import type { AppProps } from "next/app";
 
@@ -6,16 +7,15 @@ import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 
 export default function App({ Component, pageProps }: AppProps) {
-  console.log("Api goes here", process.env.NEXT_PUBLIC_BACKEND_URL);
   return (
     <ConfigProvider
       theme={{
         token: {
-          colorPrimary: '#849249',
+          colorPrimary: '#2C2C2C',
           colorFillSecondary : "#000000",
-          colorBgLayout: '#F5F5F5',
-          colorBgContainer: 'white',
-          colorBgTextActive: '#313B00',
+          colorBgLayout: '#2C2C2C',
+          colorBgContainer: '#2C2C2C',
+          colorBgTextActive: '#2C2C2C',
           borderRadius: 4,
         },
       }}
