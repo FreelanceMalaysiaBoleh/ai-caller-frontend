@@ -42,13 +42,13 @@ const   SidebarNav = () => {
                 }} style={{ marginBottom: 20, marginTop: 35 }} key="/" icon={<HomeOutlined />} >
                     <ItemText text='Dashboard' isSelected={router.asPath == "/"} />
                 </Menu.Item>
-                <Menu.Item style={{ marginBottom: 20 }} key="2" icon={<BranchesOutlined />}>
-                    <ItemText text='AI Assistant Bluerint' isSelected={router.asPath == "2"} />
-                </Menu.Item>
                 <Menu.Item onClick={() => {
                     router.push("/ai-assistant")
-                }} style={{ marginBottom: 20 }} key="/ai-assistant" icon={<DatabaseOutlined />}>
-                    <ItemText text='Data Management' isSelected={router.asPath == "/ai-assistant"} />
+                }} style={{ marginBottom: 20 }} key="/ai-assistant" icon={<BranchesOutlined />}>
+                    <ItemText text='AI Assistant Blueprint' isSelected={router.asPath == "/ai-assistant"} />
+                </Menu.Item>
+                <Menu.Item onClick={()=>{}} style={{ marginBottom: 20 }} key="2" icon={<DatabaseOutlined />}>
+                    <ItemText text='Data Management' isSelected={router.asPath == "2"} />
                 </Menu.Item>
                 <Menu.Item style={{ marginBottom: 20 }} key="4" icon={<MessageOutlined />}>
                     <ItemText text='Interaction Logs' isSelected={router.asPath == "5"} />

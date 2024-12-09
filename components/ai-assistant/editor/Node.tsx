@@ -29,7 +29,7 @@ const Node = ({
 
     const [{ isDragging }, drag] = useDrag(() => ({
         type: ItemTypes.NODE,
-        item: { id: id }, 
+        item: { id: id, desc: desc }, 
         collect: monitor => ({
             isDragging: !!monitor.isDragging(),
         }),

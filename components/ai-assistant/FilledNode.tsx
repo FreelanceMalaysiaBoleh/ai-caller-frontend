@@ -1,4 +1,5 @@
-import { NodeProps } from "./Node";
+import { NodeProps } from "./editor/Node";
+
 
 
 const FilledNode = ({

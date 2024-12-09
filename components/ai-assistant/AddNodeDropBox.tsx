@@ -1,8 +1,8 @@
 import { useDrop } from "react-dnd";
 import { CgAddR } from "react-icons/cg";
-import { ItemTypes } from "./Node";
 import { NodeState } from "./Board";
 import { LegacyRef } from "react";
+import { ItemTypes } from "./editor/Node";
 
 const AddNodeDropBox = ({ id, fillNode, tree }: { id: string, tree: NodeState[], fillNode: (id: string, itemId: string, tree: NodeState[]) => void }) => {
 
