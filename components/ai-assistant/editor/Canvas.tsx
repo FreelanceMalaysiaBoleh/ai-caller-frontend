@@ -1,22 +1,25 @@
 import React, { useCallback, useRef } from 'react';
 import ReactFlow, {
   addEdge,
-Background,
+  Background,
   useEdgesState,
   useNodesState,
   Connection,
   Edge,
   Node,
-  ReactFlowInstance, // Import the correct type
+  ReactFlowInstance,
+  ReactFlowProvider,
 } from 'reactflow';
 import { useDrop } from 'react-dnd';
-import { ItemTypes, NodeProps } from './Node';
+import { ItemTypes } from './Node';
 import 'reactflow/dist/style.css';
+import { NodeType, NodeTypes } from '@/contants/NodeConstants';
 
 const initialNodes: Node[] = [
   {
     id: '1',
-    type: 'input',
+    // type: NodeType.initiate,
+    type: NodeType.aiNameAndRole,
     data: { label: 'Input Node' },
     position: { x: 250, y: 0 },
   },
@@ -39,15 +42,26 @@ const Canvas: React.FC = () => {
 
   const onConnect = useCallback(
     (params: Connection) => {
-      console.log("Connecting edges:", params);
       setEdges((eds) => addEdge(params, eds));
+
+      const updatedNodes = nodes.map((node) => {
+        if (node.id === params.target) {
+          return {
+            ...node,
+            data: { ...node.data, isConnectedTarget: true },
+          };
+
+        }
+        return node;
+      });
+      setNodes(updatedNodes); // Update the node states
     },
-    [setEdges]
+    [nodes, setEdges, setNodes]
   );
 
   const [{ isOver }, drop] = useDrop(() => ({
     accept: ItemTypes.NODE,
-    drop: (item: NodeProps, monitor) => {
+    drop: (item: { type: string }, monitor) => {
       const clientOffset = monitor.getClientOffset();
       if (!clientOffset || !reactFlowInstance.current) return;
 
@@ -64,8 +78,8 @@ const Canvas: React.FC = () => {
 
       const newNode: Node = {
         id: `${nodes.length + 1}`,
-        type: 'default',
-        data: { label: item.desc },
+        type: item.type,
+        data: { label: "empty" },
         position,
       };
 
@@ -76,33 +90,35 @@ const Canvas: React.FC = () => {
     }),
   }), [nodes, reactFlowInstance]);
 
-  console.log("nodes:", nodes);
-  console.log("edges:", edges);
 
   return (
-    <div
-      ref={(drop as unknown) as React.Ref<HTMLDivElement>}
-      className="reactflow"
-      style={{
-        height: '100vh',
-        border: isOver ? '2px dashed green' : '2px solid transparent',
-      }}
-    >
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
-        fitView
-        zoomOnScroll={false} // Disable zoom with mouse scroll
-        panOnScroll={false} // Disable panning with scroll
-        onInit={onInit}
+    <ReactFlowProvider>
+      <button onClick={()=>{console.log(nodes)}}>Press me!</button>
+      <div
+        ref={(drop as unknown) as React.Ref<HTMLDivElement>}
+        className="reactflow"
+        style={{
+          height: '100vh',
+          border: isOver ? '2px dashed green' : '2px solid transparent',
+        }}
       >
-        {/* <Controls /> */}
-        <Background />
-      </ReactFlow>
-    </div>
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          onConnect={onConnect}
+          fitView
+          zoomOnScroll={false} // Disable zoom with mouse scroll
+          panOnScroll={false} // Disable panning with scroll
+          onInit={onInit}
+          nodeTypes={NodeTypes}
+        >
+          {/* <Controls /> */}
+          <Background />
+        </ReactFlow>
+      </div>
+    </ReactFlowProvider>
   );
 };
 
