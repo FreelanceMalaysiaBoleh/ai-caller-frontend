@@ -1,15 +1,15 @@
-import { LegacyRef} from 'react'
+import { useDrag } from 'react-dnd';
 import SourceConnector from '../SourceConnector';
 import TargetConnector from '../TargetConnector';
 import { ItemTypes, NodeType } from '@/contants/NodeConstants';
-import { useDrag } from 'react-dnd';
+import { LegacyRef } from 'react';
 
-//key: .aiNameAndRole
-const AiNameAndRoleDrag = () => {
+//key: .welcomingMessage
+const WelcomingMessageDrag = () => {
 
     const [{ isDragging }, drag] = useDrag(() => ({
         type: ItemTypes.NODE,
-        item: { type: NodeType.aiNameAndRole },
+        item: { type: NodeType.welcomingMessage },
         collect: monitor => ({
             isDragging: !!monitor.isDragging(),
         }),
@@ -31,12 +31,12 @@ const AiNameAndRoleDrag = () => {
             <div style={{
                 borderTopRightRadius: "10px",
                 borderTopLeftRadius: "10px",
-                backgroundColor: isDragging ? "#339F62":"#007C34",
+                backgroundColor: isDragging ? "#339F62" : "#007C34",
                 paddingLeft: 10,
                 paddingTop: 5,
                 paddingBottom: 5,
             }}>
-                <p style={{ fontSize: "14px" }}>AI Name and Role</p>
+                <p style={{ fontSize: "14px" }}>Welcoming Message</p>
             </div>
             {/* Editable Label */}
             <div style={{
@@ -48,36 +48,21 @@ const AiNameAndRoleDrag = () => {
             }}>
                 <TargetConnector isConnected={false} />
                 <div style={{ marginRight: "auto", marginLeft: 5, width: "90%" }}>
-                    <div style={{ marginBottom: '10px' }}>
-                        <input
-                            type="text"
-                            value={""}
-                            disabled={true}
-                            placeholder='name'
-                            style={{
-                                width: '100%',
-                                padding: '5px',
-                                borderRadius: '5px',
-                                border: 'none',
-                                backgroundColor: '#2B2B2B',
-                                color: "white"
-                            }}
-                        />
-                    </div>
-
                     <div>
-                        <input
-                            type="text"
+                        <textarea
                             value={""}
-                            placeholder='role'
                             disabled={true}
+                            placeholder="message"
                             style={{
                                 width: '100%',
+                                height: '85px',
                                 padding: '5px',
                                 borderRadius: '5px',
                                 border: 'none',
                                 backgroundColor: '#2B2B2B',
-                                color: "white"
+                                color: "white",
+                                resize: 'none', // Disable resizing
+                                overflow: 'hidden', // Ensure overflow wraps properly
                             }}
                         />
                     </div>
@@ -89,4 +74,4 @@ const AiNameAndRoleDrag = () => {
     );
 };
 
-export default AiNameAndRoleDrag;
+export default WelcomingMessageDrag;

@@ -11,16 +11,15 @@ import ReactFlow, {
   ReactFlowProvider,
 } from 'reactflow';
 import { useDrop } from 'react-dnd';
-import { ItemTypes } from './Node';
 import 'reactflow/dist/style.css';
-import { NodeType, NodeTypes } from '@/contants/NodeConstants';
+import { ItemTypes, NodeType, NodeTypes } from '@/contants/NodeConstants';
 
 const initialNodes: Node[] = [
   {
     id: '1',
     // type: NodeType.initiate,
-    type: NodeType.aiNameAndRole,
-    data: { label: 'Input Node' },
+    type: NodeType.boundaries,
+    data: {},
     position: { x: 250, y: 0 },
   },
 ];

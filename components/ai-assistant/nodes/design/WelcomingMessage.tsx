@@ -3,11 +3,10 @@ import { Connection, Handle, NodeProps, Position } from 'reactflow';
 import SourceConnector from '../SourceConnector';
 import TargetConnector from '../TargetConnector';
 
-//key: .aiNameAndRole
-const AiNameAndRole: React.FC<NodeProps> = ({ id, data }) => {
+//key: .welcomingMessage
+const WelcomingMessage: React.FC<NodeProps> = ({ id, data }) => {
     // State to manage editable fields
-    const [name, setName] = useState("");
-    const [role, setRole] = useState("");
+    const [message, setMessage] = useState("");
     const [isConnectedSource, setIsConnectedSource] = useState(false);
 
     const handleConnectSource = useCallback(
@@ -21,23 +20,17 @@ const AiNameAndRole: React.FC<NodeProps> = ({ id, data }) => {
     );
 
     // Handle label change
-    const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setName(e.target.value);
+    const handleMessageChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setMessage(e.target.value);
         // Update the node's data (this will be reflected in the state)
-        data.name = e.target.value;
-    };
-
-    // Handle description change
-    const handleRoleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setRole(e.target.value);
-        data.role = e.target.value;
+        data.message = e.target.value;
     };
 
     return (
         <div
             style={{
-                width: "238px",
                 borderRadius: '10px',
+                width: "238px",
                 paddingBottom: "15px",
                 backgroundColor: '#5B5B5B',
                 boxShadow: '0px 8px 16px 4px rgba(0, 0, 0, 0.3)',
@@ -53,7 +46,7 @@ const AiNameAndRole: React.FC<NodeProps> = ({ id, data }) => {
                 paddingTop: 5,
                 paddingBottom: 5,
             }}>
-                <p style={{ fontSize: "14px" }}>AI Name and Role</p>
+                <p style={{ fontSize: "14px" }}>Welcoming Message</p>
             </div>
             {/* Editable Label */}
             <div style={{
@@ -65,36 +58,21 @@ const AiNameAndRole: React.FC<NodeProps> = ({ id, data }) => {
             }}>
                 <TargetConnector isConnected={data.isConnectedTarget} />
                 <div style={{ marginRight: "auto", marginLeft: 5, width: "90%" }}>
-                    <div style={{ marginBottom: '10px' }}>
-                        <input
-                            type="text"
-                            value={name}
-                            onChange={handleNameChange}
-                            placeholder='name'
-                            style={{
-                                width: '100%',
-                                padding: '5px',
-                                borderRadius: '5px',
-                                border: 'none',
-                                backgroundColor: '#2B2B2B',
-                                color: "white"
-                            }}
-                        />
-                    </div>
-
                     <div>
-                        <input
-                            type="text"
-                            value={role}
-                            placeholder='role'
-                            onChange={handleRoleChange}
+                        <textarea
+                            value={message}
+                            onChange={handleMessageChange}
+                            placeholder="message"
                             style={{
                                 width: '100%',
+                                height: '85px',
                                 padding: '5px',
                                 borderRadius: '5px',
                                 border: 'none',
                                 backgroundColor: '#2B2B2B',
-                                color: "white"
+                                color: "white",
+                                resize: 'none', // Disable resizing
+                                overflow: 'hidden', // Ensure overflow wraps properly
                             }}
                         />
                     </div>
@@ -108,7 +86,7 @@ const AiNameAndRole: React.FC<NodeProps> = ({ id, data }) => {
                 type="source"
                 position={Position.Right}
                 style={{
-                    top: "43%"
+                    top: "35%"
                 }}
                 onConnect={handleConnectSource}
             />
@@ -116,7 +94,7 @@ const AiNameAndRole: React.FC<NodeProps> = ({ id, data }) => {
             <Handle
                 type="target"
                 style={{
-                    top: "43%"
+                    top: "35%"
                 }}
                 position={Position.Left}
             />
@@ -124,4 +102,4 @@ const AiNameAndRole: React.FC<NodeProps> = ({ id, data }) => {
     );
 };
 
-export default AiNameAndRole;
+export default WelcomingMessage;

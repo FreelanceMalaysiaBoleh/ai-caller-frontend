@@ -22,9 +22,10 @@ const InitiateDrag = () => {
                 borderRadius: '10px',
                 backgroundColor: isDragging ? "#828282" : "#5B5B5B",
                 height: "80px",
-                width: "168px",
+                maxWidth: "168px",
                 boxShadow: '0px 8px 16px 4px rgba(0, 0, 0, 0.3)',
                 position: 'relative',
+                cursor: "grab"
             }}
         >
             <div style={{

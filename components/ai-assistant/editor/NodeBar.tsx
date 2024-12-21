@@ -1,9 +1,15 @@
 import InitiateDrag from "../nodes/draggable/InitiateDrag";
 import AiNameAndRoleDrag from "../nodes/draggable/AiNameAndRoleDrag";
+import WelcomingMessageDrag from "../nodes/draggable/WelcomingMessageDrag";
+import CustomerSpeechDrag from "../nodes/draggable/CustomerSpeechDrag";
+import BoundariesDrag from "../nodes/draggable/BoundariesDrag";
 
 const NodesList = [
     InitiateDrag,
     AiNameAndRoleDrag,
+    WelcomingMessageDrag,
+    CustomerSpeechDrag,
+    BoundariesDrag
 ];
 
 const NodeBar = () => {
