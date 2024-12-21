@@ -17,8 +17,7 @@ import { ItemTypes, NodeType, NodeTypes } from '@/contants/NodeConstants';
 const initialNodes: Node[] = [
   {
     id: '1',
-    // type: NodeType.initiate,
-    type: NodeType.boundaries,
+    type: NodeType.initiate,
     data: {},
     position: { x: 250, y: 0 },
   },

@@ -1,5 +1,4 @@
-import { LegacyRef, useCallback, useState } from 'react';
-import { Connection, Handle, NodeProps, Position } from 'reactflow';
+import { LegacyRef } from 'react';
 import SourceConnector from '../SourceConnector';
 import TargetConnector from '../TargetConnector';
 import { useDrag } from 'react-dnd';

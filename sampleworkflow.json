@@ -123,8 +123,8 @@
         "parameters": {
           "databaseType":"MySQL",
           "db_userName": "root",
-           "db_password": "root",
-            "db_url": "localhost:27101"
+          "db_password": "root",
+          "db_url": "localhost:27101"
         },
         "connections": []
       }

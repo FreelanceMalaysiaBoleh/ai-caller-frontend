@@ -3,13 +3,23 @@ import AiNameAndRoleDrag from "../nodes/draggable/AiNameAndRoleDrag";
 import WelcomingMessageDrag from "../nodes/draggable/WelcomingMessageDrag";
 import CustomerSpeechDrag from "../nodes/draggable/CustomerSpeechDrag";
 import BoundariesDrag from "../nodes/draggable/BoundariesDrag";
+import FunctionCallDrag from "../nodes/draggable/FunctionCallDrag";
+import DBReaderDrag from "../nodes/draggable/DBReaderDrag";
+import DBWriterDrag from "../nodes/draggable/DBWriterDrag";
+import APIExecutorDrag from "../nodes/draggable/APIExecutorDrag";
+import DBConnectionDrag from "../nodes/draggable/DBConnectionDrag";
 
 const NodesList = [
     InitiateDrag,
     AiNameAndRoleDrag,
     WelcomingMessageDrag,
     CustomerSpeechDrag,
-    BoundariesDrag
+    BoundariesDrag,
+    FunctionCallDrag,
+    DBReaderDrag,
+    DBWriterDrag,
+    APIExecutorDrag,
+    DBConnectionDrag
 ];
 
 const NodeBar = () => {
