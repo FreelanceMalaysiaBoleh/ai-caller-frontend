@@ -1,0 +1,133 @@
+{
+    "workflow_id": "example_workflow_1",
+    "name":"",
+    "description":"",
+    "nodes": [
+      {
+        "node_id": "1",
+        "type": "Initiate",
+        "parameters": {
+          "runtime": "Start"
+        },
+        "connections": ["2"]
+      },
+      {
+        "node_id": "2",
+        "type": "AI Name & Role",
+        "parameters": {
+          "name": "GuideAI",
+          "role": "Restaurant Assistant"
+        },
+        "connections": ["3"]
+      },
+      {
+        "node_id": "3",
+        "type": "Welcoming Message",
+        "parameters": {
+          "message": "Please say a welcome message to the client"
+        },
+        "connections": ["4"]
+      },
+      {
+        "node_id": "4",
+        "type": "Customer Speech",
+        "parameters": {},
+        "connections": ["6"]
+      },
+      {
+        "node_id": "6",
+        "type": "Boundaries",
+        "parameters": {
+          "filter": "Topics and words to avoid"
+        },
+        "connections": ["7","8","9"]
+      },
+
+      {
+        "node_id": "7",
+        "type": "Function Call",
+        "parameters": {
+          "name": "User Data Retriever",
+          "description":"Retrieve the user data when user asking for any information.",
+          "args":{
+            "user_name": "str (The name of the user)"
+            }
+
+        },
+        "connections": ["10"]
+      },
+      {
+        "node_id": "8",
+        "type": "Function Call",
+        "parameters": {
+          "name": "User Data Writer",
+          "description":"Write the user data when user asking to.",
+          "args":{
+            "user_name": "str (The name of the user)"
+            }
+
+        },
+        "connections": ["11"]
+      },
+
+      {
+        "node_id": "9",
+        "type": "Function Call",
+        "parameters": {
+          "name": "Ticker Writer",
+          "description":"Write the ticket when user complain about some issue.",
+          "args":{
+        "user_name": "str (The name of the user creating the ticket)",
+        "description": "str (A description of the issue or request)"
+            }
+
+        },
+        "connections": ["12"]
+      },
+      {
+        "node_id": "10",
+        "type": "DB Reader",
+        "parameters": {
+          "description":"Replace the {user_name} with the value from previous node.",
+          "query": "SELECT * FROM customers where Name={user_name};"
+        },
+        "connections": ["13"]
+      },
+      
+      {
+        "node_id": "11",
+        "type": "DB Writer",
+        "parameters": {
+          "description":"Replace the {user_name} with the value from previous node.",
+           "query": "INSERT INTO customers VALUES ({user_name});"
+        },
+        "connections": ["13"]
+      },
+      {
+        "node_id": "12",
+        "type": "API Executor",
+        "parameters": {
+          "endpoint": "http://api.example.com/ticket",
+          "method":"POST",
+          "args":{
+            "user_name": "str (The name of the user creating the ticket)",
+            "description": "str (A description of the issue or request)"
+                }
+          
+        },
+        "connections": []
+      },
+      {
+        "node_id": "13",
+        "type": "DB Connection",
+        "parameters": {
+          "databaseType":"MySQL",
+          "db_userName": "root",
+          "db_password": "root",
+          "db_url": "localhost:27101"
+        },
+        "connections": []
+      }
+    ]
+  }
+  

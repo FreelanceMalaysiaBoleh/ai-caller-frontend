@@ -36,15 +36,19 @@ a {
 }
 
 h1 {
-  font-size: 36px;
-}
-
-h2{
+  color: white;
   font-size: 24px;
 }
 
-p {
+h2{
+  color: white;
   font-size: 20px;
+  font-family: "Nunito", Arial, sans-serif;
+}
+
+p {
+  color: white;
+  font-size: 18px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -52,3 +56,18 @@ p {
     color-scheme: dark;
   }
 }
+
+
+/* Text Styles */
+#medium {
+  font-size: 16px;
+}
+
+#biggersmall {
+  font-size: 14px;
+}
+
+#small {
+  font-size: 12px;
+}
+

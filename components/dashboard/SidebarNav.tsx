@@ -1,50 +1,60 @@
 import { Layout, Menu } from 'antd';
 import {
-    UserOutlined,
     HomeOutlined,
     SettingOutlined,
-    FileTextOutlined,
-    LogoutOutlined,
-    BarChartOutlined,
-    SmileOutlined,
+    BranchesOutlined,
+    DatabaseOutlined,
+    MessageOutlined,
 } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 
 const { Sider } = Layout;
 
-const SidebarNav = () => {
+const   SidebarNav = () => {
 
     const router = useRouter();
 
     console.log(router.asPath);
 
+    const ItemText = ({ text, isSelected }: { text: string, isSelected: boolean }) => {
+        return <h2 style={{
+            color: isSelected ? "#FFFFFF" : "#909090"
+        }}>{text}</h2>
+    }
+
     return (
         <Sider width={345} style={{ minHeight: '100vh', backgroundColor: "#313B00", position: "fixed" }}>
-            <Menu theme="dark" style={{ display: 'flex', flexDirection: "column", backgroundColor: "#313B00", width: 345, minHeight: '100vh' }} mode="inline" defaultSelectedKeys={[router.asPath]}>
-                <Menu.Item onClick={()=>{
+            <Menu
+                theme="dark"
+                style={{
+                    display: 'flex',
+                    flexDirection: "column",
+                    backgroundColor: "#2C2C2C",
+                    paddingTop: 100, 
+                    width: 345,
+                    minHeight: '100vh'
+                }}
+                mode="inline"
+                defaultSelectedKeys={[router.asPath]}
+            >
+                <Menu.Item onClick={() => {
                     router.push("/")
                 }} style={{ marginBottom: 20, marginTop: 35 }} key="/" icon={<HomeOutlined />} >
-                    <h2>Home</h2>
+                    <ItemText text='Dashboard' isSelected={router.asPath == "/"} />
                 </Menu.Item>
-                <Menu.Item style={{ marginBottom: 20 }} key="2" icon={<UserOutlined />}>
-                    <h2>Profile</h2>
-                </Menu.Item>
-                <Menu.Item onClick={()=>{
+                <Menu.Item onClick={() => {
                     router.push("/ai-assistant")
-                }} style={{ marginBottom: 20 }} key="/ai-assistant" icon={<SmileOutlined />}>
-                    <h2>AI Assistant</h2>
+                }} style={{ marginBottom: 20 }} key="/ai-assistant" icon={<BranchesOutlined />}>
+                    <ItemText text='AI Assistant Blueprint' isSelected={router.asPath == "/ai-assistant"} />
                 </Menu.Item>
-                <Menu.Item style={{ marginBottom: 20 }} key="4" icon={<FileTextOutlined />}>
-                    <h2>Data Management</h2>
+                <Menu.Item onClick={()=>{}} style={{ marginBottom: 20 }} key="2" icon={<DatabaseOutlined />}>
+                    <ItemText text='Data Management' isSelected={router.asPath == "2"} />
                 </Menu.Item>
-                <Menu.Item style={{ marginBottom: 20 }} key="5" icon={<BarChartOutlined />}>
-                    <h2>Interaction Logs</h2>
+                <Menu.Item style={{ marginBottom: 20 }} key="4" icon={<MessageOutlined />}>
+                    <ItemText text='Interaction Logs' isSelected={router.asPath == "5"} />
                 </Menu.Item>
                 <Menu.Item style={{ marginBottom: "auto" }} key="6" icon={<SettingOutlined />}>
-                    <h2>Settings</h2>
-                </Menu.Item>
-                <Menu.Item style={{ marginBottom: 20 }} key="7" icon={<LogoutOutlined />}>
-                    <h2>Logout</h2>
+                    <ItemText text='Settings' isSelected={router.asPath == "4"} />
                 </Menu.Item>
             </Menu>
         </Sider>
