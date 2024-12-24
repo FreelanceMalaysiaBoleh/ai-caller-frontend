@@ -6,8 +6,6 @@ def combineNodesAndEdges(nodes, edges):
   for node in nodes:
     node["parameters"] = node.pop("data")
     node["node_id"] = node.pop("id")
-
-    del node["position"]
     
     if "positionAbsolute" in node:
       del node["positionAbsolute"]
