@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import ReactFlow, {
   addEdge,
   Background,
@@ -13,6 +13,7 @@ import ReactFlow, {
 import { useDrop } from 'react-dnd';
 import 'reactflow/dist/style.css';
 import { ItemTypes, NodeType, NodeTypes } from '@/contants/NodeConstants';
+import axios from 'axios';
 
 const initialNodes: Node[] = [
   {
@@ -28,6 +29,7 @@ const initialEdges: Edge[] = [];
 const Canvas: React.FC = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const [saveLock, setSaveLock] = useState(0);
 
   const reactFlowInstance = useRef<ReactFlowInstance | null>(null);
 
@@ -88,10 +90,28 @@ const Canvas: React.FC = () => {
     }),
   }), [nodes, reactFlowInstance]);
 
+  const handleSaveWorkflow = async () => {
+    const payload = { nodes, edges };
+    console.log(process.env.NEXT_PUBLIC_BACKEND_URL);
+    try {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/workflows`, payload);
+      console.log("Response:", response.data);
+    } catch (error) {
+      console.error("Error sending payload:", error);
+    }
+  }
+
+  useEffect(() => {
+    if (nodes.length > 0 && nodes.length % 4 === 0 && saveLock != nodes.length ) {
+      handleSaveWorkflow();
+      setSaveLock(nodes.length)
+    }
+
+  }, [nodes]);
 
   return (
     <ReactFlowProvider>
-      <button onClick={()=>{console.log(nodes)}}>Press me!</button>
+      <button onClick={() => { console.log("nodes: ", nodes); console.log("edges: ", edges) }}>Press me!</button>
       <div
         ref={(drop as unknown) as React.Ref<HTMLDivElement>}
         className="reactflow"
