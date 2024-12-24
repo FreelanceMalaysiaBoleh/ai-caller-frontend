@@ -65,7 +65,7 @@ const FunctionCall: React.FC<NodeProps> = ({ id, data }) => {
   // Handle description change
   const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDescription(e.target.value);
-    data.role = e.target.value;
+    data.description = e.target.value;
   };
 
   return (
