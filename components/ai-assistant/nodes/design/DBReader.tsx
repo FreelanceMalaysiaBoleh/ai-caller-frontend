@@ -6,8 +6,8 @@ import TargetConnector from '../TargetConnector';
 //key: .dbReader
 const DBReaderComponent: React.FC<NodeProps> = ({ id, data }) => {
     // State to manage editable fields
-    const [desc, setDesc] = useState("");
-    const [query, setQuery] = useState("");
+    const [desc, setDesc] = useState(data. description || "");
+    const [query, setQuery] = useState(data.query || "");
     const [isConnectedSource, setIsConnectedSource] = useState(false);
 
     const handleConnectSource = useCallback(
