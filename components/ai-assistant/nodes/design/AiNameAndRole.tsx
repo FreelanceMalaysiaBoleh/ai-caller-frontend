@@ -6,8 +6,8 @@ import TargetConnector from '../TargetConnector';
 //key: .aiNameAndRole
 const AiNameAndRole: React.FC<NodeProps> = ({ id, data }) => {
     // State to manage editable fields
-    const [name, setName] = useState("");
-    const [role, setRole] = useState("");
+    const [name, setName] = useState(data.name || "");
+    const [role, setRole] = useState(data.role || "");
     const [isConnectedSource, setIsConnectedSource] = useState(false);
 
     const handleConnectSource = useCallback(

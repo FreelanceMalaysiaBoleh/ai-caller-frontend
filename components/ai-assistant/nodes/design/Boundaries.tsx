@@ -6,7 +6,7 @@ import TargetConnector from '../TargetConnector';
 //key: .boundaries
 const Boundaries: React.FC<NodeProps> = ({ id, data }) => {
     // State to manage editable fields
-    const [filter, setFilter] = useState("");
+    const [filter, setFilter] = useState(data.filter || "");
     const [isConnectedSource, setIsConnectedSource] = useState(false);
 
     const handleConnectSource = useCallback(

@@ -14,8 +14,6 @@ const   SidebarNav = () => {
 
     const router = useRouter();
 
-    console.log(router.asPath);
-
     const ItemText = ({ text, isSelected }: { text: string, isSelected: boolean }) => {
         return <h2 style={{
             color: isSelected ? "#FFFFFF" : "#909090"

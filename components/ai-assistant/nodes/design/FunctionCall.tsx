@@ -19,9 +19,21 @@ const options = [
 //key: .functionCall
 const FunctionCall: React.FC<NodeProps> = ({ id, data }) => {
   // State to manage editable fields
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [fields, setFields] = useState<FunctionEntry[]>([{ key: '', desc: '', type: '' }]);
+  const [name, setName] = useState(data.name || "");
+  const [description, setDescription] = useState( data.description || "");
+  let defaultFields = [{ key: '', desc: '', type: '' }];
+
+  if(data.args){
+    const args: { [key: string]: string } = data.args; 
+
+    defaultFields = Object.entries(args).map(([key, value]) => ({
+      key,
+      type: value.split(" (")[0],  // Extract the type before the first "("
+      desc: value.split(" (")[1].replace(")", "")  // Extract the description after "(" and remove trailing ")"
+    }));
+  }
+
+  const [fields, setFields] = useState<FunctionEntry[]>(defaultFields);
   const [isConnectedSource, setIsConnectedSource] = useState(false);
 
   const handleAddField = () => {
@@ -163,6 +175,7 @@ const FunctionCall: React.FC<NodeProps> = ({ id, data }) => {
                 <div style={{ width: "20%" }}>
                   <NodeDropdown
                     placeholder="Select Type"
+                    value={field.type}
                     options={options}
                     onSelect={(value) => handleFieldChange(index, 'type', value)}
                   />

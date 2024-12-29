@@ -6,7 +6,7 @@ import TargetConnector from '../TargetConnector';
 //key: .welcomingMessage
 const WelcomingMessage: React.FC<NodeProps> = ({ id, data }) => {
     // State to manage editable fields
-    const [message, setMessage] = useState("");
+    const [message, setMessage] = useState(data.message || "");
     const [isConnectedSource, setIsConnectedSource] = useState(false);
 
     const handleConnectSource = useCallback(

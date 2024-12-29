@@ -10,10 +10,17 @@ def combineNodesAndEdges(nodes, edges):
     if "positionAbsolute" in node:
       del node["positionAbsolute"]
     
-    del node["selected"]
-    del node["dragging"]
-    del node["height"]
-    del node["width"]
+    if "selected" in node:
+        del node["selected"]
+    
+    if "dragging" in node:
+        del node["dragging"]
+
+    if "height" in node:    
+        del node["height"]
+    
+    if "width" in node:
+        del node["width"]
 
     if "isConnectedTarget" in node["parameters"]:
      del node["parameters"]["isConnectedTarget"]
@@ -35,19 +42,59 @@ def combineNodesAndEdges(nodes, edges):
       node["parameters"]["args"] = args
 
       del node["parameters"]["fields"]
+
+    node["connections"] = []
   
   for edge in edges:
     target_id = edge["source"]
     connected_id = edge["target"]
     found_object = next((obj for obj in nodes if obj["node_id"] == target_id), None)
 
-    if found_object:
-      if "connections" not in found_object:
-          found_object["connections"] = []
- 
+    if found_object: 
       found_object["connections"].append(connected_id)
 
-  return nodes;
+  return nodes
+
+def restoreNodesAndEdges(transformed_nodes):
+    restored_nodes = []
+    restored_edges = []
+
+    for node in transformed_nodes:
+        # Revert the renaming and structural changes
+        restored_node = {
+            "id": node["node_id"],
+            "type": node["type"],
+            "data": node.get("parameters", {}),
+            "position": node["position"]
+        }
+        
+        if node["type"] == "Function Call" or node["type"] == "API Executor":
+            args = node["parameters"]["args"]
+
+            fields = [
+                {
+                    "key": key,
+                    "type": value.split(" (")[0], 
+                    "desc": value.split(" (", 1)[1].rstrip(")")
+                }
+                for key, value in args.items()
+            ]
+
+            restored_node["data"]["fields"] = fields
+
+        # Add the restored node to the list
+        restored_nodes.append(restored_node)
+
+        # Reconstruct edges from connections
+        if "connections" in node:
+            for target_id in node["connections"]:
+                restored_edges.append({
+                    "source": node["node_id"],
+                    "target": target_id,
+                    "id": f"reactflow__edge-{node['node_id']}-{target_id}",
+                })
+
+    return restored_nodes, restored_edges
 
 
 nodesSample = [
