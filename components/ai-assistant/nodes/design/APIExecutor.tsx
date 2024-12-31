@@ -25,9 +25,21 @@ const methodOptions = [
 //key: .apiExecutor
 const APIExecutor: React.FC<NodeProps> = ({ id, data }) => {
   // State to manage editable fields
-  const [endpoint, setEndpoint] = useState("");
-  const [method, setMethod] = useState("");
-  const [fields, setFields] = useState<FunctionEntry[]>([{ key: '', desc: '', type: '' }]);
+  const [endpoint, setEndpoint] = useState(data.endpoint || "");
+  const [method, setMethod] = useState(data.method || "");
+  let defaultFields = [{ key: '', desc: '', type: '' }];
+
+  if (data.args) {
+    const args: { [key: string]: string } = data.args;
+
+    defaultFields = Object.entries(args).map(([key, value]) => ({
+      key,
+      type: value.split(" (")[0],  // Extract the type before the first "("
+      desc: value.split(" (")[1].replace(")", "")  // Extract the description after "(" and remove trailing ")"
+    }));
+  }
+
+  const [fields, setFields] = useState<FunctionEntry[]>(defaultFields);
   const [isConnectedSource, setIsConnectedSource] = useState(false);
 
   const handleAddField = () => {

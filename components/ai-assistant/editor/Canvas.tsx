@@ -1,21 +1,21 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { Dispatch, SetStateAction, useCallback, useEffect, useRef, useState } from 'react';
 import ReactFlow, {
   addEdge,
   Background,
-  useEdgesState,
-  useNodesState,
   Connection,
   Edge,
   Node,
   ReactFlowInstance,
   ReactFlowProvider,
+  OnNodesChange,
+  OnEdgesChange,
 } from 'reactflow';
 import { useDrop } from 'react-dnd';
 import 'reactflow/dist/style.css';
 import { ItemTypes, NodeType, NodeTypes } from '@/contants/NodeConstants';
-import axios from 'axios';
+import {  WorkFlowType } from '@/hooks/useWorkflow';
 
-const initialNodes: Node[] = [
+export const initialNodes: Node[] = [
   {
     id: '1',
     type: NodeType.initiate,
@@ -24,11 +24,35 @@ const initialNodes: Node[] = [
   },
 ];
 
-const initialEdges: Edge[] = [];
+export const initialEdges: Edge[] = [];
 
-const Canvas: React.FC = () => {
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+type CanvasProps = {
+  workflow?: WorkFlowType
+  isLoading: boolean
+  nodes: Node[]
+  edges: Edge[]
+  setNodes: Dispatch<SetStateAction<Node[]>>
+  setEdges: Dispatch<SetStateAction<Edge[]>> 
+  handleSaveWorkflow: () => void
+  onNodesChange: OnNodesChange
+  onEdgesChange: OnEdgesChange
+
+}
+
+const Canvas = ({
+  workflow,
+  isLoading,
+  nodes,
+  edges,
+  setNodes,
+  setEdges,
+  handleSaveWorkflow,
+  onNodesChange,
+  onEdgesChange
+}: CanvasProps) => {
+
+
+
   const [saveLock, setSaveLock] = useState(0);
 
   const reactFlowInstance = useRef<ReactFlowInstance | null>(null);
@@ -90,53 +114,60 @@ const Canvas: React.FC = () => {
     }),
   }), [nodes, reactFlowInstance]);
 
-  const handleSaveWorkflow = async () => {
-    const payload = { nodes, edges };
-    console.log(process.env.NEXT_PUBLIC_BACKEND_URL);
-    try {
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/workflows`, payload);
-      console.log("Response:", response.data);
-    } catch (error) {
-      console.error("Error sending payload:", error);
-    }
-  }
+
 
   useEffect(() => {
-    if (nodes.length > 0 && nodes.length % 4 === 0 && saveLock != nodes.length ) {
+    if (nodes.length > 0 && nodes.length % 4 === 0 && saveLock != nodes.length) {
       handleSaveWorkflow();
       setSaveLock(nodes.length)
     }
 
   }, [nodes]);
 
+  useEffect(() => {
+    if (workflow) {
+      setNodes(workflow?.nodes)
+      setEdges(workflow?.edges)
+    }
+  }, [workflow])
+
+  if (isLoading) return <div>Loading</div>
+
   return (
-    <ReactFlowProvider>
-      <button onClick={() => { console.log("nodes: ", nodes); console.log("edges: ", edges) }}>Press me!</button>
-      <div
-        ref={(drop as unknown) as React.Ref<HTMLDivElement>}
-        className="reactflow"
-        style={{
-          height: '100vh',
-          border: isOver ? '2px dashed green' : '2px solid transparent',
-        }}
-      >
-        <ReactFlow
-          nodes={nodes}
-          edges={edges}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
-          onConnect={onConnect}
-          fitView
-          zoomOnScroll={false} // Disable zoom with mouse scroll
-          panOnScroll={false} // Disable panning with scroll
-          onInit={onInit}
-          nodeTypes={NodeTypes}
-        >
-          {/* <Controls /> */}
-          <Background />
-        </ReactFlow>
-      </div>
-    </ReactFlowProvider>
+    <>{
+      workflow
+        ?
+        <ReactFlowProvider>
+          <div
+            ref={(drop as unknown) as React.Ref<HTMLDivElement>}
+            className="reactflow"
+            style={{
+              height: '100vh',
+              border: isOver ? '2px dashed green' : '2px solid transparent',
+            }}
+          >
+            <ReactFlow
+              nodes={nodes}
+              edges={edges}
+              onNodesChange={onNodesChange}
+              onEdgesChange={onEdgesChange}
+              onConnect={onConnect}
+              fitView
+              zoomOnScroll={false} // Disable zoom with mouse scroll
+              panOnScroll={false} // Disable panning with scroll
+              onInit={onInit}
+              nodeTypes={NodeTypes}
+            >
+              {/* <Controls /> */}
+              <Background />
+            </ReactFlow>
+          </div>
+        </ReactFlowProvider>
+        :
+        <div>Not Found</div>
+    }
+    </>
+
   );
 };
 

@@ -13,10 +13,10 @@ const typeOptions = [
 //key: .dbConnection
 const DBConnection: React.FC<NodeProps> = ({ id, data }) => {
   // State to manage editable fields
-  const [type, setType] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [url, setUrl] = useState("");
+  const [type, setType] = useState(data.databaseType || "");
+  const [username, setUsername] = useState(data.db_username ||  "");
+  const [password, setPassword] = useState(data.db_password || "");
+  const [url, setUrl] = useState(data.db_url || "");
   const [isConnectedSource, setIsConnectedSource] = useState(false);
 
   const handleConnectSource = useCallback(
