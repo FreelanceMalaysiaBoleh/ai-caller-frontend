@@ -15,7 +15,7 @@ const loginSchema = yup.object().shape({
 const LoginForm = () => {
 
   const [isHovered, setIsHovered] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
   const router = useRouter();
 
   const {
@@ -36,7 +36,7 @@ const LoginForm = () => {
       saveToken(token);
       router.push("/");
     }).catch(e => {
-      setError(e)
+      setError(`${e}`)
       console.log(e);
     })
   };

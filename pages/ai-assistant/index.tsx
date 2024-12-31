@@ -1,7 +1,7 @@
 import MainLayout from "@/components/general/MainLayout"
 
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Modal } from "antd"
 import Canvas, { initialEdges, initialNodes } from "@/components/ai-assistant/editor/Canvas"
 import NodeBar from "@/components/ai-assistant/editor/NodeBar"
@@ -9,6 +9,7 @@ import TabNavigation from "@/components/ai-assistant/editor/TabNavigation"
 import { useEdgesState, useNodesState } from "reactflow"
 import { useWorkflow } from "@/hooks/useWorkflow"
 import axios from "axios"
+import { ErrorResponse, getPipelineStatus, SuccessResponse } from "@/services/PipelineServices"
 
 
 
@@ -22,6 +23,25 @@ const Index = () => {
 
     const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
     const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+    const [pipelineStatus, setPipelineStatus] = useState("");
+    const [errorPipeline, setErrorPipeline] = useState("");
+
+
+    useEffect(() => {
+        const getStatus = async () => {
+            const res = await getPipelineStatus()
+
+            if ((res as ErrorResponse).error) {
+                const errResponse = res as ErrorResponse;
+                setErrorPipeline(errResponse.error)
+            } else {
+                const response = res as SuccessResponse
+                setPipelineStatus(response.status);
+            }
+        }
+
+        getStatus();
+    }, [])
 
     const handleSaveWorkflow = async () => {
         console.log(nodes, edges)
@@ -57,8 +77,6 @@ const Index = () => {
         window.location.reload();
     }
 
-    console.log(workflow);
-
     return (
         <MainLayout>
             <>
@@ -80,7 +98,21 @@ const Index = () => {
                         <TabNavigation
                             saveWorkflow={handleSaveWorkflow}
                             resetWorkFlow={handleResetWorkflow}
+                            pipelineStatus={pipelineStatus}
+                            setPipelineStatus={setPipelineStatus}
+                            setErrorPipeline={setErrorPipeline}
                         />
+                        {
+                            errorPipeline
+                                ?
+                                <div style={{ width: "100%", display: "flex", paddingRight: 12 }}>
+                                    <p style={{ color: "red", marginLeft: "auto", fontSize: "12px" }}>
+                                        {errorPipeline}
+                                    </p>
+                                </div>
+                                :
+                                <></>
+                        }
                         <div style={{
                             boxShadow: '0px 8px 16px 4px rgba(0, 0, 0, 0.3)',
                             marginTop: 10
