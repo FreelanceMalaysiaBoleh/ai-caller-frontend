@@ -5,6 +5,7 @@ import type { AppProps } from "next/app";
 
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
+import AuthContext from "@/components/context/AuthContext";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -12,7 +13,7 @@ export default function App({ Component, pageProps }: AppProps) {
       theme={{
         token: {
           colorPrimary: '#2C2C2C',
-          colorFillSecondary : "#000000",
+          colorFillSecondary: "#000000",
           colorBgLayout: '#2C2C2C',
           colorBgContainer: '#2C2C2C',
           colorBgTextActive: '#2C2C2C',
@@ -20,9 +21,11 @@ export default function App({ Component, pageProps }: AppProps) {
         },
       }}
     >
-      <DndProvider backend={HTML5Backend}>
-      <Component {...pageProps} />
-      </DndProvider>
+      <AuthContext>
+        <DndProvider backend={HTML5Backend}>
+          <Component {...pageProps} />
+        </DndProvider>
+      </AuthContext>
     </ConfigProvider>
   )
 }

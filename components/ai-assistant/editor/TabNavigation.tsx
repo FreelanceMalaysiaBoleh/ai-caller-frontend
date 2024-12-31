@@ -1,16 +1,82 @@
-import React from 'react';
+import { ErrorResponse, getPipelineStatus, startPipeline, stopPipeline, SuccessResponse } from '@/services/PipelineServices';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 
-const TabNavigation = ({ saveWorkflow, resetWorkFlow }: { saveWorkflow: () => void, resetWorkFlow: () => void }) => {
+const TabNavigation = ({
+    saveWorkflow,
+    resetWorkFlow,
+    pipelineStatus = "not started",
+    setPipelineStatus,
+    setErrorPipeline,
+}: {
+    saveWorkflow: () => void,
+    resetWorkFlow: () => void,
+    pipelineStatus?: string,
+    setPipelineStatus: Dispatch<SetStateAction<string>>,
+    setErrorPipeline: Dispatch<SetStateAction<string>>,
 
+}) => {
+    const [isHoveredStart, setIsHoveredStart] = useState(false);
+    const [isHoveredStop, setIsHoveredStop] = useState(false);
+    
+    const [isHoveredSave, setIsHoveredSave] = useState(false);
+    const [isHoveredReset, setIsHoveredReset] = useState(false);
 
-    // const [selectedTab, setSelectedTab] = useState<string>("Blueprint 1");
+    const handleStartPipeline = async () => {
+        setErrorPipeline("")
+        if (pipelineStatus == "stopped") {
+            const res = await startPipeline()
 
+            if ((res as ErrorResponse).error) {
+                const errResponse = res as ErrorResponse;
+                setErrorPipeline(errResponse.error)
+            } else {
+                const response = res as SuccessResponse
+                setPipelineStatus(response.status);
+            }
+
+            await new Promise(resolve => setTimeout(resolve, 1000));
+
+            const resStatus = await getPipelineStatus();
+
+            if ((resStatus as ErrorResponse).error) {
+                const errResponse = resStatus as ErrorResponse;
+                setErrorPipeline(errResponse.error)
+            } else {
+                const response = resStatus as SuccessResponse
+                setPipelineStatus(response.status);
+            }
+
+            return
+        }
+
+        setErrorPipeline("Process already started")
+    }
+    
+    const handleStopPipeline = async () => {
+        setErrorPipeline("")
+        if (pipelineStatus == "running") {
+            const res = await stopPipeline()
+
+            if ((res as ErrorResponse).error) {
+                const errResponse = res as ErrorResponse;
+                setErrorPipeline(errResponse.error)
+            } else {
+                const response = res as SuccessResponse
+                setPipelineStatus(response.status);
+            }
+            return
+        }
+
+        setErrorPipeline("Process already stopped")
+    }
 
     return (
         <div
             style={{
                 display: 'flex',
+                flexDirection: "row",
                 height: '40px', // Adjust height as needed
+                width: "100%",
                 alignItems: 'center',
             }}
         >
@@ -59,18 +125,21 @@ const TabNavigation = ({ saveWorkflow, resetWorkFlow }: { saveWorkflow: () => vo
             <div
                 onClick={async () => {
                     await saveWorkflow();
-                    // window.location.reload();
+                    window.location.reload();
                 }}
                 style={{
                     display: 'flex',
                     alignItems: 'center',
                     padding: '0 15px',
                     height: '100%',
-                    backgroundColor: '#2c2c2c',
+                    backgroundColor: isHoveredSave ? '#3e3e3e' : '#2c2c2c',
                     color: 'white',
                     marginRight: '5px',
                     cursor: 'pointer',
                 }}
+
+                onMouseEnter={() => setIsHoveredSave(true)}
+                onMouseLeave={() => setIsHoveredSave(false)}
             >
                 Save blueprint
             </div>
@@ -81,13 +150,66 @@ const TabNavigation = ({ saveWorkflow, resetWorkFlow }: { saveWorkflow: () => vo
                     alignItems: 'center',
                     padding: '0 15px',
                     height: '100%',
-                    backgroundColor: '#2c2c2c',
+                    backgroundColor: isHoveredReset ? '#3e3e3e' : '#2c2c2c',
                     color: 'white',
                     marginRight: '5px',
                     cursor: 'pointer',
                 }}
+
+                onMouseEnter={() => setIsHoveredReset(true)}
+                onMouseLeave={() => setIsHoveredReset(false)}
             >
                 Reset blueprint
+            </div>
+
+            <div
+                onClick={handleStartPipeline}
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '0 15px',
+                    height: '100%',
+                    backgroundColor: isHoveredStart ? '#3e3e3e' : '#2c2c2c',
+                    color: 'white',
+                    marginLeft: 'auto',
+                    cursor: 'pointer',
+
+                }}
+                onMouseEnter={() => setIsHoveredStart(true)}
+                onMouseLeave={() => setIsHoveredStart(false)}
+            >
+                Start
+            </div>
+            <div
+                onClick={handleStopPipeline}
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '0 15px',
+                    height: '100%',
+                    backgroundColor: isHoveredStop ? '#3e3e3e' : '#2c2c2c',
+                    color: 'white',
+                    marginLeft: '5px',
+                    cursor: 'pointer',
+                }}
+                onMouseEnter={() => setIsHoveredStop(true)}
+                onMouseLeave={() => setIsHoveredStop(false)}
+            >
+                Stop
+            </div>
+            <div
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '0 15px',
+                    height: '100%',
+                    backgroundColor: '#2c2c2c',
+                    color: 'white',
+                    marginLeft: '5px',
+                }}
+
+            >
+                Status: {pipelineStatus.charAt(0).toUpperCase() + pipelineStatus.slice(1)}
             </div>
         </div>
     );
