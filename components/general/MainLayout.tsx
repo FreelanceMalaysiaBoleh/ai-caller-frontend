@@ -2,7 +2,6 @@ import React from 'react'
 import SidebarNav from '../dashboard/SidebarNav';
 import { Layout } from 'antd';
 import AppHeader from '../dashboard/AppHeader';
-
 const { Content } = Layout;
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {

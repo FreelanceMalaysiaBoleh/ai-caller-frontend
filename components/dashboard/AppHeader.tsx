@@ -1,6 +1,7 @@
 import { Layout } from 'antd';
 import Image from 'next/image';
 import logo from "../../public/images/logo.png"
+import { deleteToken } from '@/services/AuthServices';
 
 const { Header } = Layout;
 
@@ -35,18 +36,32 @@ const AppHeader = () => {
                 marginLeft: "auto",
             }}>
                 <h2>Omantel Telecommunications</h2>
-                <p style={{
-                    fontSize: "18px",
-                    color: "#909090",
-                    textDecoration: "underline"
-                }}>Logout</p>
+                <button
+                    onClick={() => {
+                        deleteToken();
+                        window.location.reload();
+                    }}
+                    style={{
+                        all: "unset", 
+                        cursor: "pointer", 
+                    }}
+                >
+                    <p
+
+                        style={{
+                            fontSize: "18px",
+                            color: "#909090",
+                            textDecoration: "underline",
+                            cursor: "pointer"
+                        }}>Logout</p>
+                </button>
             </div>
             <div
                 style={{
-                    width: '60px',         
-                    height: '60px',        
-                    borderRadius: '50%',    
-                    overflow: 'hidden', 
+                    width: '60px',
+                    height: '60px',
+                    borderRadius: '50%',
+                    overflow: 'hidden',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -55,12 +70,12 @@ const AppHeader = () => {
                 }}
             >
                 <img
-                    src="https://picsum.photos/200" 
+                    src="https://picsum.photos/200"
                     alt="Avatar"
                     style={{
                         width: '100%',
                         height: '100%',
-                        objectFit: 'cover', 
+                        objectFit: 'cover',
                     }}
                 />
             </div>
