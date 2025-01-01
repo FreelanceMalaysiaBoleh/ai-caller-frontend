@@ -65,9 +65,22 @@ const DBConnectionDrag = () => {
           <div style={{ marginBottom: '10px' }}>
             <input
               type="text"
-              value={""}
-              disabled
               placeholder='db name'
+              style={{
+                width: '100%',
+                padding: '5px',
+                borderRadius: '5px',
+                border: 'none',
+                backgroundColor: '#2B2B2B',
+                color: "white"
+              }}
+            />
+          </div>
+          
+          <div style={{ marginBottom: '10px' }}>
+            <input
+              type="text"
+              placeholder='db user'
               style={{
                 width: '100%',
                 padding: '5px',

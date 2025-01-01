@@ -14,7 +14,8 @@ const typeOptions = [
 const DBConnection: React.FC<NodeProps> = ({ id, data }) => {
   // State to manage editable fields
   const [type, setType] = useState(data.databaseType || "");
-  const [username, setUsername] = useState(data.db_username ||  "");
+  const [username, setUsername] = useState(data.db_user ||  "");
+  const [dbname, setDbname] = useState(data.db_name ||  "");
   const [password, setPassword] = useState(data.db_password || "");
   const [url, setUrl] = useState(data.db_url || "");
   const [isConnectedSource, setIsConnectedSource] = useState(false);
@@ -33,7 +34,13 @@ const DBConnection: React.FC<NodeProps> = ({ id, data }) => {
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
     // Update the node's data (this will be reflected in the state)
-    data.db_userName = e.target.value;
+    data.db_user = e.target.value;
+  };
+  
+  const handleDbNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDbname(e.target.value);
+    // Update the node's data (this will be reflected in the state)
+    data.db_name = e.target.value;
   };
 
   // Handle description change
@@ -97,9 +104,26 @@ const DBConnection: React.FC<NodeProps> = ({ id, data }) => {
           <div style={{ marginBottom: '10px' }}>
             <input
               type="text"
+              value={dbname}
+              onChange={handleDbNameChange}
+              placeholder='db name'
+              style={{
+                width: '100%',
+                padding: '5px',
+                borderRadius: '5px',
+                border: 'none',
+                backgroundColor: '#2B2B2B',
+                color: "white"
+              }}
+            />
+          </div>
+          
+          <div style={{ marginBottom: '10px' }}>
+            <input
+              type="text"
               value={username}
               onChange={handleUsernameChange}
-              placeholder='db name'
+              placeholder='db user'
               style={{
                 width: '100%',
                 padding: '5px',

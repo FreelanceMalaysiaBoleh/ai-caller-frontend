@@ -32,16 +32,27 @@ def combineNodesAndEdges(nodes, edges):
       node["parameters"]["runtime"] = "Start"
 
     if node["type"] == "Function Call" or node["type"] == "API Executor":
-      fields = node["parameters"]["fields"]
+      try:
+        fields = node["parameters"]["fields"]
 
-      args = {
-        field["key"]: f'{field["type"]} ({field["desc"]})'
-        for field in fields
-      }
+        args = {
+            field["key"]: f'{field["type"]} ({field["desc"]})'
+            for field in fields
+        }
 
-      node["parameters"]["args"] = args
+        node["parameters"]["args"] = args
 
-      del node["parameters"]["fields"]
+        del node["parameters"]["fields"]
+      except:
+        fields = node["parameters"]["args"]
+
+        args = {
+            field["key"]: f'{field["type"]} ({field["desc"]})'
+            for field in fields
+        }
+
+        node["parameters"]["args"] = args
+        pass
 
     node["connections"] = []
   
