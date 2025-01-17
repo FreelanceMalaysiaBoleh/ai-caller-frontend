@@ -2,9 +2,10 @@ import { useCallback, useState } from 'react';
 import { Connection, Handle, NodeProps, Position } from 'reactflow';
 import SourceConnector from '../SourceConnector';
 import TargetConnector from '../TargetConnector';
+import NodeHead from '../NodeHead';
 
 //key: .welcomingMessage
-const WelcomingMessage: React.FC<NodeProps> = ({ id, data }) => {
+const WelcomingMessage: React.FC<NodeProps> = ({ id, data, type }) => {
     // State to manage editable fields
     const [message, setMessage] = useState(data.message || "");
     const [isConnectedSource, setIsConnectedSource] = useState(false);
@@ -37,17 +38,7 @@ const WelcomingMessage: React.FC<NodeProps> = ({ id, data }) => {
                 position: 'relative',
             }}
         >
-
-            <div style={{
-                borderTopRightRadius: "10px",
-                borderTopLeftRadius: "10px",
-                backgroundColor: "#007C34",
-                paddingLeft: 10,
-                paddingTop: 5,
-                paddingBottom: 5,
-            }}>
-                <p style={{ fontSize: "14px" }}>Welcoming Message</p>
-            </div>
+            <NodeHead id={id} title={'Welcoming Message'} nodeType={type} color='#007C34' />
             {/* Editable Label */}
             <div style={{
                 paddingTop: 10,

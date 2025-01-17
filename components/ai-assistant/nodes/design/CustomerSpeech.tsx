@@ -2,9 +2,10 @@ import { useCallback, useState } from 'react';
 import { Connection, Handle, NodeProps, Position } from 'reactflow';
 import SourceConnector from '../SourceConnector';
 import TargetConnector from '../TargetConnector';
+import NodeHead from '../NodeHead';
 
 //key: .customerSpeech
-const CustomerSpeech: React.FC<NodeProps> = ({ id, data }) => {
+const CustomerSpeech: React.FC<NodeProps> = ({ id, data, type }) => {
     const [isConnectedSource, setIsConnectedSource] = useState(false);
 
     const handleConnectSource = useCallback(
@@ -30,16 +31,7 @@ const CustomerSpeech: React.FC<NodeProps> = ({ id, data }) => {
             }}
         >
 
-            <div style={{
-                borderTopRightRadius: "10px",
-                borderTopLeftRadius: "10px",
-                backgroundColor: "#000000",
-                paddingLeft: 10,
-                paddingTop: 5,
-                paddingBottom: 5,
-            }}>
-                <p style={{ fontSize: "14px" }}>Customer Speech</p>
-            </div>
+            <NodeHead id={id} title={'Customer Speech'} nodeType={type} color='#000000'/>
             {/* Editable Label */}
             <div style={{
                 paddingTop: 10,

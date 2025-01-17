@@ -3,6 +3,7 @@ import { Connection, Handle, NodeProps, Position } from 'reactflow';
 import SourceConnector from '../SourceConnector';
 import TargetConnector from '../TargetConnector';
 import NodeDropdown from '../../NodeDropdown';
+import NodeHead from '../NodeHead';
 
 const typeOptions = [
   { value: 'MySQL', label: 'MySQL' },
@@ -72,16 +73,7 @@ const DBConnection: React.FC<NodeProps> = ({ id, data }) => {
       }}
     >
 
-      <div style={{
-        borderTopRightRadius: "10px",
-        borderTopLeftRadius: "10px",
-        backgroundColor: "#7C0002",
-        paddingLeft: 10,
-        paddingTop: 5,
-        paddingBottom: 5,
-      }}>
-        <p style={{ fontSize: "14px" }}>DB Connection</p>
-      </div>
+      <NodeHead id={id} title={'DB Connection'} nodeType={type} color='#7C0002' />
       {/* Editable Label */}
       <div style={{
         paddingTop: 10,

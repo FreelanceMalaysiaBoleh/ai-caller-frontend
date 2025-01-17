@@ -41,7 +41,7 @@ export const NodeType = {
 }
 
 //3. register the new node for ReactFlow, import the component from "design"
-export const NodeTypes = { 
+export const NodeTypes = {
     [NodeType.initiate]: Initiate,
     [NodeType.aiNameAndRole]: AiNameAndRole,
     [NodeType.welcomingMessage]: WelcomingMessage,
@@ -53,3 +53,16 @@ export const NodeTypes = {
     [NodeType.apiExecutor]: APIExecutor,
     [NodeType.dbConnection]: DBConnection,
 };
+
+export const NodeItems = [
+    { title: initiateKey, value: initiateKey },
+    { title: aiNameAndRoleKey, value: aiNameAndRoleKey },
+    { title: welcomingMessage, value: welcomingMessage },
+    { title: customerSpeech, value: customerSpeech },
+    { title: boundaries, value: boundaries },
+    { title: functionCall, value: functionCall },
+    { title: dbReader, value: dbReader },
+    { title: dbWriter, value: dbWriter },
+    { title: apiExecutor, value: apiExecutor },
+    { title: dbConnection, value: dbConnection },
+  ];

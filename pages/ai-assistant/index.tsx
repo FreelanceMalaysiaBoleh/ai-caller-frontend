@@ -44,7 +44,6 @@ const Index = () => {
     }, [])
 
     const handleSaveWorkflow = async () => {
-        console.log(nodes, edges)
         const payload = { nodes, edges };
 
         if (workflow) {
@@ -85,6 +84,7 @@ const Index = () => {
                         <p>Caller flow has been saved successfully</p>
                     </div>
                 </Modal>
+                <div id="modal-root"></div>
                 <h1 style={{ fontSize: "18px" }}>Construct your own logic</h1>
                 <div style={{ marginTop: "20px" }}></div>
                 <div style={{

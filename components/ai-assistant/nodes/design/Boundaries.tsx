@@ -2,9 +2,10 @@ import { useCallback, useState } from 'react';
 import { Connection, Handle, NodeProps, Position } from 'reactflow';
 import SourceConnector from '../SourceConnector';
 import TargetConnector from '../TargetConnector';
+import NodeHead from '../NodeHead';
 
 //key: .boundaries
-const Boundaries: React.FC<NodeProps> = ({ id, data }) => {
+const Boundaries: React.FC<NodeProps> = ({ id, data, type }) => {
     // State to manage editable fields
     const [filter, setFilter] = useState(data.filter || "");
     const [isConnectedSource, setIsConnectedSource] = useState(false);
@@ -38,16 +39,7 @@ const Boundaries: React.FC<NodeProps> = ({ id, data }) => {
             }}
         >
 
-            <div style={{
-                borderTopRightRadius: "10px",
-                borderTopLeftRadius: "10px",
-                backgroundColor: "#BB3800",
-                paddingLeft: 10,
-                paddingTop: 5,
-                paddingBottom: 5,
-            }}>
-                <p style={{ fontSize: "14px" }}>Boundaries</p>
-            </div>
+            <NodeHead id={id} title={'Boundaries'} nodeType={type} color='#BB3800' />
             {/* Editable Label */}
             <div style={{
                 paddingTop: 10,

@@ -51,13 +51,10 @@ const Canvas = ({
   onEdgesChange
 }: CanvasProps) => {
 
-
-
   const [saveLock, setSaveLock] = useState(0);
 
   const reactFlowInstance = useRef<ReactFlowInstance | null>(null);
-
-
+  
   const onInit = (instance: ReactFlowInstance) => {
     reactFlowInstance.current = instance;
 
