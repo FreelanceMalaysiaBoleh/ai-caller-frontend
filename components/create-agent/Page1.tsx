@@ -32,7 +32,7 @@ const Page1 = ({
                         label="Name"
                         field="name"
                         subtext="What name will you assistant go by"
-                        register={register}
+                        register={register as never}
                         errors={errors}
                     />
                 </div>
@@ -74,7 +74,7 @@ const Page1 = ({
                         label="Phone Number"
                         field="phoneno"
                         subtext="Select what phone number for inbound/outbound calls"
-                        register={register}
+                        register={register as never}
                         errors={errors}
                     />
                 </div>

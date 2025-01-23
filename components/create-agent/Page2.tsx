@@ -28,7 +28,7 @@ const Page2 = ({
                         label="Agent Type"
                         field="type"
                         subtext="Select what this agent do for you"
-                        register={register}
+                        register={register as never}
                         errors={errors}
                     />
                 </div>

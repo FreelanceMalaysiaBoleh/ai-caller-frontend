@@ -3,6 +3,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from "yup";
 import Page1 from "./Page1";
 import Page2 from "./Page2";
+import { addFilefields, AddFileTypes } from "@/hooks/data-management/useAddFileModal";
 
 export interface AgentFormTypes {
     name: string;
@@ -87,13 +88,15 @@ const AgentForm = ({ page, setPage }: { page: number, setPage: (index: number) =
                             />
                         </div>
 
-
+                        {/* <button type="submit">Press me! </button> */}
                     </form>
                 </FormProvider>
             </div>
         </>
     )
 }
+
+export type AllFields = fields | addFilefields;
 
 export const FormInput = ({
     label,
@@ -103,18 +106,19 @@ export const FormInput = ({
     errors
 }: {
     label: string,
-    field: fields,
+    field: AllFields,
     subtext: string,
-    register: UseFormRegister<AgentFormTypes>,
+    register: UseFormRegister<keyof (AgentFormTypes | AddFileTypes)>,
     errors: FieldErrors<AgentFormTypes>
 }) => {
+
     return (
         <div style={{ marginBottom: "20px" }}>
             <p id="medium">{label}</p>
             <p id="small">{subtext}</p>
             <input
                 type="text"
-                {...register(field)}
+                {...register(field as never)}
                 style={{
                     marginTop: "10px",
                     height: "46px",
@@ -126,9 +130,12 @@ export const FormInput = ({
                     color: "white",
                 }}
             />
-            {errors[field]?.message && (
-                <p style={{ color: "red", margin: 0 }}>{errors[field]?.message}</p>
-            )}
+
+            {errors[field as fields]?.message &&
+                <p style={{ color: "red", margin: 0 }}>
+                    {errors[field as fields]?.message}
+                </p>
+            }
         </div>
     )
 }
