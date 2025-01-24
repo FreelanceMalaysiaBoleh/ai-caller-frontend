@@ -1,5 +1,4 @@
 import MainLayout from "@/components/general/MainLayout";
-import { useRouter } from "next/router";
 import { FaFolderOpen } from "react-icons/fa";
 import { FaGoogleDrive } from "react-icons/fa";
 import { GrOnedrive } from "react-icons/gr";
@@ -12,8 +11,6 @@ import { useState } from "react";
 
 export default function DataManagementDetail() {
 
-  const route = useRouter();
-  const { type } = route.query;
   const [open, setOpen] = useState(false);
 
   const toggleModal = () => {
@@ -33,7 +30,7 @@ export default function DataManagementDetail() {
           }}>
             <FaFolderOpen size={50} color="#9d9d9d" />
             <div style={{ marginLeft: "10px" }}>
-              <h1 style={{ color: "#B5B5B5", fontWeight: "normal" }} >AI DATA CENTER - <span style={{ color: "white" }}>{type ? (type as string).charAt(0).toUpperCase() + (type as string).slice(1) : ""}</span></h1>
+              <h1 style={{ color: "#B5B5B5", fontWeight: "normal" }} >AI DATA CENTER - <span style={{ color: "white" }}>Documents</span></h1>
               <p style={{ color: "#B5B5B5", }}>Here you can view and add new data</p>
             </div>
             <div style={{ height: "50px", marginLeft: 10, marginRight: 10, borderLeft: "2px solid #909090" }}></div>
