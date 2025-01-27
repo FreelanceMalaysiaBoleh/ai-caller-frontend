@@ -3,6 +3,7 @@ import { Connection, Handle, NodeProps, Position } from 'reactflow';
 import SourceConnector from '../SourceConnector';
 import TargetConnector from '../TargetConnector';
 import NodeDropdown from '../../NodeDropdown';
+import NodeHead from '../NodeHead';
 
 type FunctionEntry = {
   key: string;
@@ -17,7 +18,7 @@ const options = [
 ];
 
 //key: .functionCall
-const FunctionCall: React.FC<NodeProps> = ({ id, data }) => {
+const FunctionCall: React.FC<NodeProps> = ({ id, data, type }) => {
   // State to manage editable fields
   const [name, setName] = useState(data.name || "");
   const [description, setDescription] = useState( data.description || "");
@@ -91,16 +92,7 @@ const FunctionCall: React.FC<NodeProps> = ({ id, data }) => {
       }}
     >
 
-      <div style={{
-        borderTopRightRadius: "10px",
-        borderTopLeftRadius: "10px",
-        backgroundColor: "#534F8D",
-        paddingLeft: 10,
-        paddingTop: 5,
-        paddingBottom: 5,
-      }}>
-        <p style={{ fontSize: "14px" }}>Function Call</p>
-      </div>
+      <NodeHead id={id} title={'Function Call'} nodeType={type} color='#534F8D' />
       {/* Editable Label */}
       <div style={{
         paddingTop: 10,

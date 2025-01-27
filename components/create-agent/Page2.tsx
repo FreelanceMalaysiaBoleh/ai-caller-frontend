@@ -26,9 +26,9 @@ const Page2 = ({
                 }}>
                     <FormInput
                         label="Agent Type"
-                        field="type"
+                        field="agent_type"
                         subtext="Select what this agent do for you"
-                        register={register}
+                        register={register as never}
                         errors={errors}
                     />
                 </div>
@@ -68,7 +68,7 @@ const Page2 = ({
                 }}>
                      <FormSelect
                         label="Select Blueprint Flow"
-                        field="blueprint"
+                        field="blueprint_flow"
                         subtext="Select what customized behavior or create one later."
                         register={register}
                         errors={errors}

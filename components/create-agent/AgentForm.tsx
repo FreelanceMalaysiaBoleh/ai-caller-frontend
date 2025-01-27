@@ -3,34 +3,38 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from "yup";
 import Page1 from "./Page1";
 import Page2 from "./Page2";
+import { addFilefields, AddFileTypes } from "@/hooks/data-management/useAddFileModal";
+import Page3 from "./Page3";
+import { createNewAgent } from "@/services/AgentServices";
+import { useRouter } from "next/router";
 
 export interface AgentFormTypes {
     name: string;
     language: string;
     voice: string;
-    phoneno: string;
-    type: string,
+    phone_number: string;
+    agent_type: string,
     tone: string,
     goal: string,
-    blueprint: string,
+    blueprint_flow: string,
 }
 
-export type fields = "name" | "language" | "voice" | "phoneno" | "type" | "tone" | "goal" | "blueprint";
+export type fields = "name" | "language" | "voice" | "phone_number" | "agent_type" | "tone" | "goal" | "blueprint_flow";
 
 const AgentForm = ({ page, setPage }: { page: number, setPage: (index: number) => void }) => {
 
-
+    const router = useRouter();
 
     const agentSchema = yup
         .object({
             name: yup.string().required(),
             language: yup.string().required(),
             voice: yup.string().required(),
-            phoneno: yup.string().required(),
-            type: yup.string().required(),
+            phone_number: yup.string().required(),
+            agent_type: yup.string().required(),
             tone: yup.string().required(),
             goal: yup.string().required(),
-            blueprint: yup.string().required(),
+            blueprint_flow: yup.string().required(),
         })
 
     const form = useForm({
@@ -38,12 +42,12 @@ const AgentForm = ({ page, setPage }: { page: number, setPage: (index: number) =
             name: "",
             language: "Auto",
             voice: "",
-            phoneno: "",
-            type: "",
+            phone_number: "",
+            agent_type: "",
             tone: "",
             goal: "",
-            blueprint: "",
-        },
+            blueprint_flow: "",
+        } as AgentFormTypes,
         resolver: yupResolver(agentSchema)
     })
 
@@ -54,8 +58,17 @@ const AgentForm = ({ page, setPage }: { page: number, setPage: (index: number) =
         formState: { errors },
     } = form
 
-    const handleSubmitForm = handleSubmit((values) => {
-        console.log("your values: ", values);
+    const handleSubmitForm = handleSubmit(async (values) => {
+        const result = await createNewAgent(values);
+
+        if (result.success) {
+            window.alert("Agent created successfully")
+            router.push("/")
+            return;
+        }
+
+        window.alert(`Error: ${result.error}`)
+        return;
     })
 
 
@@ -86,14 +99,21 @@ const AgentForm = ({ page, setPage }: { page: number, setPage: (index: number) =
                                 setPage={setPage}
                             />
                         </div>
+                        <div style={{
+                            display: page == 3 ? "block" : "none"
+                        }}>
+                            <Page3 errors={errors} />
+                        </div>
 
-
+                        {/* <button type="submit">Press me! </button> */}
                     </form>
                 </FormProvider>
             </div>
         </>
     )
 }
+
+export type AllFields = fields | addFilefields;
 
 export const FormInput = ({
     label,
@@ -103,18 +123,19 @@ export const FormInput = ({
     errors
 }: {
     label: string,
-    field: fields,
+    field: AllFields,
     subtext: string,
-    register: UseFormRegister<AgentFormTypes>,
+    register: UseFormRegister<keyof (AgentFormTypes | AddFileTypes)>,
     errors: FieldErrors<AgentFormTypes>
 }) => {
+
     return (
         <div style={{ marginBottom: "20px" }}>
             <p id="medium">{label}</p>
             <p id="small">{subtext}</p>
             <input
                 type="text"
-                {...register(field)}
+                {...register(field as never)}
                 style={{
                     marginTop: "10px",
                     height: "46px",
@@ -126,9 +147,12 @@ export const FormInput = ({
                     color: "white",
                 }}
             />
-            {errors[field]?.message && (
-                <p style={{ color: "red", margin: 0 }}>{errors[field]?.message}</p>
-            )}
+
+            {errors[field as fields]?.message &&
+                <p style={{ color: "red", margin: 0 }}>
+                    {(errors[field as fields]?.message)?.replaceAll("_", " ")}
+                </p>
+            }
         </div>
     )
 }

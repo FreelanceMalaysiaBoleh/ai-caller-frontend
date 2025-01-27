@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getToken } from "./AuthServices";
 
 export interface SuccessResponse {
   status: string;
@@ -12,10 +13,18 @@ export interface ErrorResponse {
 
 type PipelineResponse = SuccessResponse | ErrorResponse;
 
-const startPipeline = async (): Promise<PipelineResponse> => {
+const startPipeline = async (workflowId: string): Promise<PipelineResponse> => {
+
+  const token = getToken();
+
   try {
     const response = await axios.post<SuccessResponse>(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/workflows/pipeline/start`
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/workflows/pipeline/start/${workflowId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
 
     // Return the successful response as is
@@ -43,10 +52,17 @@ const startPipeline = async (): Promise<PipelineResponse> => {
   }
 };
 
-const getPipelineStatus = async (): Promise<PipelineResponse> => {
+const getPipelineStatus = async (workflowId: string): Promise<PipelineResponse> => {
+  const token = getToken();
+
   try {
     const response = await axios.get<SuccessResponse>(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/workflows/pipeline/status`
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/workflows/pipeline/status/${workflowId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
 
     // Return the successful response as is
@@ -74,10 +90,17 @@ const getPipelineStatus = async (): Promise<PipelineResponse> => {
   }
 };
 
-const stopPipeline = async (): Promise<PipelineResponse> => {
+const stopPipeline = async (workflowId: string): Promise<PipelineResponse> => {
+  const token = getToken();
+
   try {
     const response = await axios.post<SuccessResponse>(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/workflows/pipeline/stop`
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/workflows/pipeline/stop/${workflowId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
 
     // Return the successful response as is

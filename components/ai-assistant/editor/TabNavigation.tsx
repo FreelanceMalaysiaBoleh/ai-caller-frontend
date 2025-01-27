@@ -2,12 +2,14 @@ import { ErrorResponse, getPipelineStatus, startPipeline, stopPipeline, SuccessR
 import React, { Dispatch, SetStateAction, useState } from 'react';
 
 const TabNavigation = ({
+    workflowId,
     saveWorkflow,
     resetWorkFlow,
     pipelineStatus = "not started",
     setPipelineStatus,
     setErrorPipeline,
 }: {
+    workflowId: string,
     saveWorkflow: () => void,
     resetWorkFlow: () => void,
     pipelineStatus?: string,
@@ -17,14 +19,14 @@ const TabNavigation = ({
 }) => {
     const [isHoveredStart, setIsHoveredStart] = useState(false);
     const [isHoveredStop, setIsHoveredStop] = useState(false);
-    
+
     const [isHoveredSave, setIsHoveredSave] = useState(false);
     const [isHoveredReset, setIsHoveredReset] = useState(false);
 
     const handleStartPipeline = async () => {
         setErrorPipeline("")
         if (pipelineStatus == "stopped") {
-            const res = await startPipeline()
+            const res = await startPipeline(workflowId)
 
             if ((res as ErrorResponse).error) {
                 const errResponse = res as ErrorResponse;
@@ -36,7 +38,7 @@ const TabNavigation = ({
 
             await new Promise(resolve => setTimeout(resolve, 1000));
 
-            const resStatus = await getPipelineStatus();
+            const resStatus = await getPipelineStatus(workflowId);
 
             if ((resStatus as ErrorResponse).error) {
                 const errResponse = resStatus as ErrorResponse;
@@ -51,11 +53,11 @@ const TabNavigation = ({
 
         setErrorPipeline("Process already started")
     }
-    
+
     const handleStopPipeline = async () => {
         setErrorPipeline("")
         if (pipelineStatus == "running") {
-            const res = await stopPipeline()
+            const res = await stopPipeline(workflowId)
 
             if ((res as ErrorResponse).error) {
                 const errResponse = res as ErrorResponse;
@@ -125,7 +127,6 @@ const TabNavigation = ({
             <div
                 onClick={async () => {
                     await saveWorkflow();
-                    window.location.reload();
                 }}
                 style={{
                     display: 'flex',

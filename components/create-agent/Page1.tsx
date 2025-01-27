@@ -18,7 +18,7 @@ const Page1 = ({
         <>
             <p id="medium" style={{ marginTop: "30px" }}>Agent avatar</p>
             <p id="small">Upload an avatar for your agent</p>
-            <ImageUpload />
+            <ImageUpload setFile={() => { }} />
             <div style={{
                 display: "flex",
                 flexDirection: "row",
@@ -32,7 +32,7 @@ const Page1 = ({
                         label="Name"
                         field="name"
                         subtext="What name will you assistant go by"
-                        register={register}
+                        register={register as never}
                         errors={errors}
                     />
                 </div>
@@ -72,9 +72,9 @@ const Page1 = ({
                 }}>
                     <FormInput
                         label="Phone Number"
-                        field="phoneno"
+                        field="phone_number"
                         subtext="Select what phone number for inbound/outbound calls"
-                        register={register}
+                        register={register as never}
                         errors={errors}
                     />
                 </div>

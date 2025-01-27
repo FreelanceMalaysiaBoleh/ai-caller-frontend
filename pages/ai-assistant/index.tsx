@@ -7,19 +7,16 @@ import Canvas, { initialEdges, initialNodes } from "@/components/ai-assistant/ed
 import NodeBar from "@/components/ai-assistant/editor/NodeBar"
 import TabNavigation from "@/components/ai-assistant/editor/TabNavigation"
 import { useEdgesState, useNodesState } from "reactflow"
-import { useWorkflow } from "@/hooks/useWorkflow"
-import axios from "axios"
+import { useWorkflow } from "@/hooks/workflow/useWorkflow"
 import { ErrorResponse, getPipelineStatus, SuccessResponse } from "@/services/PipelineServices"
+import { resetWorkflow, saveWorkflow } from "@/services/WorkflowServices"
 
 
 
 const Index = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-
-    const workflowId = "67710f9ff48d7283d5471c70";
-
-    const { workflow, isLoading } = useWorkflow(workflowId);
+    const { workflow, workflowId, isLoading, agent } = useWorkflow();
 
     const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
     const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
@@ -29,7 +26,7 @@ const Index = () => {
 
     useEffect(() => {
         const getStatus = async () => {
-            const res = await getPipelineStatus()
+            const res = await getPipelineStatus(workflowId || "")
 
             if ((res as ErrorResponse).error) {
                 const errResponse = res as ErrorResponse;
@@ -44,37 +41,24 @@ const Index = () => {
     }, [])
 
     const handleSaveWorkflow = async () => {
-        console.log(nodes, edges)
-        const payload = { nodes, edges };
+        console.log(nodes, workflow)
+        const results = await saveWorkflow(nodes, edges, workflow, agent?._id || "");
 
-        if (workflow) {
-            console.log("saving workflow")
-            try {
-                const response = await axios.put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/workflows/${workflow.workflow_id}`, payload);
-                console.log("Success:", response.data);
-            } catch (error) {
-                console.log("Error:", error)
-            }
-        } else {
-            console.log("saving workflow")
-            try {
-                const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/workflows`, payload);
-                console.log("Success:", response.data);
-            } catch (error) {
-                console.log("Error:", error)
-            }
+        if (results.success) {
+            window.location.reload();
+            return;
         }
-
     }
 
     const handleResetWorkflow = async () => {
-        const payload = {
-            nodes: initialNodes,
-            edges: initialEdges
-        }
-        await axios.put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/workflows/${workflowId}`, payload);
+        const results = await resetWorkflow(initialNodes, initialEdges, workflowId || "", agent?._id || "");
 
-        window.location.reload();
+        if (results.success) {
+            window.location.reload();
+            return;
+        }
+
+        window.alert(`Error: ${results.error}`)
     }
 
     return (
@@ -85,6 +69,7 @@ const Index = () => {
                         <p>Caller flow has been saved successfully</p>
                     </div>
                 </Modal>
+                <div id="modal-root"></div>
                 <h1 style={{ fontSize: "18px" }}>Construct your own logic</h1>
                 <div style={{ marginTop: "20px" }}></div>
                 <div style={{
@@ -96,6 +81,7 @@ const Index = () => {
                 }}>
                     <div style={{ flex: 1, marginLeft: 20 }}>
                         <TabNavigation
+                            workflowId={workflowId || ""}
                             saveWorkflow={handleSaveWorkflow}
                             resetWorkFlow={handleResetWorkflow}
                             pipelineStatus={pipelineStatus}

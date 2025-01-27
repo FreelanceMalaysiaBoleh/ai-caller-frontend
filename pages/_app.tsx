@@ -1,4 +1,5 @@
 import "@/styles/globals.css";
+import "@/styles/datatable.css";
 import "@/styles/fonts.css";
 import { ConfigProvider } from "antd";
 import type { AppProps } from "next/app";

@@ -1,0 +1,27 @@
+.custom-table .ant-table-container {
+  background: #3e3e3e; /* Table background */
+  border-collapse: collapse; /* Prevent gaps */
+}
+
+.custom-table .ant-table-thead > tr > th {
+  background: #3e3e3e; /* Header background */
+  border-bottom: none !important; /* Remove bottom border */
+  border-top: none !important; /* Remove top border */
+  border-left: none !important; /* Remove left border */
+  border-right: none !important; /* Remove right border */
+  padding: 8px;
+}
+
+.custom-table .ant-table-tbody > tr > td {
+  background: #3e3e3e; /* Body background */
+  border: none !important; /* Remove all borders */
+  padding: 8px;
+}
+
+.custom-table .ant-table-thead {
+  border-spacing: 0;
+}
+
+.custom-table table {
+  border-collapse: collapse; /* Prevent spacing between cells */
+}
