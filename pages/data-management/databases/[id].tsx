@@ -5,6 +5,7 @@ import AddFileModal from "@/components/data-management/AddFileModal";
 import { useState } from "react";
 import DatabaseNavSideBar from "@/components/data-management/DatabaseNavSideBar";
 import DatabaseDataListing from "@/components/data-management/DatabaseDataListing";
+import { useDatabaseConnections } from "@/hooks/data-management/useDatabaseConnections";
 
 const connections_sample = [
   {
@@ -45,8 +46,9 @@ export default function DataManagementDetail() {
   const { id } = route.query;
   const [open, setOpen] = useState(false);
 
-  //TODO: query for database records with id
+  const { dbconnections } = useDatabaseConnections();
   console.log(id);
+  console.log(dbconnections);
 
   const databaseName = "GedeekDB"
 

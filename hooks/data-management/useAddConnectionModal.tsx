@@ -2,13 +2,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as yup from "yup";
 
-export interface AddFileTypes {
-  file_desc: string,
-  topic: string,
-  tags: string,
-  file_url: string,
-}
-
+export interface DatabaseConnectionType {
+  connection_name: string;
+  database_type: "mongodb";
+  is_cloud_db: boolean;
+  host?: string;
+  port?: number;
+  database_name?: string;
+} 
 
 export type addFilefields = "file_desc" | "topic" | "tags" | "file_url";
 

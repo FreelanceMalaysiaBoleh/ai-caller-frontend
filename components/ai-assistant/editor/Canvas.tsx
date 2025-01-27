@@ -13,7 +13,7 @@ import ReactFlow, {
 import { useDrop } from 'react-dnd';
 import 'reactflow/dist/style.css';
 import { ItemTypes, NodeType, NodeTypes } from '@/contants/NodeConstants';
-import {  WorkFlowType } from '@/hooks/useWorkflow';
+import { WorkFlowType } from '@/hooks/workflow/useWorkflow';
 
 export const initialNodes: Node[] = [
   {
@@ -32,7 +32,7 @@ type CanvasProps = {
   nodes: Node[]
   edges: Edge[]
   setNodes: Dispatch<SetStateAction<Node[]>>
-  setEdges: Dispatch<SetStateAction<Edge[]>> 
+  setEdges: Dispatch<SetStateAction<Edge[]>>
   handleSaveWorkflow: () => void
   onNodesChange: OnNodesChange
   onEdgesChange: OnEdgesChange
@@ -54,7 +54,7 @@ const Canvas = ({
   const [saveLock, setSaveLock] = useState(0);
 
   const reactFlowInstance = useRef<ReactFlowInstance | null>(null);
-  
+
   const onInit = (instance: ReactFlowInstance) => {
     reactFlowInstance.current = instance;
 
@@ -132,36 +132,33 @@ const Canvas = ({
 
   return (
     <>{
-      workflow
-        ?
-        <ReactFlowProvider>
-          <div
-            ref={(drop as unknown) as React.Ref<HTMLDivElement>}
-            className="reactflow"
-            style={{
-              height: '100vh',
-              border: isOver ? '2px dashed green' : '2px solid transparent',
-            }}
+      <ReactFlowProvider>
+        <div
+          ref={(drop as unknown) as React.Ref<HTMLDivElement>}
+          className="reactflow"
+          style={{
+            height: '100vh',
+            border: isOver ? '2px dashed green' : '2px solid transparent',
+          }}
+        >
+          <ReactFlow
+            nodes={nodes}
+            edges={edges}
+            onNodesChange={onNodesChange}
+            onEdgesChange={onEdgesChange}
+            onConnect={onConnect}
+            fitView
+            zoomOnScroll={false} // Disable zoom with mouse scroll
+            panOnScroll={false} // Disable panning with scroll
+            onInit={onInit}
+            nodeTypes={NodeTypes}
           >
-            <ReactFlow
-              nodes={nodes}
-              edges={edges}
-              onNodesChange={onNodesChange}
-              onEdgesChange={onEdgesChange}
-              onConnect={onConnect}
-              fitView
-              zoomOnScroll={false} // Disable zoom with mouse scroll
-              panOnScroll={false} // Disable panning with scroll
-              onInit={onInit}
-              nodeTypes={NodeTypes}
-            >
-              {/* <Controls /> */}
-              <Background />
-            </ReactFlow>
-          </div>
-        </ReactFlowProvider>
-        :
-        <div>Not Found</div>
+            {/* <Controls /> */}
+            <Background />
+          </ReactFlow>
+        </div>
+      </ReactFlowProvider>
+
     }
     </>
 

@@ -4,10 +4,16 @@ import AvatarDefault from "../../public/images/avatar_default.png";
 interface ImageUploadType {
     styleType?: 1 | 2,
     customLabel?: string,
-    acceptedFormats?: Array<string>
+    acceptedFormats?: Array<string>,
+    setFile: (file: File) => void
 }
 
-const ImageUpload = ({ styleType = 1, customLabel = "accepted formats png, jpg", acceptedFormats = ["image/jpeg", "image/png"] }: ImageUploadType) => {
+const ImageUpload = ({
+    styleType = 1,
+    customLabel = "accepted formats png, jpg",
+    acceptedFormats = ["image/jpeg", "image/png"],
+    setFile
+}: ImageUploadType) => {
     const [avatar, setAvatar] = useState<string>(AvatarDefault.src);
     const [fileName, setFileName] = useState<string>(customLabel);
 
@@ -25,6 +31,7 @@ const ImageUpload = ({ styleType = 1, customLabel = "accepted formats png, jpg",
             reader.onloadend = () => {
                 setAvatar(reader.result as string);
                 setFileName(file.name);
+                setFile(file);
             };
             reader.readAsDataURL(file);
         } else {

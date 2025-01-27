@@ -146,6 +146,14 @@ const AddConnectionModal = ({ open, setOpen }: ModalProps) => {
                       register={register as never}
                       errors={errors}
                     />
+                    
+                      <FormInput
+                      label="URL"
+                      field="tags"
+                      subtext='Add URL for your MongoDB to be migrated to GedeekDB'
+                      register={register as never}
+                      errors={errors}
+                    />
                   </div>
                 </div>
               </form>

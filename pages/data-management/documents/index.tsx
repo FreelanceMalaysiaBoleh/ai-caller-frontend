@@ -8,13 +8,29 @@ import { RiFileAddFill } from "react-icons/ri";
 import DataTable from "@/components/data-management/DataTable";
 import AddFileModal from "@/components/data-management/AddFileModal";
 import { useState } from "react";
+import { useGetAllFiles } from "@/hooks/data-management/useGetAllFiles";
+import { deleteFiles } from "@/services/FileServices";
 
 export default function DataManagementDetail() {
 
+  const { files, isLoading } = useGetAllFiles();
+  const [checkedFiles, setCheckFiles] = useState<string[]>([]);
   const [open, setOpen] = useState(false);
 
   const toggleModal = () => {
     setOpen((val) => !val);
+  }
+
+  const handleDeleteFiles =  async () =>{
+    const results = await deleteFiles(checkedFiles);
+
+    if(results.success){
+      window.alert("Files deleted succesfully");
+      window.location.reload();
+      return
+    }
+
+    window.alert("");
   }
 
   return (
@@ -45,8 +61,17 @@ export default function DataManagementDetail() {
                 <GrOnedrive size={25} color="#9D9D9D" />
               </div>
               <SearchBar />
-              <FaTrash style={{ marginLeft: "10px", marginRight: "10px" }} size={25} color="#9D9D9D" />
-              <div onClick={toggleModal} style={{cursor: "pointer"}}>
+
+              <FaTrash
+                style={{ marginLeft: "10px", marginRight: "10px" }}
+                size={25}
+                color="#9D9D9D"
+                onClick={() => {
+                  handleDeleteFiles();
+                }}
+              />
+
+              <div onClick={toggleModal} style={{ cursor: "pointer" }}>
                 <RiFileAddFill size={25} color="#9D9D9D" />
               </div>
             </div>
@@ -56,19 +81,26 @@ export default function DataManagementDetail() {
 
           <div style={{ marginBottom: "10px" }}></div>
           <div style={{
-            height: "90%",
             backgroundColor: "#3E3E3E",
             borderRadius: 10,
             display: "flex",
             flexDirection: "column",
-            alignItems: "center"
+            alignItems: "center",
+            marginBottom: "30px"
           }}>
 
             <div style={{
               width: "100%",
               padding: "10px 15px"
             }}>
-              <DataTable />
+              {
+                !isLoading && files
+                  ?
+                  <DataTable files={files} checkedFiles={checkedFiles} setCheckFiles={setCheckFiles} />
+                  :
+                  <h2>Loading files...</h2>
+              }
+
             </div>
           </div>
         </div>

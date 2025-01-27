@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, MouseEvent } from "react";
+import React, { Dispatch, SetStateAction, MouseEvent, useState } from "react";
 import { RiFileAddFill } from "react-icons/ri";
 import { TbArrowBackUp } from "react-icons/tb";
 import ImageUpload from "../create-agent/ImageUpload";
@@ -12,8 +12,10 @@ interface ModalProps {
 
 const AddFileModal = ({ open, setOpen }: ModalProps) => {
   const closeModal = () => setOpen(false);
+  const [file, setFile] = useState<File | undefined>();
 
-  const { register, errors, form, handleSubmitForm } = useAddFileModal();
+  const { register, errors, form, handleSubmitForm, isLoading } = useAddFileModal(file);
+
 
   // Prevent closing the modal when clicking inside the content
   const handleContentClick = (e: MouseEvent<HTMLDivElement>) => {
@@ -40,7 +42,6 @@ const AddFileModal = ({ open, setOpen }: ModalProps) => {
     borderRadius: "10px",
     padding: 20
   };
-
 
   return (
     <div>
@@ -110,7 +111,7 @@ const AddFileModal = ({ open, setOpen }: ModalProps) => {
                       label="File Description"
                       field="file_desc"
                       subtext='A short description of the file content (e.g., "Product Catalog for Q1 2024").'
-                      register={register as never}
+                      register={register}
                       errors={errors}
                     />
                   </div>
@@ -121,7 +122,7 @@ const AddFileModal = ({ open, setOpen }: ModalProps) => {
                       label="Topic"
                       field="topic"
                       subtext='Example topics: "Product Information," "Sales Reports," "Training Materials," etc. This allows categorization for better search and retrieval.'
-                      register={register as never}
+                      register={register}
                       errors={errors}
                     />
                   </div>
@@ -139,36 +140,43 @@ const AddFileModal = ({ open, setOpen }: ModalProps) => {
                       label="Tags"
                       field="tags"
                       subtext='Keywords or labels for additional categorization (e.g., "Inventory, Sales, Products").'
-                      register={register as never}
+                      register={register}
                       errors={errors}
                     />
                   </div>
                   <div style={{
                     flex: 1
                   }}>
-                    <ImageUpload styleType={2} customLabel="No file uploaded yet" />
+                    <ImageUpload
+                      acceptedFormats={["application/pdf"]}
+                      styleType={2}
+                      customLabel="No file uploaded yet"
+                      setFile={(file) => { setFile(file) }}
+                    />
                   </div>
+                </div>
+
+                <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "start" }}>
+                  <button
+                    type="submit"
+                    disabled={isLoading}
+                    style={{
+                      padding: "10px 30px",
+                      backgroundColor: "#F73587",
+                      color: "white",
+                      border: "none",
+                      borderRadius: "5px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <p id="biggersmall">Save</p>
+                  </button>
+                  <p id="biggersmall" style={{ marginLeft: 15, color: "#A5A5A5" }}>File is ready to deploy</p>
                 </div>
               </form>
             </FormProvider>
 
-            <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "start" }}>
-              <button
-                type="submit"
-                style={{
-                  padding: "10px 30px",
-                  backgroundColor: "#F73587",
-                  color: "white",
-                  border: "none",
-                  borderRadius: "5px",
-                  cursor: "pointer",
-                }}
-              >
-                <p id="biggersmall">Save</p>
-              </button>
 
-              <p id="biggersmall" style={{ marginLeft: 15, color: "#A5A5A5" }}>File is ready to deploy</p>
-            </div>
           </div>
         </div>
       )}

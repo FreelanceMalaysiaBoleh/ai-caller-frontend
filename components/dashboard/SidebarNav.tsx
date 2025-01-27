@@ -9,6 +9,7 @@ import {
     MenuFoldOutlined,
 } from '@ant-design/icons';
 import { useRouter } from 'next/router';
+import { TbArrowBackUp } from 'react-icons/tb';
 
 const { Sider } = Layout;
 
@@ -78,7 +79,7 @@ const SidebarNav = ({ collapsed, setCollapsed, toggleCollapse }: { collapsed: bo
                     />
                 </Menu.Item>
                 <Menu.Item
-                     onClick={() => router.push("/data-management")}
+                    onClick={() => router.push("/data-management")}
                     key="2"
                     icon={<DatabaseOutlined />}
                     style={{ marginBottom: 20 }}
@@ -99,12 +100,34 @@ const SidebarNav = ({ collapsed, setCollapsed, toggleCollapse }: { collapsed: bo
                     />
                 </Menu.Item>
                 <Menu.Item
+                    onClick={() => router.push("/profile/123")}
                     key="6"
                     icon={<SettingOutlined />}
                     style={{ marginBottom: 20 }}
                 >
-                    <ItemText text="Settings" isSelected={router.asPath === "4"} />
+                    <ItemText text="Settings" isSelected={router.asPath === "/profile/123"} />
                 </Menu.Item>
+
+                <div style={{
+                    border: "2px solid #FFFFFF",
+                    borderRadius: "5px",
+                    backgroundColor: "#555555",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    paddingLeft: "3px",
+                    height: "35px",
+                    width: "35px",
+                    cursor: "pointer",
+                    marginLeft: 26,
+                    marginTop: 50,
+                }}
+                    onClick={() => {
+                        router.back()
+                    }}
+                >
+                    <TbArrowBackUp size={100} color="#FFF" style={{ marginRight: "10px" }} />
+                </div>
             </Menu>
         </Sider>
     );

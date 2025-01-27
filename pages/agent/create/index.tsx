@@ -1,6 +1,6 @@
 import AgentForm from "@/components/create-agent/AgentForm";
 import MainLayout from "@/components/general/MainLayout";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { TiTick } from "react-icons/ti";
 
 const CreateAgent = () => {
@@ -26,14 +26,14 @@ const CreateAgent = () => {
                 borderRadius: 10,
                 marginBottom: "50px"
             }}>
-                <BreadCrumbComponent page={page} />
+                <BreadCrumbComponent page={page} setPage={setPage} />
                 <AgentForm page={page} setPage={(index) => { setPage(index) }} />
             </div>
         </MainLayout>
     )
 }
 
-const BreadCrumbComponent = ({ page }: { page: number }) => {
+const BreadCrumbComponent = ({ page, setPage }: { page: number, setPage: Dispatch<SetStateAction<number>> }) => {
     return (
         <div
             style={{
@@ -48,6 +48,7 @@ const BreadCrumbComponent = ({ page }: { page: number }) => {
                 text="Agent Config"
                 subText="Setup Your Agent"
                 index={1}
+                onClickTab={() => { setPage(1) }}
                 active={page == 1}
                 complete={page == 2 || page == 3}
             />
@@ -63,6 +64,7 @@ const BreadCrumbComponent = ({ page }: { page: number }) => {
                 text="Main Customize"
                 subText="Setup Your Agent"
                 index={2}
+                onClickTab={() => { setPage(2) }}
                 active={page == 2}
                 complete={page == 3}
             />
@@ -78,6 +80,7 @@ const BreadCrumbComponent = ({ page }: { page: number }) => {
                 text="Summary"
                 subText="Review and payment"
                 index={3}
+                onClickTab={() => { }}
                 active={page == 3}
                 complete={false}
             />
@@ -90,8 +93,9 @@ const BreadCrumbItem = ({
     subText,
     index,
     active,
-    complete
-}: { text: string, subText: string, index: number, active: boolean, complete: boolean }) => {
+    complete,
+    onClickTab
+}: { text: string, subText: string, index: number, active: boolean, complete: boolean, onClickTab: () => void }) => {
 
     return (
         <>
@@ -102,16 +106,19 @@ const BreadCrumbItem = ({
                 height: "38px",
                 display: "flex",
                 justifyContent: "center",
-                alignItems: "center"
-            }}>
+                alignItems: "center",
+                cursor: "pointer"
+            }}
+                onClick={onClickTab}
+            >
                 {
                     complete
-                    ?
-                    <TiTick color="#3e3e3e" size={25}/>
-                    :
-                    <p id="medium">{index}</p>
+                        ?
+                        <TiTick color="#3e3e3e" size={25} />
+                        :
+                        <p id="medium">{index}</p>
                 }
-                
+
             </div>
             <div style={{
                 marginLeft: 15

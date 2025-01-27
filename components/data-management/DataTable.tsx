@@ -1,33 +1,14 @@
-import { useState } from "react";
+import { FileData } from "@/hooks/data-management/useGetAllFiles";
+import { Dispatch, SetStateAction } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 
 
-const DataTable = () => {
-  const [selectedRows, setSelectedRows] = useState<number[]>([]);
+const DataTable = ({ files, checkedFiles, setCheckFiles }: { files: FileData[], checkedFiles: string[], setCheckFiles: Dispatch<SetStateAction<string[]>> }) => {
 
-  const dataSource = [
-    {
-      key: 1,
-      fileName: "Sample File 1",
-      contentDescription: "Description 1",
-      keywords: "Keyword1, Keyword2",
-      topic: "Topic A",
-      state: "Draft",
-    },
-    {
-      key: 2,
-      fileName: "Sample File 2",
-      contentDescription: "Description 2",
-      keywords: "Keyword3, Keyword4",
-      topic: "Topic B",
-      state: "Published",
-    },
-  ];
-
-  const handleCheckboxChange = (key: number) => {
-    setSelectedRows((prev) =>
+  const handleCheckboxChange = (key: string) => {
+    setCheckFiles((prev) =>
       prev.includes(key) ? prev.filter((row) => row !== key) : [...prev, key]
-    );
+    )
   };
 
   return (
@@ -119,8 +100,8 @@ const DataTable = () => {
       </thead>
       {/* Table Body */}
       <tbody>
-        {dataSource.map((data) => (
-          <tr key={data.key} style={{ borderBottom: "1px solid #C2C2C2" }}>
+        {files.map((data) => (
+          <tr key={data._id} style={{ borderBottom: "1px solid #C2C2C2" }}>
             <td
               style={{
                 padding: "8px",
@@ -130,8 +111,8 @@ const DataTable = () => {
             >
               <input
                 type="checkbox"
-                checked={selectedRows.includes(data.key)}
-                onChange={() => handleCheckboxChange(data.key)}
+                checked={checkedFiles.includes(data._id)}
+                onChange={() => handleCheckboxChange(data._id)}
               />
             </td>
             <td
@@ -141,7 +122,7 @@ const DataTable = () => {
                 borderBottom: "none",
               }}
             >
-              <p style={{ margin: 0, fontSize: "16px" }}>{data.fileName}</p>
+              <p style={{ margin: 0, fontSize: "16px" }}>{data.file_name}</p>
             </td>
             <td
               style={{
@@ -150,7 +131,7 @@ const DataTable = () => {
                 borderBottom: "none",
               }}
             >
-              <p style={{ margin: 0, fontSize: "16px" }}>{data.contentDescription}</p>
+              <p style={{ margin: 0, fontSize: "16px" }}>{data.file_path}</p>
             </td>
             <td
               style={{
@@ -159,7 +140,7 @@ const DataTable = () => {
                 borderBottom: "none",
               }}
             >
-              <p style={{ margin: 0, fontSize: "16px" }}>{data.keywords}</p>
+              <p style={{ margin: 0, fontSize: "16px" }}>{data.keywords.join(", ").replaceAll("[", "").replaceAll("]", "").replaceAll('"', "")}</p>
             </td>
             <td
               style={{

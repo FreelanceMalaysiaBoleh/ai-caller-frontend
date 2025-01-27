@@ -34,6 +34,15 @@ const saveToken = (token: string, expirationDays: number = 7): void => {
   Cookies.set('authToken', token, { expires: expirationDays, secure: true });
 };
 
+/**
+ * Save token as a cookie
+ * @param token - The token to save
+ * @param expirationDays - Number of days the cookie should persist (default is 7 days)
+ */
+const saveUserID = (uid: string, expirationDays: number = 7): void => {
+  Cookies.set('userID', uid, { expires: expirationDays, secure: true });
+};
+
 
 /**
  * Get the token from the cookie

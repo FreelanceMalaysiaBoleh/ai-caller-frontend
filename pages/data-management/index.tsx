@@ -1,9 +1,11 @@
 import MainLayout from "@/components/general/MainLayout";
+import { useRouter } from "next/router";
 
 import { FaFolderOpen } from "react-icons/fa";
 import { FaDatabase } from "react-icons/fa6";
 
 export default function DataManagement() {
+  const router = useRouter();
 
   return (
     <MainLayout>
@@ -28,6 +30,9 @@ export default function DataManagement() {
           padding: "10px 15px"
         }}>
           <div
+            onClick={() => {
+              router.push("/data-management/documents");
+            }}
             style={{
               display: "flex",
               width: "100%",
@@ -52,6 +57,9 @@ export default function DataManagement() {
 
           <div style={{ width: "100%", borderBottom: "1px solid #909090", marginTop: "15px" }}></div>
           <div
+            onClick={() => {
+              router.push("/data-management/databases/1");
+            }}
             style={{
               marginTop: "15px",
               display: "flex",
