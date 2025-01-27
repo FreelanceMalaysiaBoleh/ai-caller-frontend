@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useCallback, useEffect, useRef, useState } from 'react';
+import React, { Dispatch, SetStateAction, useCallback, useEffect, useRef } from 'react';
 import ReactFlow, {
   addEdge,
   Background,
@@ -46,12 +46,11 @@ const Canvas = ({
   edges,
   setNodes,
   setEdges,
-  handleSaveWorkflow,
   onNodesChange,
   onEdgesChange
 }: CanvasProps) => {
 
-  const [saveLock, setSaveLock] = useState(0);
+  // const [saveLock, setSaveLock] = useState(0);
 
   const reactFlowInstance = useRef<ReactFlowInstance | null>(null);
 
@@ -113,13 +112,14 @@ const Canvas = ({
 
 
 
-  useEffect(() => {
-    if (nodes.length > 0 && nodes.length % 4 === 0 && saveLock != nodes.length) {
-      handleSaveWorkflow();
-      setSaveLock(nodes.length)
-    }
+  // useEffect(() => {
+  //   console.log("save workflow", saveLock)
+  //   if (nodes.length > 0 && nodes.length % 4 === 0 && saveLock != nodes.length) {
+  //     handleSaveWorkflow();
+  //     setSaveLock(nodes.length)
+  //   }
 
-  }, [nodes]);
+  // }, [nodes]);
 
   useEffect(() => {
     if (workflow) {
