@@ -58,5 +58,8 @@ export const useWorkflow = (): { workflow: WorkFlowType | undefined, workflowId:
 
     const workflowId = workflow?.workflow_id;
 
+    // console.log(workflow)
+    // console.log(workflowId)
+
     return { workflow, workflowId, isLoading, agent };
 };
