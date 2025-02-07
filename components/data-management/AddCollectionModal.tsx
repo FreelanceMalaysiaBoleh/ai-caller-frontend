@@ -1,18 +1,25 @@
-import React, { Dispatch, SetStateAction, MouseEvent } from "react";
+import React, { Dispatch, SetStateAction, MouseEvent, useEffect, useState } from "react";
 import { TbArrowBackUp } from "react-icons/tb";
 import { FieldErrors, FormProvider, UseFormRegister } from "react-hook-form";
-import { addFilefields, AddFileTypes } from "@/hooks/data-management/useAddFileModal";
-import useAddConnectionModal from "@/hooks/data-management/useAddConnectionModal";
+import useAddCollectionModal, { addCollectionField, CollectionType } from "@/hooks/data-management/useAddCollectionmodal";
 
 interface ModalProps {
   open: boolean;
+  databaseId: string | null;
   setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-const AddCollectionModal = ({ open, setOpen }: ModalProps) => {
+const AddCollectionModal = ({ open, setOpen, databaseId }: ModalProps) => {
   const closeModal = () => setOpen(false);
 
-  const { register, errors, form, handleSubmitForm } = useAddConnectionModal();
+  const [dbid, setDbid] = useState<string | null>(null);
+
+  useEffect(() => {
+    setDbid(databaseId)
+  }, [databaseId])
+
+
+  const { register, errors, form, handleSubmitForm } = useAddCollectionModal(dbid);
 
   // Prevent closing the modal when clicking inside the content
   const handleContentClick = (e: MouseEvent<HTMLDivElement>) => {
@@ -106,31 +113,30 @@ const AddCollectionModal = ({ open, setOpen }: ModalProps) => {
                   }}>
                     <FormInput
                       label="Collection Name"
-                      field="file_desc"
+                      field="collection_name"
                       register={register as never}
                       errors={errors}
                     />
                   </div>
                 </div>
 
+                <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "start", marginTop: "30px" }}>
+                  <button
+                    type="submit"
+                    style={{
+                      padding: "10px 30px",
+                      backgroundColor: "#F73587",
+                      color: "white",
+                      border: "none",
+                      borderRadius: "5px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <p id="biggersmall">Save</p>
+                  </button>
+                </div>
               </form>
             </FormProvider>
-
-            <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "start", marginTop: "30px" }}>
-              <button
-                type="submit"
-                style={{
-                  padding: "10px 30px",
-                  backgroundColor: "#F73587",
-                  color: "white",
-                  border: "none",
-                  borderRadius: "5px",
-                  cursor: "pointer",
-                }}
-              >
-                <p id="biggersmall">Save</p>
-              </button>
-            </div>
           </div>
         </div>
       )}
@@ -147,9 +153,9 @@ export const FormInput = ({
   errors
 }: {
   label: string,
-  field: addFilefields,
-  register: UseFormRegister<AddFileTypes>,
-  errors: FieldErrors<AddFileTypes>
+  field: addCollectionField,
+  register: UseFormRegister<CollectionType>,
+  errors: FieldErrors<CollectionType>
 }) => {
 
   return (

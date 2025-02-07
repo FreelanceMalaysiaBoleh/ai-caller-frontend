@@ -1,40 +1,40 @@
-import { ChangeEvent, useState } from "react";
-import AvatarDefault from "../../public/images/avatar_default.png";
+// import { ChangeEvent, useState } from "react";
+// import AvatarDefault from "../../public/images/avatar_default.png";
 import { FieldErrors, FormProvider, UseFormRegister } from "react-hook-form";
 import useProfileForm, { profileDetailsFields, ProfileDetailsFormType } from "@/hooks/profile/useProfileForm";
-import { Switch } from "antd";
+// import { Switch } from "antd";
 import { FaCheckCircle } from "react-icons/fa";
 
 const ProfileDetails = () => {
   const { register, errors, form, handleSubmitForm } = useProfileForm();
-  const [emailPasswordCheck, setEmailPasswordCheck] = useState(false);
-  const [mobileCheck, setMobileCheck] = useState(false);
-  const [emailOTPCheck, setEmailOTPCheck] = useState(false);
+  // const [emailPasswordCheck, setEmailPasswordCheck] = useState(false);
+  // const [mobileCheck, setMobileCheck] = useState(false);
+  // const [emailOTPCheck, setEmailOTPCheck] = useState(false);
 
 
-  const handleChange = (check: "email_password" | "mobile" | "email_otp") => {
-    setEmailPasswordCheck((val) => {
-      if (check == "email_password" && !val) {
-        return true
-      }
+  // const handleChange = (check: "email_password" | "mobile" | "email_otp") => {
+  //   setEmailPasswordCheck((val) => {
+  //     if (check == "email_password" && !val) {
+  //       return true
+  //     }
 
-      return false
-    });
-    setMobileCheck((val) => {
-      if (check == "mobile" && !val) {
-        return true
-      }
+  //     return false
+  //   });
+  //   setMobileCheck((val) => {
+  //     if (check == "mobile" && !val) {
+  //       return true
+  //     }
 
-      return false
-    });
-    setEmailOTPCheck((val) => {
-      if (check == "email_otp" && !val) {
-        return true
-      }
+  //     return false
+  //   });
+  //   setEmailOTPCheck((val) => {
+  //     if (check == "email_otp" && !val) {
+  //       return true
+  //     }
 
-      return false
-    });
-  }
+  //     return false
+  //   });
+  // }
 
   return (
     <>
@@ -54,7 +54,7 @@ const ProfileDetails = () => {
         alignItems: "start",
         padding: "10px 20px"
       }}>
-        <ProfileImageUpload />
+        {/* <ProfileImageUpload /> */}
 
         <div style={{ marginTop: "30px", width: "100%" }}>
           <FormProvider {...form}>
@@ -63,18 +63,18 @@ const ProfileDetails = () => {
                 <div style={{ display: "flex", flexDirection: "row", gap: 40 }}>
                   <div style={{ width: "50%", display: "flex", flexDirection: "column" }}>
                     <FormInput
-                      label={"Account Holder Name"}
-                      placeholder="account name"
-                      field={"name"}
+                      label={"Mobile Number"}
+                      placeholder="+60XXXXXXX"
+                      field={"mobile_number"}
                       register={register as never}
                       errors={errors}
                     />
 
                     <div style={{ marginTop: "15px", marginBottom: "15px" }}>
                       <FormInput
-                        label={"Mobile Number"}
+                        label={"Send Port"}
                         placeholder="account name"
-                        field={"phoneno"}
+                        field={"send_port"}
                         verifiedTag={true}
                         verified={true}
                         register={register as never}
@@ -84,16 +84,16 @@ const ProfileDetails = () => {
 
                     <div style={{ marginBottom: "15px" }}>
                       <FormInput
-                        label={"Email"}
+                        label={"Receive Port"}
                         placeholder="account name"
-                        field={"email"}
+                        field={"receive_port"}
                         verifiedTag={true}
                         verified={false}
                         register={register as never}
                         errors={errors}
                       />
                     </div>
-
+{/* 
                     <div style={{ marginBottom: "15px" }}>
                       <FormInput
                         label={"Company/Corporate/Legal Name"}
@@ -102,9 +102,9 @@ const ProfileDetails = () => {
                         register={register as never}
                         errors={errors}
                       />
-                    </div>
+                    </div> */}
                   </div>
-                  <div style={{ width: "50%" }}>
+                  {/* <div style={{ width: "50%" }}>
                     <FormInput
                       label={"Password"}
                       placeholder="account name"
@@ -113,10 +113,10 @@ const ProfileDetails = () => {
                       register={register as never}
                       errors={errors}
                     />
-                  </div>
+                  </div> */}
                 </div>
 
-                <p style={{ fontSize: "12px", color: "#B8B8B8", marginBottom: "5px" }}>Login Methods</p>
+                {/* <p style={{ fontSize: "12px", color: "#B8B8B8", marginBottom: "5px" }}>Login Methods</p>
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyItems: "center", marginBottom: "10px" }}>
                     <Switch
@@ -153,7 +153,7 @@ const ProfileDetails = () => {
                     />
                     <p style={{ fontSize: "12px", marginLeft: "10px" }}>Email with OTP</p>
                   </div>
-                </div>
+                </div> */}
 
                 <div style={{ width: "100%", display: "flex", marginTop: "40px" }}>
                   <button
@@ -266,89 +266,89 @@ const FormInput = ({
   )
 }
 
-const ProfileImageUpload = () => {
-  const [avatar, setAvatar] = useState<string>(AvatarDefault.src);
-  const [fileName, setFileName] = useState<string>("");
+// const ProfileImageUpload = () => {
+//   const [avatar, setAvatar] = useState<string>(AvatarDefault.src);
+//   const [fileName, setFileName] = useState<string>("");
 
-  const formatChecker = (format: string, formats: Array<string>) => {
-    return formats.includes(format);
-  }
+//   const formatChecker = (format: string, formats: Array<string>) => {
+//     return formats.includes(format);
+//   }
 
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const file = e.target.files?.[0]; // Safely access the first file
+//   const handleFileChange = (e: ChangeEvent<HTMLInputElement>): void => {
+//     const file = e.target.files?.[0]; // Safely access the first file
 
-    if (file && formatChecker(file.type, ["image/jpeg", "image/png"])) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setAvatar(reader.result as string);
-        setFileName(file.name);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      alert("Please upload a valid PNG or JPG file.");
-    }
-  };
+//     if (file && formatChecker(file.type, ["image/jpeg", "image/png"])) {
+//       const reader = new FileReader();
+//       reader.onloadend = () => {
+//         setAvatar(reader.result as string);
+//         setFileName(file.name);
+//       };
+//       reader.readAsDataURL(file);
+//     } else {
+//       alert("Please upload a valid PNG or JPG file.");
+//     }
+//   };
 
-  return (
-    <div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-        }}
-      >
-        <div
-          style={{
-            width: "45px",
-            height: "45px",
-            borderRadius: "50%",
-            overflow: "hidden",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "#3e3e3e",
-            marginRight: "7px",
-          }}
-        >
-          <img
-            src={avatar}
-            alt="Avatar"
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-            }}
-          />
-        </div>
+//   return (
+//     <div>
+//       <div
+//         style={{
+//           display: "flex",
+//           flexDirection: "row",
+//           alignItems: "center",
+//         }}
+//       >
+//         <div
+//           style={{
+//             width: "45px",
+//             height: "45px",
+//             borderRadius: "50%",
+//             overflow: "hidden",
+//             display: "flex",
+//             alignItems: "center",
+//             justifyContent: "center",
+//             backgroundColor: "#3e3e3e",
+//             marginRight: "7px",
+//           }}
+//         >
+//           <img
+//             src={avatar}
+//             alt="Avatar"
+//             style={{
+//               width: "100%",
+//               height: "100%",
+//               objectFit: "cover",
+//             }}
+//           />
+//         </div>
 
 
 
-        {/* File Input Button */}
-        <label
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            borderBottom: "solid 1px",
-            borderColor: "#626262",
-            color: "#fff",
-            cursor: "pointer",
-            fontSize: "16px"
-          }}
-        >
-          {fileName ? fileName : "Choose File"}
-          <input
-            type="file"
-            accept={"image/jpeg, image/png"}
-            style={{ display: "none" }}
-            onChange={handleFileChange}
-          />
-        </label>
-      </div>
-      <p id="small" style={{ marginLeft: 10, color: "#C9C9C9" }}>
-        logo
-      </p>
-    </div>
-  );
-};
+//         {/* File Input Button */}
+//         <label
+//           style={{
+//             display: "flex",
+//             alignItems: "center",
+//             justifyContent: "center",
+//             borderBottom: "solid 1px",
+//             borderColor: "#626262",
+//             color: "#fff",
+//             cursor: "pointer",
+//             fontSize: "16px"
+//           }}
+//         >
+//           {fileName ? fileName : "Choose File"}
+//           <input
+//             type="file"
+//             accept={"image/jpeg, image/png"}
+//             style={{ display: "none" }}
+//             onChange={handleFileChange}
+//           />
+//         </label>
+//       </div>
+//       <p id="small" style={{ marginLeft: 10, color: "#C9C9C9" }}>
+//         logo
+//       </p>
+//     </div>
+//   );
+// };

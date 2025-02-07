@@ -58,7 +58,7 @@ export default function DataManagement() {
           <div style={{ width: "100%", borderBottom: "1px solid #909090", marginTop: "15px" }}></div>
           <div
             onClick={() => {
-              router.push("/data-management/databases/1");
+              router.push("/data-management/databases/view");
             }}
             style={{
               marginTop: "15px",
