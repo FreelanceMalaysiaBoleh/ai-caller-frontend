@@ -1,77 +1,78 @@
 import { IoIosArrowForward } from "react-icons/io";
 import { FaPlus } from "react-icons/fa6";
 import { ReactNode, useState } from "react";
-import { AiOutlineEdit } from "react-icons/ai";
 import { BiSolidRightArrow } from "react-icons/bi";
-import AddConnectionModal from "./AddConnectionModal";
-import AddCollectionModal from "./AddCollectionModal";
+import { ItemsArray } from "@/hooks/data-management/useCollectionItems";
+import AddItemModal from "./AddItemModal";
+import { FaTrash } from "react-icons/fa";
+import { deleteItem } from "@/services/DatabaseServices";
 
-const sampleData = [
-  {
-    bv_name: "Coca Cola",
-    bv_size: "Large",
-    bv_date: "06-01-2025",
-    bv_time: "08:03:30 UTC",
-    bv_id: "1dsfg41sds",
-    bv_orders: "201 ordered",
-  },
-  {
-    bv_name: "Pepsi",
-    bv_size: "Medium",
-    bv_date: "07-01-2025",
-    bv_time: "09:15:00 UTC",
-    bv_id: "dasdf121d",
-    bv_orders: "105 ordered",
-  },
-  {
-    bv_name: "Sprite",
-    bv_size: "Small",
-    bv_date: "08-01-2025",
-    bv_time: "11:45:00 UTC",
-    bv_id: "qwerty098",
-    bv_orders: "320 ordered",
-  },
-  {
-    bv_name: "Fanta",
-    bv_size: "Large",
-    bv_date: "09-01-2025",
-    bv_time: "14:30:00 UTC",
-    bv_id: "asdfgh567",
-    bv_orders: "85 ordered",
-  },
-];
+function convertToRecord(obj: unknown): Record<string, string> {
+  if (typeof obj !== "object" || obj === null || Array.isArray(obj)) {
+    throw new Error("Input must be a non-null object");
+  }
 
-const DatabaseDataListing = () => {
+  const result: Record<string, string> = {};
 
-  const [openConnection, setOpenConnection] = useState(false);
-  const [openCollection, setOpenCollection] = useState(false);
+  for (const [key, value] of Object.entries(obj)) {
+    result[key] = String(value); // Convert all values to strings
+  }
+
+  return result;
+}
+
+const DatabaseDataListing = ({ title, data, databaseId, collectionName }: {
+  title: string,
+  data: ItemsArray,
+  databaseId: string | null,
+  collectionName: string | null
+}) => {
+
+  const [openAddItem, setOpenAddItem] = useState(false);
+  const [editItem, setEditItem] = useState<Record<string, unknown>>();
+  const dataObjects = data.items;
+
   return (
     <>
-      <AddConnectionModal open={openConnection} setOpen={setOpenConnection} />
-      <AddCollectionModal open={openCollection} setOpen={setOpenCollection}/>
-
+      <AddItemModal
+        item={editItem}
+        databaseId={databaseId}
+        collectionName={collectionName}
+        open={openAddItem}
+        setOpen={setOpenAddItem}
+      />
       <div style={{ display: "flex", flexDirection: "row", padding: "10px 10px" }}>
         <div style={{ flexGrow: 1, display: "flex", flexDirection: "row", }}>
-          <IoIosArrowForward size={25} color="white" />
-          <p style={{ fontSize: "18px" }}>beverages</p>
+          {
+            title
+              ?
+              <>
+                <IoIosArrowForward size={25} color="white" />
+                <p style={{ fontSize: "18px" }}>{title}</p>
+              </>
+              :
+              <></>
+          }
         </div>
 
         <div style={{ display: "flex", flexDirection: "row", flexGrow: 1 }}>
           <IconButton
             text="ADD DATA"
+            disabled={collectionName ? false : true}
             icon={<FaPlus size={10} color="white" style={{ marginRight: "10px" }} />}
-            onClick={()=>{
-              setOpenConnection(true)
+            onClick={() => {
+              setEditItem(undefined);
+              setOpenAddItem(true);
             }}
           />
-          <div style={{ marginLeft: "10px" }}></div>
+          {/* <div style={{ marginLeft: "10px" }}></div>
           <IconButton
             text="UPDATE"
             icon={<AiOutlineEdit size={15} color="white" style={{ marginRight: "10px" }} />}
-            onClick={()=>{
-              setOpenCollection(true)
+            onClick={() => {
+
             }}
-          />
+          /> */}
         </div>
 
         <input
@@ -100,17 +101,25 @@ const DatabaseDataListing = () => {
           padding: "20px",
         }}
       >
-        {sampleData.map((data, index) => (
-          <div
-            key={index}
-            style={{
-              flex: "1 1 calc(50% - 20px)", // Two cards per row with 20px gap
-              boxSizing: "border-box",
-            }}
-          >
-            <DataCard data={data} />
-          </div>
-        ))}
+        {
+          dataObjects && dataObjects.map((data, index) => (
+            <div
+              key={index}
+              style={{
+                flex: "1 1 calc(50% - 20px)", // Two cards per row with 20px gap
+                boxSizing: "border-box",
+              }}
+            >
+              <DataCard
+                dbId={databaseId || ""}
+                collectioName={collectionName || ""}
+                data={convertToRecord(data)}
+                onClick={() => {
+                  setEditItem(data as Record<string, unknown>);
+                  setOpenAddItem(true);
+                }} />
+            </div>
+          ))}
       </div>
     </>
   )
@@ -119,7 +128,17 @@ const DatabaseDataListing = () => {
 
 export default DatabaseDataListing;
 
-const IconButton = ({ icon, text, onClick }: { icon: ReactNode, text: string, onClick: () => void }) => {
+const IconButton = ({
+  icon,
+  text,
+  disabled = false,
+  onClick
+}: {
+  icon: ReactNode,
+  text: string,
+  disabled?: boolean,
+  onClick: () => void
+}) => {
 
   return (
     <div style={{
@@ -133,7 +152,7 @@ const IconButton = ({ icon, text, onClick }: { icon: ReactNode, text: string, on
       justifyContent: "center",
       cursor: "pointer"
     }}
-    onClick={onClick}
+      onClick={disabled ? () => { } : onClick}
     >
       {icon}
       {text}
@@ -143,9 +162,29 @@ const IconButton = ({ icon, text, onClick }: { icon: ReactNode, text: string, on
 
 type DataCardProps = {
   data: Record<string, string>;
+  onClick: () => void;
+  dbId: string;
+  collectioName: string;
 };
 
-const DataCard: React.FC<DataCardProps> = ({ data }) => {
+const DataCard: React.FC<DataCardProps> = ({
+  data,
+  onClick,
+  dbId,
+  collectioName
+}) => {
+
+  const handleDelete = async () => {
+    const results = await deleteItem(dbId, collectioName, data._id);
+
+    if (results.success) {
+      window.alert("Item deleted succesfully");
+      window.location.reload();
+      return
+    }
+
+    window.alert(results.error || "Error deleting Item");
+  }
   return (
     <div
       style={{
@@ -169,19 +208,26 @@ const DataCard: React.FC<DataCardProps> = ({ data }) => {
           </p>
         ))}
       </div>
-      <div
-        style={{
-          border: "1px solid white",
-          marginLeft: "auto",
-          height: "20px",
-          borderRadius: "2px",
-          padding: 5,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <BiSolidRightArrow size={10} color="white" />
+      <div style={{
+        marginLeft: "auto",
+      }}>
+        <div
+          style={{
+            border: "1px solid white",
+            height: "20px",
+            borderRadius: "2px",
+            padding: 5,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          onClick={onClick}
+        >
+          <BiSolidRightArrow size={10} color="white" />
+        </div>
+        <FaTrash style={{ marginTop: "10px" }} size={20} color="white" onClick={() => {
+          handleDelete();
+        }} />
       </div>
     </div>
   );

@@ -1,9 +1,8 @@
 import React, { Dispatch, SetStateAction, MouseEvent, useState } from "react";
 import { TbArrowBackUp } from "react-icons/tb";
 import { FieldErrors, FormProvider, UseFormRegister } from "react-hook-form";
-import { addFilefields, AddFileTypes } from "@/hooks/data-management/useAddFileModal";
+import useAddConnectionModal, { addConnectionfields, DatabaseConnectionType } from "@/hooks/data-management/useAddConnectionModal";
 import { Switch } from "antd";
-import useAddConnectionModal from "@/hooks/data-management/useAddConnectionModal";
 
 interface ModalProps {
   open: boolean;
@@ -13,12 +12,14 @@ interface ModalProps {
 const AddConnectionModal = ({ open, setOpen }: ModalProps) => {
   const closeModal = () => setOpen(false);
 
-  const { register, errors, form, handleSubmitForm } = useAddConnectionModal();
+  const { register, errors, form, handleSubmitForm, setValue, isLoading } = useAddConnectionModal();
 
   const [checked, setChecked] = useState(false);
 
   const handleChange = (checked: boolean) => {
     setChecked(checked);
+
+    setValue("is_cloud_db", checked);
     console.log("Switch state:", checked);
   };
 
@@ -42,7 +43,7 @@ const AddConnectionModal = ({ open, setOpen }: ModalProps) => {
   };
 
   const modalStyle = {
-    width: "480px",
+    width: "650px",
     backgroundColor: "#3e3e3e",
     borderRadius: "10px",
     padding: 20
@@ -113,22 +114,34 @@ const AddConnectionModal = ({ open, setOpen }: ModalProps) => {
                     marginRight: "25px"
                   }}>
                     <FormInput
-                      label="GedeekDB"
-                      field="file_desc"
-                      subtext='Create new DB in Gedeek cloud.'
+                      label="Connection name"
+                      field="connection_name"
+                      subtext='Name of the connection'
                       register={register as never}
                       errors={errors}
                     />
                   </div>
+                  <div style={{
+                    flex: 1
+                  }}>
+                  </div>
                 </div>
 
-                <Switch
-                  checked={checked}
-                  onChange={handleChange}
-                  style={{
-                    backgroundColor: checked ? "#F73587" : "#A0A0A0",
-                  }}
-                />
+                <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+                  <Switch
+                    checked={checked}
+                    onChange={handleChange}
+                    style={{
+                      backgroundColor: checked ? "#F73587" : "#A0A0A0",
+                    }}
+                  />
+                  <p id="small" style={{ color: "#A5A5A5", marginLeft: "10px" }}>Is cloud db?</p>
+                </div>
+                {errors["is_cloud_db"]?.message &&
+                  <p style={{ color: "red", margin: 0 }}>
+                    {errors["is_cloud_db"]?.message}
+                  </p>
+                }
 
                 <div style={{
                   display: "flex",
@@ -140,40 +153,62 @@ const AddConnectionModal = ({ open, setOpen }: ModalProps) => {
                     marginRight: "25px"
                   }}>
                     <FormInput
-                      label="URL"
-                      field="tags"
-                      subtext='Add URL for your MongoDB to be migrated to GedeekDB'
+                      label="Host"
+                      field="host"
+                      subtext='Add the host of the connection to connect to it'
                       register={register as never}
                       errors={errors}
                     />
-                    
-                      <FormInput
-                      label="URL"
-                      field="tags"
-                      subtext='Add URL for your MongoDB to be migrated to GedeekDB'
+                  </div>
+                  <div style={{
+                    flex: 1,
+                  }}>
+                    <FormInput
+                      label="Port"
+                      field="port"
+                      subtext='Add the port of the connection to connect to it'
                       register={register as never}
                       errors={errors}
                     />
                   </div>
                 </div>
+
+                <div style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  marginTop: "10px"
+                }}>
+                  <div style={{
+                    flex: 1,
+                  }}>
+                    <FormInput
+                      label="Database Name"
+                      field="database_name"
+                      subtext='The name of your database'
+                      register={register as never}
+                      errors={errors}
+                    />
+                  </div>
+                </div>
+
+                <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "start", marginTop: "30px" }}>
+                  <button
+                    type="submit"
+                    disabled={isLoading}
+                    style={{
+                      padding: "10px 30px",
+                      backgroundColor: "#F73587",
+                      color: "white",
+                      border: "none",
+                      borderRadius: "5px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <p id="biggersmall">Save & Connect</p>
+                  </button>
+                </div>F
               </form>
             </FormProvider>
-
-            <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "start", marginTop: "30px" }}>
-              <button
-                type="submit"
-                style={{
-                  padding: "10px 30px",
-                  backgroundColor: "#F73587",
-                  color: "white",
-                  border: "none",
-                  borderRadius: "5px",
-                  cursor: "pointer",
-                }}
-              >
-                <p id="biggersmall">Save & Connect</p>
-              </button>
-            </div>
           </div>
         </div>
       )}
@@ -191,10 +226,10 @@ export const FormInput = ({
   errors
 }: {
   label: string,
-  field: addFilefields,
+  field: addConnectionfields,
   subtext: string,
-  register: UseFormRegister<AddFileTypes>,
-  errors: FieldErrors<AddFileTypes>
+  register: UseFormRegister<DatabaseConnectionType>,
+  errors: FieldErrors<DatabaseConnectionType>
 }) => {
 
   return (

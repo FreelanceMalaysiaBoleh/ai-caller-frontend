@@ -1,61 +1,28 @@
 import MainLayout from "@/components/general/MainLayout";
 import { useRouter } from "next/router";
 import { FaFolderOpen } from "react-icons/fa";
-import AddFileModal from "@/components/data-management/AddFileModal";
-import { useState } from "react";
 import DatabaseNavSideBar from "@/components/data-management/DatabaseNavSideBar";
 import DatabaseDataListing from "@/components/data-management/DatabaseDataListing";
 import { useDatabaseConnections } from "@/hooks/data-management/useDatabaseConnections";
+import { useCollectionItems } from "@/hooks/data-management/useCollectionItems";
 
-const connections_sample = [
-  {
-    name: "128.233.60.109:27017",
-    database: [
-      {
-        dbname: "example",
-        tables: ["example tables"],
-      },
-    ],
-  },
-  {
-    name: "128.200.60.104:42161",
-    database: [],
-  },
-  {
-    name: "GedeekDB:Hashim Company",
-    database: [],
-  },
-  {
-    name: "GedeekDB: McDonald's Tokyo",
-    database: [
-      {
-        dbname: "food_list_2024",
-        tables: ["burgers", "twisters", "beverages"],
-      },
-      {
-        dbname: "customer_list_2024",
-        tables: ["nationality"],
-      },
-    ],
-  },
-];
 
 export default function DataManagementDetail() {
 
-  const route = useRouter();
-  const { id } = route.query;
-  const [open, setOpen] = useState(false);
+  const router = useRouter();
 
-  const { dbconnections } = useDatabaseConnections();
-  console.log(id);
-  console.log(dbconnections);
+  const { dbId, collection_name } = router.query;
+
+  const { connections } = useDatabaseConnections();
+  const { collectionItems } = useCollectionItems(dbId as string | undefined || "", collection_name as string | undefined || "");
+
+  console.log("Items:", collectionItems);
 
   const databaseName = "GedeekDB"
 
   return (
     <MainLayout>
       <div style={{ height: "100%", paddingTop: "20px", display: "flex", flexDirection: "row" }}>
-        <AddFileModal open={open} setOpen={setOpen} />
         <div style={{ width: "85%" }}>
           <div style={{
             height: "55px",
@@ -87,11 +54,16 @@ export default function DataManagementDetail() {
           }}>
 
             <div style={{ borderRight: "1px solid #909090", height: "100%", width: "30%", paddingTop: "10px" }}>
-              <DatabaseNavSideBar data={connections_sample} />
+              <DatabaseNavSideBar data={connections} />
             </div>
 
             <div style={{ height: "100%", width: "70%" }}>
-              <DatabaseDataListing />
+              <DatabaseDataListing
+                databaseId={dbId as string | undefined || ""}
+                collectionName={collection_name as string | undefined || ""}
+                title={collection_name as string | undefined || ""}
+                data={collectionItems || { items: [] }}
+              />
             </div>
           </div>
         </div>
