@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { getAllDatabaseConnections } from "@/services/DatabaseServices";
+import { useGetToken } from "@/services/AuthServices";
 
 export interface DatabaseConnection {
   _id: string;
@@ -42,12 +43,13 @@ export const useDatabaseConnections = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [dbconnections, setDbconnections] = useState<DatabaseConnection[] | undefined>(undefined);
   let connections: Connection[] = []
+  const token = useGetToken();
 
   useEffect(() => {
     const fetchDatabases = async () => {
       setIsLoading(true);
       try {
-        const response = await getAllDatabaseConnections();
+        const response = await getAllDatabaseConnections(token);
         setDbconnections(response.data);
       } catch (error) {
         console.log("errored man:")
@@ -59,7 +61,7 @@ export const useDatabaseConnections = () => {
 
     fetchDatabases();
 
-  }, []);
+  }, [token]);
 
   if (dbconnections) {
     connections = groupAndSortConnections(dbconnections)

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { getToken } from "@/services/AuthServices";
+import { useGetToken } from "@/services/AuthServices";
 
 export type FileData = {
   _id: string;
@@ -10,16 +10,16 @@ export type FileData = {
   size: number;
   keywords: string[];
   topic: string;
-  uploaded_at: string; 
+  uploaded_at: string;
 };
 
 export const useGetAllFiles = (): { files: FileData[] | undefined, isLoading: boolean } => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [files, setFiles] = useState<FileData[] | undefined>(undefined);
+  const token = useGetToken();
 
   useEffect(() => {
     const fetchWorkflow = async () => {
-      const token = getToken();
       setIsLoading(true);
       try {
         const response = await axios.get(
@@ -41,7 +41,7 @@ export const useGetAllFiles = (): { files: FileData[] | undefined, isLoading: bo
 
     fetchWorkflow();
 
-  }, []);
+  }, [token]);
 
   return { files, isLoading };
 };

@@ -11,6 +11,7 @@ export default function Home() {
 
   const [isHovered, setIsHovered] = useState(false);
   const { agent } = useGetAgent();
+
   // const { ticketList } = useTicketList();
   // const ticketList = ticketssample;
 
@@ -29,7 +30,7 @@ export default function Home() {
       <div style={{ marginBottom: "10px" }}></div>
       <div style={{
         width: "75%",
-        height: "65%",
+        height: agent ? "" : "65%",
         backgroundColor: "#3E3E3E",
         borderRadius: 10,
         display: "flex",

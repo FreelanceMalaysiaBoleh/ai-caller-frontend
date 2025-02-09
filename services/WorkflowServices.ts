@@ -1,10 +1,8 @@
 import { WorkFlowType } from "@/hooks/workflow/useWorkflow";
 import axios, { AxiosError } from "axios";
 import { Edge, Node } from "reactflow";
-import { getToken } from "./AuthServices";
 
-export const getWorkflows = async () => {
-  const token = getToken();
+export const getWorkflows = async (token : string | null) => {
 
   try {
     const response = await axios.get(
@@ -29,7 +27,7 @@ export const getWorkflows = async () => {
   }
 }
 
-export const saveWorkflow = async (nodes: Node<any, string | undefined>[], edges: Edge<any>[], workflow: WorkFlowType | undefined, agentId: string) => {
+export const saveWorkflow = async (nodes: Node<any, string | undefined>[], edges: Edge<any>[], workflow: WorkFlowType | undefined, agentId: string, token : string | null) => {
   const payload = {
     name: workflow?.workflow_name || "",
     description: workflow?.workflow_description || "",
@@ -42,8 +40,6 @@ export const saveWorkflow = async (nodes: Node<any, string | undefined>[], edges
     success: true,
     data: "no workflow",
   };
-
-  const token = getToken();
 
   if (workflow) {
     console.log("saving workflow")
@@ -95,13 +91,11 @@ export const saveWorkflow = async (nodes: Node<any, string | undefined>[], edges
   }
 }
 
-export const resetWorkflow = async (initialNodes: Node[], initialEdges: Edge[], workflowId: string, agentId: string) => {
+export const resetWorkflow = async (initialNodes: Node[], initialEdges: Edge[], workflowId: string, token : string | null) => {
   const payload = {
     nodes: initialNodes,
     edges: initialEdges
   }
-
-  const token = getToken();
 
   try {
     const response = await axios.put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/workflows/${workflowId}`,

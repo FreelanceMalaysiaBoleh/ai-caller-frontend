@@ -11,6 +11,7 @@ import AddCollectionModal from "./AddCollectionModal";
 import { deleteConnection } from "@/services/DatabaseServices";
 import { Connection } from "@/hooks/data-management/useDatabaseConnections";
 import { useRouter } from "next/router";
+import { useGetToken } from "@/services/AuthServices";
 
 
 const DatabaseNavSideBar = ({ data }: { data: Connection[] }) => {
@@ -22,7 +23,7 @@ const DatabaseNavSideBar = ({ data }: { data: Connection[] }) => {
   const [openCollection, setOpenCollection] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [databaseId, setDatabaseId] = useState<string | null>(null);
-
+  const token = useGetToken();
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   const toggleExpand = (key: string) => {
@@ -57,7 +58,7 @@ const DatabaseNavSideBar = ({ data }: { data: Connection[] }) => {
   }, []);
 
   const handleDelete = async (dbId: string) => {
-    const results = await deleteConnection(dbId)
+    const results = await deleteConnection(dbId, token)
 
     if (results.success) {
       window.alert("Database deleted succesfully");

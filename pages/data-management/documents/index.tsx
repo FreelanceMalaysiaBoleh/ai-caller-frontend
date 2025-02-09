@@ -10,21 +10,23 @@ import AddFileModal from "@/components/data-management/AddFileModal";
 import { useState } from "react";
 import { useGetAllFiles } from "@/hooks/data-management/useGetAllFiles";
 import { deleteFiles } from "@/services/FileServices";
+import { useGetToken } from "@/services/AuthServices";
 
 export default function DataManagementDetail() {
 
   const { files, isLoading } = useGetAllFiles();
   const [checkedFiles, setCheckFiles] = useState<string[]>([]);
   const [open, setOpen] = useState(false);
+  const token = useGetToken();
 
   const toggleModal = () => {
     setOpen((val) => !val);
   }
 
-  const handleDeleteFiles =  async () =>{
-    const results = await deleteFiles(checkedFiles);
+  const handleDeleteFiles = async () => {
+    const results = await deleteFiles(checkedFiles, token);
 
-    if(results.success){
+    if (results.success) {
       window.alert("Files deleted succesfully");
       window.location.reload();
       return

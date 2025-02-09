@@ -7,6 +7,9 @@ import type { AppProps } from "next/app";
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import AuthContext from "@/components/context/AuthContext";
+import { Provider } from "react-redux";
+import { store, persistor } from "../redux/store"
+import { PersistGate } from "redux-persist/integration/react";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -22,11 +25,15 @@ export default function App({ Component, pageProps }: AppProps) {
         },
       }}
     >
-      <AuthContext>
-        <DndProvider backend={HTML5Backend}>
-          <Component {...pageProps} />
-        </DndProvider>
-      </AuthContext>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <AuthContext>
+            <DndProvider backend={HTML5Backend}>
+              <Component {...pageProps} />
+            </DndProvider>
+          </AuthContext>
+        </PersistGate>
+      </Provider>
     </ConfigProvider>
   )
 }

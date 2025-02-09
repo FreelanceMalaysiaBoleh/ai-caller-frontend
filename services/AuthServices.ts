@@ -1,5 +1,7 @@
+import { RootState } from '@/redux/store';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { useSelector } from 'react-redux';
 
 const login = async (values: { username: string, password: string }) => {
   const { username, password } = values;
@@ -25,53 +27,13 @@ const login = async (values: { username: string, password: string }) => {
   }
 }
 
-/**
- * Save token as a cookie
- * @param token - The token to save
- * @param expirationDays - Number of days the cookie should persist (default is 7 days)
- */
-const saveToken = (token: string, expirationDays: number = 7): void => {
-  Cookies.set('authToken', token, { expires: expirationDays, secure: true });
-};
+const useGetToken = () => {
+  const token = useSelector((state: RootState) => state.auth.token);
 
-/**
- * Save token as a cookie
- * @param token - The token to save
- * @param expirationDays - Number of days the cookie should persist (default is 7 days)
- */
-const saveUserID = (uid: string, expirationDays: number = 7): void => {
-  Cookies.set('userID', uid, { expires: expirationDays, secure: true });
-};
-
-
-/**
- * Get the token from the cookie
- * @returns {string | undefined} - The saved token, or undefined if it doesn't exist
- */
-const getToken = (): string | undefined => {
-  try {
-    const token = Cookies.get("authToken");
-    if (!token) {
-      console.error("Token not found");
-    }
-    return token;
-  } catch (error) {
-    console.error("Error retrieving token from cookies:", error);
-    return undefined;
-  }
-};
-
-const deleteToken = (): void => {
-  try {
-    Cookies.remove("authToken");
-  } catch (error) {
-    console.error("Error deleting token from cookies:", error);
-  }
-};
+  return token;
+}
 
 export {
   login,
-  saveToken,
-  getToken,
-  deleteToken
+  useGetToken
 }

@@ -10,6 +10,7 @@ import { useEdgesState, useNodesState } from "reactflow"
 import { useWorkflow } from "@/hooks/workflow/useWorkflow"
 import { ErrorResponse, getPipelineStatus, SuccessResponse } from "@/services/PipelineServices"
 import { resetWorkflow, saveWorkflow } from "@/services/WorkflowServices"
+import { useGetToken } from "@/services/AuthServices"
 
 
 
@@ -22,11 +23,12 @@ const Index = () => {
     const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
     const [pipelineStatus, setPipelineStatus] = useState("");
     const [errorPipeline, setErrorPipeline] = useState("");
+    const token = useGetToken();
 
 
     useEffect(() => {
         const getStatus = async () => {
-            const res = await getPipelineStatus(workflowId || "")
+            const res = await getPipelineStatus(workflowId || "", token)
 
             if ((res as ErrorResponse).error) {
                 const errResponse = res as ErrorResponse;
@@ -42,7 +44,7 @@ const Index = () => {
 
     const handleSaveWorkflow = async () => {
         console.log(nodes, workflow)
-        const results = await saveWorkflow(nodes, edges, workflow, agent?._id || "");
+        const results = await saveWorkflow(nodes, edges, workflow, agent?._id || "", token);
 
         if (results.success) {
             window.location.reload();
@@ -51,7 +53,7 @@ const Index = () => {
     }
 
     const handleResetWorkflow = async () => {
-        const results = await resetWorkflow(initialNodes, initialEdges, workflowId || "", agent?._id || "");
+        const results = await resetWorkflow(initialNodes, initialEdges, workflowId || "", token);
 
         if (results.success) {
             window.location.reload();

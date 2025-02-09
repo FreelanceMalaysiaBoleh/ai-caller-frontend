@@ -3,10 +3,12 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Layout } from "antd";
 import { useState } from "react";
-import { login, saveToken } from "@/services/AuthServices";
+import { login } from "@/services/AuthServices";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import GedeekIcon from "@/public/images/GEDEEK_BIG.png"
+import { useDispatch } from "react-redux";
+import { setToken } from "@/redux/authSlice";
 
 // Validation schema for username and password
 const loginSchema = yup.object().shape({
@@ -19,6 +21,8 @@ const LoginForm = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
+
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -35,7 +39,7 @@ const LoginForm = () => {
   const onSubmit = async (data: { username: string, password: string }) => {
     console.log("login")
     login(data).then((token) => {
-      saveToken(token);
+      dispatch(setToken(token));
       router.push("/");
     }).catch(e => {
       setError(`${e}`)

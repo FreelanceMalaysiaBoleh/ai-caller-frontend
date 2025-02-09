@@ -1,3 +1,4 @@
+import { useGetToken } from '@/services/AuthServices';
 import { createNewItem, updateItem } from '@/services/DatabaseServices';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
@@ -25,6 +26,7 @@ function convertObjectToArray(obj: Record<string, unknown>): ItemType["fields"] 
 const useAddItemModal = (databaseId: string | null, collection_name: string | null, item: Record<string, unknown> | undefined) => {
 
     const [isLoading, setIsLoading] = useState(false);
+    const token = useGetToken();
 
     const documentSchema = yup
         .object({
@@ -85,9 +87,9 @@ const useAddItemModal = (databaseId: string | null, collection_name: string | nu
 
         if (item) {
             console.log(dataObject, (item as { _id: string })._id, collection_name)
-            results = await updateItem(dataObject, databaseId!, collection_name || "", (item as { _id: string })._id);
+            results = await updateItem(dataObject, databaseId!, collection_name || "", (item as { _id: string })._id, token);
         } else {
-            results = await createNewItem(dataObject, databaseId!, collection_name || "");
+            results = await createNewItem(dataObject, databaseId!, collection_name || "", token);
         }
 
 

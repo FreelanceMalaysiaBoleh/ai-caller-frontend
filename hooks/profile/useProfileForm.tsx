@@ -1,3 +1,4 @@
+import { useGetToken } from '@/services/AuthServices';
 import { createUserSettings, getUserSettings, updateUserSettings } from '@/services/SettingServives';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
@@ -10,7 +11,7 @@ export interface ProfileDetailsFormType {
   receive_port: string
 
   user_id?: string,
-  created_at?: string, 
+  created_at?: string,
   updated_at?: string
 }
 
@@ -21,6 +22,7 @@ const useProfileForm = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [edit, setEdit] = useState(false);
+  const token = useGetToken();
 
   const documentSchema = yup.object({
     mobile_number: yup.string().required(),
@@ -41,7 +43,7 @@ const useProfileForm = () => {
 
   useEffect(() => {
     const fetchUserSettings = async () => {
-      const response = await getUserSettings();
+      const response = await getUserSettings(token);
 
       if (response.success && response.data) {
         console.log(response.data)
@@ -59,9 +61,9 @@ const useProfileForm = () => {
     let results: { success: boolean; data?: any; error?: string } = { success: false }
 
     if (edit) {
-      results = await updateUserSettings(values);
+      results = await updateUserSettings(values, token);
     } else {
-      results = await createUserSettings(values);
+      results = await createUserSettings(values, token);
     }
 
 

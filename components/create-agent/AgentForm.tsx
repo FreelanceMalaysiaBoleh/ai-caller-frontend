@@ -7,6 +7,7 @@ import { addFilefields, AddFileTypes } from "@/hooks/data-management/useAddFileM
 import Page3 from "./Page3";
 import { createNewAgent } from "@/services/AgentServices";
 import { useRouter } from "next/router";
+import { useGetToken } from "@/services/AuthServices";
 
 export interface AgentFormTypes {
     name: string;
@@ -24,7 +25,7 @@ export type fields = "name" | "language" | "voice" | "phone_number" | "agent_typ
 const AgentForm = ({ page, setPage }: { page: number, setPage: (index: number) => void }) => {
 
     const router = useRouter();
-
+    const token = useGetToken();
     const agentSchema = yup
         .object({
             name: yup.string().required(),
@@ -59,7 +60,7 @@ const AgentForm = ({ page, setPage }: { page: number, setPage: (index: number) =
     } = form
 
     const handleSubmitForm = handleSubmit(async (values) => {
-        const result = await createNewAgent(values);
+        const result = await createNewAgent(values, token);
 
         if (result.success) {
             window.alert("Agent created successfully")

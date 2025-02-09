@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { getAllItemsInCollection } from "@/services/DatabaseServices";
+import { useGetToken } from "@/services/AuthServices";
 
 export interface ItemsArray<T = unknown> {
     items: T[];
@@ -9,6 +10,7 @@ export const useCollectionItems = (dbid: string, collectionName: string) => {
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [collectionItems, setCollectionItems] = useState<ItemsArray | undefined>(undefined);
+    const token = useGetToken();
 
     useEffect(() => {
         const fetchItems = async () => {
@@ -16,7 +18,7 @@ export const useCollectionItems = (dbid: string, collectionName: string) => {
             try {
                 console.log(dbid, collectionName);
 
-                const response = await getAllItemsInCollection(dbid, collectionName);
+                const response = await getAllItemsInCollection(dbid, collectionName, token);
                 setCollectionItems(response.data);
             } catch (error) {
                 console.log("errored man:")
@@ -28,7 +30,7 @@ export const useCollectionItems = (dbid: string, collectionName: string) => {
 
         fetchItems();
 
-    }, [dbid, collectionName]);
+    }, [dbid, collectionName, token]);
 
     return { collectionItems, isLoading };
 };

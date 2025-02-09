@@ -1,5 +1,4 @@
 import axios from "axios";
-import { getToken } from "./AuthServices";
 
 export interface SuccessResponse {
   status: string;
@@ -13,9 +12,7 @@ export interface ErrorResponse {
 
 type PipelineResponse = SuccessResponse | ErrorResponse;
 
-const startPipeline = async (workflowId: string): Promise<PipelineResponse> => {
-
-  const token = getToken();
+const startPipeline = async (workflowId: string, token: string | null): Promise<PipelineResponse> => {
 
   try {
     const response = await axios.post<SuccessResponse>(
@@ -52,8 +49,7 @@ const startPipeline = async (workflowId: string): Promise<PipelineResponse> => {
   }
 };
 
-const getPipelineStatus = async (workflowId: string): Promise<PipelineResponse> => {
-  const token = getToken();
+const getPipelineStatus = async (workflowId: string, token: string | null): Promise<PipelineResponse> => {
 
   try {
     const response = await axios.get<SuccessResponse>(
@@ -90,8 +86,7 @@ const getPipelineStatus = async (workflowId: string): Promise<PipelineResponse> 
   }
 };
 
-const stopPipeline = async (workflowId: string): Promise<PipelineResponse> => {
-  const token = getToken();
+const stopPipeline = async (workflowId: string, token: string | null): Promise<PipelineResponse> => {
 
   try {
     const response = await axios.post<SuccessResponse>(

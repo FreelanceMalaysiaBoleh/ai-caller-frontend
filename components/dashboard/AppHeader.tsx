@@ -1,11 +1,16 @@
 import { Layout } from 'antd';
 import Image from 'next/image';
 import logo from "../../public/images/logo.png"
-import { deleteToken } from '@/services/AuthServices';
+import { removeToken } from '@/redux/authSlice';
+import { useDispatch } from 'react-redux';
+import { useGetAgent } from '@/hooks/agent/useGetAgent';
 
 const { Header } = Layout;
 
 const AppHeader = () => {
+    const dispatch = useDispatch();
+    const { agent } = useGetAgent();
+
     return (
         <Header
             style={{
@@ -28,7 +33,7 @@ const AppHeader = () => {
                     marginRight: 25,
                 }}
             ></div>
-            <h2>No agent created</h2>
+            <h2>{agent ? `${agent.name}`: "No agent created"}</h2>
             <div style={{
                 display: "flex",
                 flexDirection: "column",
@@ -38,12 +43,12 @@ const AppHeader = () => {
                 <h2>Omantel Telecommunications</h2>
                 <button
                     onClick={() => {
-                        deleteToken();
+                        dispatch(removeToken());
                         window.location.reload();
                     }}
                     style={{
-                        all: "unset", 
-                        cursor: "pointer", 
+                        all: "unset",
+                        cursor: "pointer",
                     }}
                 >
                     <p

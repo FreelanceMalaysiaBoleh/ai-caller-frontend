@@ -100,7 +100,7 @@ const SidebarNav = ({ collapsed, setCollapsed, toggleCollapse }: { collapsed: bo
                     />
                 </Menu.Item>
                 <Menu.Item
-                    onClick={() => router.push("/profile/123")}
+                    onClick={() => router.push("/profile")}
                     key="6"
                     icon={<SettingOutlined />}
                     style={{ marginBottom: 20 }}
