@@ -1,3 +1,4 @@
+import { useGetToken } from '@/services/AuthServices';
 import { createNewConnection } from '@/services/DatabaseServices';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
@@ -18,6 +19,7 @@ export type addConnectionfields = "connection_name" | "database_type" | "is_clou
 const useAddConnectionModal = () => {
 
   const [isLoading, setIsLoading] = useState(false);
+  const token = useGetToken();
 
   const documentSchema = yup
     .object({
@@ -51,7 +53,7 @@ const useAddConnectionModal = () => {
   const handleSubmitForm = handleSubmit(async (values) => {
     setIsLoading(true);
 
-    const results = await createNewConnection(values);
+    const results = await createNewConnection(values, token);
 
     if (results.success) {
       window.alert("Connection created successfully")

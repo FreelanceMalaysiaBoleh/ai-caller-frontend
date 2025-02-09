@@ -1,3 +1,4 @@
+import { useGetToken } from '@/services/AuthServices';
 import { ErrorResponse, getPipelineStatus, startPipeline, stopPipeline, SuccessResponse } from '@/services/PipelineServices';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 
@@ -17,6 +18,7 @@ const TabNavigation = ({
     setErrorPipeline: Dispatch<SetStateAction<string>>,
 
 }) => {
+    const token = useGetToken();
     const [isHoveredStart, setIsHoveredStart] = useState(false);
     const [isHoveredStop, setIsHoveredStop] = useState(false);
 
@@ -26,7 +28,7 @@ const TabNavigation = ({
     const handleStartPipeline = async () => {
         setErrorPipeline("")
         if (pipelineStatus == "stopped") {
-            const res = await startPipeline(workflowId)
+            const res = await startPipeline(workflowId, token)
 
             if ((res as ErrorResponse).error) {
                 const errResponse = res as ErrorResponse;
@@ -38,7 +40,7 @@ const TabNavigation = ({
 
             await new Promise(resolve => setTimeout(resolve, 1000));
 
-            const resStatus = await getPipelineStatus(workflowId);
+            const resStatus = await getPipelineStatus(workflowId, token);
 
             if ((resStatus as ErrorResponse).error) {
                 const errResponse = resStatus as ErrorResponse;
@@ -57,7 +59,7 @@ const TabNavigation = ({
     const handleStopPipeline = async () => {
         setErrorPipeline("")
         if (pipelineStatus == "running") {
-            const res = await stopPipeline(workflowId)
+            const res = await stopPipeline(workflowId, token)
 
             if ((res as ErrorResponse).error) {
                 const errResponse = res as ErrorResponse;

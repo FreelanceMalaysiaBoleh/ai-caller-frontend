@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Edge, Node } from "reactflow";
-import { getToken } from "@/services/AuthServices";
+import { useGetToken } from "@/services/AuthServices";
 
 export type WorkFlowType = {
   workflow_id: string,
@@ -15,10 +15,10 @@ export type WorkFlowType = {
 export const useWorkflows = (): { workflows: WorkFlowType[] | undefined, isLoading: boolean } => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [workflows, setWorkflow] = useState<WorkFlowType[] | undefined>(undefined);
-
+  const token = useGetToken();
+  
   useEffect(() => {
     const fetchWorkflow = async () => {
-      const token = getToken();
       setIsLoading(true);
       try {
         const response = await axios.get(
@@ -40,9 +40,9 @@ export const useWorkflows = (): { workflows: WorkFlowType[] | undefined, isLoadi
 
     fetchWorkflow();
 
-  }, []);
+  }, [token]);
 
-  console.log(workflows);   
+  console.log(workflows);
 
   return { workflows, isLoading };
 };

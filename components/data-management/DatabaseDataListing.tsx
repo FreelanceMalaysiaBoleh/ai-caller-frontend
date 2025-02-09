@@ -6,6 +6,7 @@ import { ItemsArray } from "@/hooks/data-management/useCollectionItems";
 import AddItemModal from "./AddItemModal";
 import { FaTrash } from "react-icons/fa";
 import { deleteItem } from "@/services/DatabaseServices";
+import { useGetToken } from "@/services/AuthServices";
 
 function convertToRecord(obj: unknown): Record<string, string> {
   if (typeof obj !== "object" || obj === null || Array.isArray(obj)) {
@@ -31,6 +32,7 @@ const DatabaseDataListing = ({ title, data, databaseId, collectionName }: {
   const [openAddItem, setOpenAddItem] = useState(false);
   const [editItem, setEditItem] = useState<Record<string, unknown>>();
   const dataObjects = data.items;
+  const token = useGetToken();
 
   return (
     <>
@@ -114,6 +116,7 @@ const DatabaseDataListing = ({ title, data, databaseId, collectionName }: {
                 dbId={databaseId || ""}
                 collectioName={collectionName || ""}
                 data={convertToRecord(data)}
+                token={token}
                 onClick={() => {
                   setEditItem(data as Record<string, unknown>);
                   setOpenAddItem(true);
@@ -165,17 +168,19 @@ type DataCardProps = {
   onClick: () => void;
   dbId: string;
   collectioName: string;
+  token: string | null;
 };
 
 const DataCard: React.FC<DataCardProps> = ({
   data,
   onClick,
   dbId,
-  collectioName
+  collectioName,
+  token
 }) => {
 
   const handleDelete = async () => {
-    const results = await deleteItem(dbId, collectioName, data._id);
+    const results = await deleteItem(dbId, collectioName, data._id, token);
 
     if (results.success) {
       window.alert("Item deleted succesfully");

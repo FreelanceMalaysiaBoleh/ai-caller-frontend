@@ -1,6 +1,4 @@
 import { AddFileTypes } from "@/hooks/data-management/useAddFileModal";
-import { getToken } from "./AuthServices";
-import { convertToFormData } from "@/helpers/GeneralHelper";
 import axios, { AxiosError } from "axios";
 
 interface FileFields extends AddFileTypes {
@@ -10,9 +8,8 @@ interface FileFields extends AddFileTypes {
   file: File
 }
 
-export const createFile = async (values: FileFields): Promise<{ success: boolean; data?: any; error?: string }> => {
+export const createFile = async (values: FileFields, token: string | null): Promise<{ success: boolean; data?: any; error?: string }> => {
   try {
-    const token = getToken();
 
     // Create form data
     const formData = new FormData();
@@ -49,8 +46,7 @@ export const createFile = async (values: FileFields): Promise<{ success: boolean
 
 }
 
-export const deleteFiles = async (ids: string[]): Promise<{ success: boolean; data?: any; error?: string }> => {
-  const token = getToken();
+export const deleteFiles = async (ids: string[], token: string | null): Promise<{ success: boolean; data?: any; error?: string }> => {
 
   try {
     const response = await axios({

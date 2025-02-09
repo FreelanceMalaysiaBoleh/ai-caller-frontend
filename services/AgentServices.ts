@@ -1,13 +1,10 @@
 import { AgentFormTypes } from "@/components/create-agent/AgentForm";
 import axios, { AxiosError } from "axios";
-import { getToken } from "./AuthServices";
 import { convertToFormData } from "@/helpers/GeneralHelper";
 
-export const createNewAgent = async (values: AgentFormTypes): Promise<{ success: boolean; data?: any; error?: string }> => {
-  const token = getToken();
-
+export const createNewAgent = async (values: AgentFormTypes, token: string | null): Promise<{ success: boolean; data?: any; error?: string }> => {
   const valuesFormData = convertToFormData(values);
-  
+
   try {
     const response = await axios({
       url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/agents`,
@@ -31,9 +28,8 @@ export const createNewAgent = async (values: AgentFormTypes): Promise<{ success:
   }
 };
 
-export const getAgents = async (): Promise<{ success: boolean; data?: any; error?: string }> => {
-  const token = getToken();
-  
+export const getAgents = async (token: string | null): Promise<{ success: boolean; data?: any; error?: string }> => {
+
   try {
     const response = await axios({
       url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/agents`,

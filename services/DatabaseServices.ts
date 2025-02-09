@@ -1,11 +1,8 @@
 import axios, { AxiosError } from "axios";
-import { getToken } from "./AuthServices";
 import { DatabaseConnectionType } from "@/hooks/data-management/useAddConnectionModal";
 import { addCollectionField, CollectionType } from "@/hooks/data-management/useAddCollectionmodal";
 
-export const getAllDatabaseConnections = async () => {
-
-  const token = getToken();
+export const getAllDatabaseConnections = async (token: string | null) => {
 
   try {
     const response = await axios({
@@ -29,8 +26,7 @@ export const getAllDatabaseConnections = async () => {
   }
 }
 
-export const getAllItemsInCollection = async (connectionId: string, collectionName: string) => {
-  const token = getToken();
+export const getAllItemsInCollection = async (connectionId: string, collectionName: string, token: string | null) => {
 
   try {
     const response = await axios({
@@ -56,8 +52,7 @@ export const getAllItemsInCollection = async (connectionId: string, collectionNa
 
 type addConnectionfieldsStrings = "connection_name" | "database_type" | "host" | "database_name";
 
-export const createNewConnection = async (values: DatabaseConnectionType): Promise<{ success: boolean; data?: any; error?: string }> => {
-  const token = getToken();
+export const createNewConnection = async (values: DatabaseConnectionType, token: string | null): Promise<{ success: boolean; data?: any; error?: string }> => {
 
   console.log(values);
   const formData = new FormData();
@@ -92,8 +87,8 @@ export const createNewConnection = async (values: DatabaseConnectionType): Promi
   }
 }
 
-export const createNewItem = async (values: unknown, dbId: string, collectionName: string,): Promise<{ success: boolean; data?: any; error?: string }> => {
-  const token = getToken();
+export const createNewItem = async (values: unknown, dbId: string, collectionName: string, token: string | null): Promise<{ success: boolean; data?: any; error?: string }> => {
+
   try {
     const response = await axios({
       url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/database-connections/${dbId}/collections/${collectionName}/items
@@ -118,8 +113,7 @@ export const createNewItem = async (values: unknown, dbId: string, collectionNam
   }
 }
 
-export const updateItem = async (values: unknown, dbId: string, collectionName: string, itemId: string): Promise<{ success: boolean; data?: any; error?: string }> => {
-  const token = getToken();
+export const updateItem = async (values: unknown, dbId: string, collectionName: string, itemId: string, token: string | null): Promise<{ success: boolean; data?: any; error?: string }> => {
 
   delete (values as { _id?: string })._id
 
@@ -146,8 +140,7 @@ export const updateItem = async (values: unknown, dbId: string, collectionName: 
   }
 }
 
-export const deleteItem = async (dbId: string, collectionName: string, itemId: string): Promise<{ success: boolean; data?: any; error?: string }> => {
-  const token = getToken();
+export const deleteItem = async (dbId: string, collectionName: string, itemId: string, token: string | null): Promise<{ success: boolean; data?: any; error?: string }> => {
 
   try {
     const response = await axios({
@@ -175,8 +168,7 @@ export const deleteItem = async (dbId: string, collectionName: string, itemId: s
 
 
 
-export const createNewCollection = async (connectionId: string, values: CollectionType): Promise<{ success: boolean; data?: any; error?: string }> => {
-  const token = getToken();
+export const createNewCollection = async (connectionId: string, values: CollectionType, token: string | null): Promise<{ success: boolean; data?: any; error?: string }> => {
 
   const formData = new FormData();
 
@@ -208,8 +200,7 @@ export const createNewCollection = async (connectionId: string, values: Collecti
 }
 
 
-export const deleteConnection = async (connectionId: string): Promise<{ success: boolean; data?: any; error?: string }> => {
-  const token = getToken();
+export const deleteConnection = async (connectionId: string, token: string | null): Promise<{ success: boolean; data?: any; error?: string }> => {
 
   try {
     const response = await axios({

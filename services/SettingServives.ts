@@ -1,9 +1,7 @@
 import axios, { AxiosError } from "axios";
-import { getToken } from "./AuthServices";
 import { ProfileDetailsFormType } from "@/hooks/profile/useProfileForm";
 
-export const createUserSettings = async (values: ProfileDetailsFormType): Promise<{ success: boolean; data?: any; error?: string }> => {
-    const token = getToken();
+export const createUserSettings = async (values: ProfileDetailsFormType, token: string | null): Promise<{ success: boolean; data?: any; error?: string }> => {
 
     try {
         const response = await axios({
@@ -28,8 +26,7 @@ export const createUserSettings = async (values: ProfileDetailsFormType): Promis
     }
 }
 
-export const updateUserSettings = async (values: ProfileDetailsFormType): Promise<{ success: boolean; data?: any; error?: string }> => {
-    const token = getToken();
+export const updateUserSettings = async (values: ProfileDetailsFormType, token: string | null): Promise<{ success: boolean; data?: any; error?: string }> => {
 
     delete values.user_id;
     delete values.created_at;
@@ -59,9 +56,7 @@ export const updateUserSettings = async (values: ProfileDetailsFormType): Promis
     }
 }
 
-export const getUserSettings = async () => {
-
-    const token = getToken();
+export const getUserSettings = async (token: string | null) => {
 
     try {
         const response = await axios({

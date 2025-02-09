@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { getToken } from "@/services/AuthServices";
+import { useGetToken } from "@/services/AuthServices";
 
 export type AgentTypes = {
   _id: string;
@@ -19,10 +19,11 @@ export type AgentTypes = {
 export const useGetAgent = (): { agent: AgentTypes | undefined, isLoading: boolean } => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [agents, setAgents] = useState<AgentTypes[] | undefined>(undefined);
+  const token = useGetToken();
+
 
   useEffect(() => {
     const fetchAgent = async () => {
-      const token = getToken();
       setIsLoading(true);
       try {
         const response = await axios({
@@ -43,7 +44,7 @@ export const useGetAgent = (): { agent: AgentTypes | undefined, isLoading: boole
 
     fetchAgent();
 
-  }, []);
+  }, [token]);
 
   if (agents) {
     const agent = agents[0];

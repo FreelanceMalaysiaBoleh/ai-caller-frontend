@@ -1,3 +1,4 @@
+import { useGetToken } from '@/services/AuthServices';
 import { createFile } from '@/services/FileServices';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
@@ -16,7 +17,7 @@ export type addFilefields = "file_desc" | "topic" | "tags";
 const useAddFileModal = (file?: File) => {
 
   const [isLoading, setIsloading] = useState(false);
-
+  const token = useGetToken();
   const documentSchema = yup
     .object({
       file_desc: yup.string().required(),
@@ -47,7 +48,7 @@ const useAddFileModal = (file?: File) => {
       return
     }
 
-    const results = await createFile({ ...values, file: file });
+    const results = await createFile({ ...values, file: file }, token);
 
     if (results.success) {
       window.alert("File created successfully")

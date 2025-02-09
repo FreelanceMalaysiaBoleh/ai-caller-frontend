@@ -1,4 +1,5 @@
-import { createNewCollection, createNewConnection } from '@/services/DatabaseServices';
+import { useGetToken } from '@/services/AuthServices';
+import { createNewCollection } from '@/services/DatabaseServices';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -13,6 +14,7 @@ export type addCollectionField = "collection_name";
 const useAddCollectionModal = (databaseId: string | null) => {
 
   const [isLoading, setIsLoading] = useState(false);
+  const token = useGetToken();
 
   const documentSchema = yup
     .object({
@@ -42,7 +44,7 @@ const useAddCollectionModal = (databaseId: string | null) => {
       return
     }
 
-    const results = await createNewCollection(databaseId!, values);
+    const results = await createNewCollection(databaseId!, values, token);
 
     if (results.success) {
       window.alert("Collection added successfully")

@@ -1,14 +1,8 @@
 import MainLayout from "@/components/general/MainLayout";
 import ProfileDetails from "@/components/profile/ProfileDetails";
 import TelephonySettings from "@/components/profile/TelephonySettings";
-import { useRouter } from "next/router";
 
 const ProfileDetail = () => {
-
-  const router = useRouter();
-  const { userId } = router.query;
-
-  console.log(userId);
 
   return (
     <MainLayout>
