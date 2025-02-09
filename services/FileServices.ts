@@ -23,7 +23,7 @@ export const createFile = async (values: FileFields): Promise<{ success: boolean
 
     // Make the API call
     const response = await axios.post(
-      "http://18.141.243.3:8000/files/documents",
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/files/documents`,
       formData,
       {
         headers: {
