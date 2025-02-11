@@ -22,11 +22,12 @@ function convertToRecord(obj: unknown): Record<string, string> {
   return result;
 }
 
-const DatabaseDataListing = ({ title, data, databaseId, collectionName }: {
+const DatabaseDataListing = ({ title, data, databaseId, collectionName, refreshData }: {
   title: string,
   data: ItemsArray,
   databaseId: string | null,
-  collectionName: string | null
+  collectionName: string | null,
+  refreshData: () => void
 }) => {
 
   const [openAddItem, setOpenAddItem] = useState(false);
@@ -42,6 +43,7 @@ const DatabaseDataListing = ({ title, data, databaseId, collectionName }: {
         collectionName={collectionName}
         open={openAddItem}
         setOpen={setOpenAddItem}
+        refreshData={refreshData}
       />
       <div style={{ display: "flex", flexDirection: "row", padding: "10px 10px" }}>
         <div style={{ flexGrow: 1, display: "flex", flexDirection: "row", }}>
@@ -114,6 +116,7 @@ const DatabaseDataListing = ({ title, data, databaseId, collectionName }: {
             >
               <DataCard
                 dbId={databaseId || ""}
+                refreshData={refreshData}
                 collectioName={collectionName || ""}
                 data={convertToRecord(data)}
                 token={token}
@@ -169,6 +172,7 @@ type DataCardProps = {
   dbId: string;
   collectioName: string;
   token: string | null;
+  refreshData: () => void
 };
 
 const DataCard: React.FC<DataCardProps> = ({
@@ -176,7 +180,8 @@ const DataCard: React.FC<DataCardProps> = ({
   onClick,
   dbId,
   collectioName,
-  token
+  token,
+  refreshData
 }) => {
 
   const handleDelete = async () => {
@@ -184,7 +189,7 @@ const DataCard: React.FC<DataCardProps> = ({
 
     if (results.success) {
       window.alert("Item deleted succesfully");
-      window.location.reload();
+      refreshData();
       return
     }
 

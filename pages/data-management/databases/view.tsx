@@ -13,8 +13,8 @@ export default function DataManagementDetail() {
 
   const { dbId, collection_name } = router.query;
 
-  const { connections } = useDatabaseConnections();
-  const { collectionItems } = useCollectionItems(dbId as string | undefined || "", collection_name as string | undefined || "");
+  const { connections, refreshData } = useDatabaseConnections();
+  const { collectionItems, refreshData: refreshCollection } = useCollectionItems(dbId as string | undefined || "", collection_name as string | undefined || "");
 
   console.log("Items:", collectionItems);
 
@@ -54,7 +54,7 @@ export default function DataManagementDetail() {
           }}>
 
             <div style={{ borderRight: "1px solid #909090", height: "100%", width: "30%", paddingTop: "10px" }}>
-              <DatabaseNavSideBar data={connections} />
+              <DatabaseNavSideBar data={connections} refreshData={refreshData} />
             </div>
 
             <div style={{ height: "100%", width: "70%" }}>
@@ -63,6 +63,7 @@ export default function DataManagementDetail() {
                 collectionName={collection_name as string | undefined || ""}
                 title={collection_name as string | undefined || ""}
                 data={collectionItems || { items: [] }}
+                refreshData={refreshCollection}
               />
             </div>
           </div>

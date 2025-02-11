@@ -14,7 +14,7 @@ import { useRouter } from "next/router";
 import { useGetToken } from "@/services/AuthServices";
 
 
-const DatabaseNavSideBar = ({ data }: { data: Connection[] }) => {
+const DatabaseNavSideBar = ({ data, refreshData }: { data: Connection[], refreshData: () => void }) => {
 
   const router = useRouter();
 
@@ -62,7 +62,7 @@ const DatabaseNavSideBar = ({ data }: { data: Connection[] }) => {
 
     if (results.success) {
       window.alert("Database deleted succesfully");
-      window.location.reload();
+      refreshData();
       return
     }
 
@@ -71,7 +71,7 @@ const DatabaseNavSideBar = ({ data }: { data: Connection[] }) => {
 
   return (
     <>
-      <AddConnectionModal open={openConnection} setOpen={setOpenConnection} />
+      <AddConnectionModal open={openConnection} setOpen={setOpenConnection} refreshData={refreshData}/>
       <AddCollectionModal open={openCollection} setOpen={setOpenCollection} databaseId={databaseId} />
 
       <div style={{ display: "flex", flexDirection: "row", justifyContent: "start", alignItems: "center", padding: "0px 20px" }}>
@@ -176,7 +176,7 @@ const DatabaseNavSideBar = ({ data }: { data: Connection[] }) => {
                               setOpenCollection(true);
                             }}
                           >
-                            Add Collection {db.database_name}
+                            Add Collection
                           </div>
                         </div>
                       )}
