@@ -42,8 +42,13 @@ function groupAndSortConnections(connections: DatabaseConnection[]) {
 export const useDatabaseConnections = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [dbconnections, setDbconnections] = useState<DatabaseConnection[] | undefined>(undefined);
+  const [refresh, setRefresh] = useState(false);
   let connections: Connection[] = []
   const token = useGetToken();
+
+  const refreshData = () => {
+    setRefresh(refresh => !refresh);
+  }
 
   useEffect(() => {
     const fetchDatabases = async () => {
@@ -61,11 +66,11 @@ export const useDatabaseConnections = () => {
 
     fetchDatabases();
 
-  }, [token]);
+  }, [token, refresh]);
 
   if (dbconnections) {
     connections = groupAndSortConnections(dbconnections)
   }
 
-  return { dbconnections, isLoading, connections };
+  return { dbconnections, isLoading, connections, refreshData };
 };

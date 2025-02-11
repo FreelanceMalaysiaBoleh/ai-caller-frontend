@@ -7,12 +7,13 @@ import { Switch } from "antd";
 interface ModalProps {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
+  refreshData: () => void
 }
 
-const AddConnectionModal = ({ open, setOpen }: ModalProps) => {
+const AddConnectionModal = ({ open, setOpen, refreshData }: ModalProps) => {
   const closeModal = () => setOpen(false);
 
-  const { register, errors, form, handleSubmitForm, setValue, isLoading } = useAddConnectionModal();
+  const { register, errors, form, handleSubmitForm, setValue, isLoading } = useAddConnectionModal(refreshData, closeModal);
 
   const [checked, setChecked] = useState(false);
 

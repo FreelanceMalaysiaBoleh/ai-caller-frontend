@@ -11,9 +11,10 @@ interface ModalProps {
     item?: Record<string, unknown>;
     collectionName: string | null;
     setOpen: Dispatch<SetStateAction<boolean>>;
+    refreshData: () => void
 }
 
-const AddItemModal = ({ open, setOpen, databaseId, collectionName, item }: ModalProps) => {
+const AddItemModal = ({ open, setOpen, databaseId, collectionName, item, refreshData }: ModalProps) => {
     const closeModal = () => setOpen(false);
 
     const [dbid, setDbid] = useState<string | null>(null);
@@ -21,13 +22,12 @@ const AddItemModal = ({ open, setOpen, databaseId, collectionName, item }: Modal
     const [itemObj, setItemObj] = useState<Record<string, unknown> | undefined>(item);
 
     useEffect(() => {
-        console.log("item", item)
         setDbid(databaseId);
         setColName(collectionName);
         setItemObj(item);
     }, [databaseId, collectionName, item])
-    
-    const { register, errors, fields, append, remove, form, handleSubmitForm } = useAddItemModal(dbid, colName, itemObj);
+
+    const { register, errors, fields, append, remove, form, handleSubmitForm } = useAddItemModal(dbid, colName, itemObj, refreshData, closeModal);
 
     // Prevent closing the modal when clicking inside the content
     const handleContentClick = (e: MouseEvent<HTMLDivElement>) => {

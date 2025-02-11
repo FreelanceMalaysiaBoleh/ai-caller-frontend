@@ -23,7 +23,7 @@ function convertObjectToArray(obj: Record<string, unknown>): ItemType["fields"] 
     return Object.entries(obj).map(([key, value]) => ({ key, value }));
 }
 
-const useAddItemModal = (databaseId: string | null, collection_name: string | null, item: Record<string, unknown> | undefined) => {
+const useAddItemModal = (databaseId: string | null, collection_name: string | null, item: Record<string, unknown> | undefined, refreshData: () => void, closeModal: () => void) => {
 
     const [isLoading, setIsLoading] = useState(false);
     const token = useGetToken();
@@ -46,6 +46,7 @@ const useAddItemModal = (databaseId: string | null, collection_name: string | nu
     const {
         handleSubmit,
         register,
+        reset,
         setValue,
         control,
         formState: { errors },
@@ -96,7 +97,9 @@ const useAddItemModal = (databaseId: string | null, collection_name: string | nu
         if (results.success) {
             window.alert(`Item ${item ? "updated" : "added"} successfully`)
             setIsLoading(false);
-            window.location.reload();
+            refreshData();
+            closeModal();
+            reset();
             return
         }
 

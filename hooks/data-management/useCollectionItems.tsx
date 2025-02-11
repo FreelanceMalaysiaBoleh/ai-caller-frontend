@@ -10,7 +10,12 @@ export const useCollectionItems = (dbid: string, collectionName: string) => {
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [collectionItems, setCollectionItems] = useState<ItemsArray | undefined>(undefined);
+    const [refresh, setRefresh] = useState(false);
     const token = useGetToken();
+
+    const refreshData = () => {
+        setRefresh(refresh => !refresh);
+      }
 
     useEffect(() => {
         const fetchItems = async () => {
@@ -30,7 +35,7 @@ export const useCollectionItems = (dbid: string, collectionName: string) => {
 
         fetchItems();
 
-    }, [dbid, collectionName, token]);
+    }, [dbid, collectionName, token, refresh]);
 
-    return { collectionItems, isLoading };
+    return { collectionItems, isLoading, refreshData };
 };

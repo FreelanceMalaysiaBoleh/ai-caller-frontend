@@ -54,15 +54,17 @@ type addConnectionfieldsStrings = "connection_name" | "database_type" | "host" |
 
 export const createNewConnection = async (values: DatabaseConnectionType, token: string | null): Promise<{ success: boolean; data?: any; error?: string }> => {
 
-  console.log(values);
+  console.log(values, token);
   const formData = new FormData();
 
   for (const key in values) {
     formData.append(key, values[key as addConnectionfieldsStrings]);
   }
 
-  formData.append("is_cloud_db", values.is_cloud_db ? "true" : "false")
-  formData.append("port", `${values.port}`)
+  // formData.append("is_cloud_db", values.is_cloud_db ? "true" : "false")
+  // formData.append("port", `${values.port}`)
+
+  console.log(formData);
 
   try {
     const response = await axios({

@@ -16,7 +16,7 @@ export interface DatabaseConnectionType {
 
 export type addConnectionfields = "connection_name" | "database_type" | "is_cloud_db" | "host" | "port" | "database_name";
 
-const useAddConnectionModal = () => {
+const useAddConnectionModal = (refreshData: () => void, closeModal: () => void) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const token = useGetToken();
@@ -46,6 +46,7 @@ const useAddConnectionModal = () => {
   const {
     handleSubmit,
     register,
+    reset,
     setValue,
     formState: { errors },
   } = form
@@ -58,7 +59,9 @@ const useAddConnectionModal = () => {
     if (results.success) {
       window.alert("Connection created successfully")
       setIsLoading(false);
-      window.location.reload();
+      refreshData();
+      closeModal();
+      reset();
       return
     }
 
