@@ -111,7 +111,6 @@ const NodeHeadModal = ({ onClose, currentNodeType, changeType }: { onClose: () =
     </div>
   );
 
-  // Use ReactDOM.createPortal to render the modal outside the canvas
   return ReactDOM.createPortal(
     modalContent,
     document.getElementById("modal-root") as HTMLElement
