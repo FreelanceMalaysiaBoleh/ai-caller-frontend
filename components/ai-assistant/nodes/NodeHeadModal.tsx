@@ -42,7 +42,7 @@ const NodeHeadModal = ({ onClose, currentNodeType, changeType }: { onClose: () =
             marginBottom: "20px",
           }}
         >
-          <h2 style={{ fontSize: "18px", margin: 0 }}>Change Node</h2>
+          <h2 style={{ fontSize: "18px", margin: 0, color: "black" }}>Change Node</h2>
           <button
             onClick={onClose}
             style={{
@@ -63,6 +63,7 @@ const NodeHeadModal = ({ onClose, currentNodeType, changeType }: { onClose: () =
           style={{
             width: "100%",
             padding: "10px",
+            backgroundColor: "white",
             marginBottom: "20px",
             borderRadius: "5px",
             border: "1px solid #ddd",
