@@ -97,7 +97,7 @@ const Canvas = ({
       };
 
       const newNode: Node = {
-        id: `${nodes.length + 1}`,
+        id: `${Number(nodes[nodes.length - 1].id) + 1}`,
         type: item.type,
         data: { label: "empty" },
         position,

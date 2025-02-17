@@ -13,7 +13,7 @@ interface NodeHeadProps {
 const NodeHead = ({ id, title, nodeType, color }: NodeHeadProps) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const { setNodes } = useReactFlow();
+  const { setNodes, setEdges } = useReactFlow();
 
   // Ref to detect click outside the dropdown
   const dropdownRef = useRef<HTMLDivElement | null>(null);
@@ -29,7 +29,8 @@ const NodeHead = ({ id, title, nodeType, color }: NodeHeadProps) => {
   };
 
   const deleteNode = () => {
-    setNodes((nodes) => nodes.filter((node) => node.id !== id)); // Filter out the node with the given id
+    setNodes((nodes) => nodes.filter((node) => node.id !== id));
+    setEdges((edges) => edges.filter((edge) => edge.source !== id && edge.target !== id));
   };
 
   const toggleDropdown = () => {

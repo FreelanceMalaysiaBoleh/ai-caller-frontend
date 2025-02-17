@@ -12,7 +12,7 @@ const ExistingDB: React.FC<NodeProps> = ({ id, data, type }) => {
     const [openModal, setOpenModal] = useState(false);
     const [value, setValue] = useState(data.selectedDB || "");
 
-    const { connections } = useDatabaseConnections();
+    const { dbconnections } = useDatabaseConnections();
 
     const closeModal = () => {
         setOpenModal(false);
@@ -20,6 +20,7 @@ const ExistingDB: React.FC<NodeProps> = ({ id, data, type }) => {
 
     const handleConnectSource = useCallback(
         (params: Connection) => {
+            console.log(params);
             // Check if the current node is involved in the connection
             if (params.source === id || params.target === id) {
                 setIsConnectedSource(true); // Set as connected
@@ -28,8 +29,8 @@ const ExistingDB: React.FC<NodeProps> = ({ id, data, type }) => {
         [id]
     );
 
-    const items = connections ? connections.map(item => { return { title: item.name, value: item.name } }) : [];
-    const selectedVal = connections ? connections.find((item) => item.name == value)?.name || "None selected" : "None selected"
+    const items = dbconnections ? dbconnections.map(item => { return { title: item.database_name, value: item._id } }) : [];
+    const selectedVal = dbconnections ? dbconnections.find((item) => item._id == value)?.database_name || "None selected" : "None selected"
 
     const handleDBSelect = (selectedDB: string) => {
         setValue(selectedDB);

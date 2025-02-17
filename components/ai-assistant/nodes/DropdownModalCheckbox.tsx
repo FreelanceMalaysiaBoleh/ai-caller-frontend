@@ -55,7 +55,7 @@ const DropdownModalCheckbox = (
                         marginBottom: "20px",
                     }}
                 >
-                    <h2 style={{ fontSize: "18px", margin: 0 }}>{title}</h2>
+                    <h2 style={{ fontSize: "18px", margin: 0, color: "black" }}>{title}</h2>
                     <button
                         onClick={onClose}
                         style={{
@@ -76,6 +76,7 @@ const DropdownModalCheckbox = (
                     style={{
                         width: "100%",
                         padding: "10px",
+                        backgroundColor: "white",
                         marginBottom: "20px",
                         borderRadius: "5px",
                         border: "1px solid #ddd",
@@ -99,6 +100,9 @@ const DropdownModalCheckbox = (
                                     marginBottom: "5px",
                                     borderRadius: "5px",
                                     transition: "background-color 0.2s",
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    alignItems: "center"
                                 }}
                                 onMouseOver={(e) =>
                                     (e.currentTarget.style.backgroundColor = "#e6e6e6")
@@ -111,8 +115,14 @@ const DropdownModalCheckbox = (
                                     type="checkbox"
                                     checked={selectedItems.includes(item.value)}
                                     onChange={() => onChange(item.value)}
+                                    style={{
+                                        marginRight: 5,
+                                        marginTop: 3
+                                    }}
                                 />
-                                {item.title}
+                                <p style={{ color: "black", fontSize: "15px" }}>
+                                    {item.title}
+                                </p>
                             </div>
                         ))
                     ) : (
