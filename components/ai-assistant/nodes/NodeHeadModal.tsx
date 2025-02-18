@@ -1,14 +1,30 @@
 import { NodeItems } from "@/contants/NodeConstants";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import ReactDOM from "react-dom";
 
-const NodeHeadModal = ({ onClose, currentNodeType, changeType }: { onClose: () => void, currentNodeType: string, changeType: (type: string) => void }) => {
+const NodeHeadModal = ({
+  onClose,
+  currentNodeType,
+  changeType,
+}: {
+  onClose: () => void;
+  currentNodeType: string;
+  changeType: (type: string) => void;
+}) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const items = NodeItems.filter(item => item.value !== currentNodeType);
+  const modalRef = useRef<HTMLDivElement | null>(null); // Ref for modal
 
+  const items = NodeItems.filter((item) => item.value !== currentNodeType);
   const filteredItems = items.filter((item) =>
     item.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  // Handle click outside the modal to close it
+  const handleOutsideClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+      onClose(); // Close the modal
+    }
+  };
 
   const modalContent = (
     <div
@@ -24,8 +40,10 @@ const NodeHeadModal = ({ onClose, currentNodeType, changeType }: { onClose: () =
         alignItems: "center",
         zIndex: 1000,
       }}
+      onClick={handleOutsideClick} // Listen for clicks on the overlay
     >
       <div
+        ref={modalRef} // Attach ref to modal container
         style={{
           backgroundColor: "#fff",
           borderRadius: "10px",
@@ -34,6 +52,7 @@ const NodeHeadModal = ({ onClose, currentNodeType, changeType }: { onClose: () =
           maxHeight: "80%",
           overflow: "auto",
         }}
+        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside modal
       >
         <div
           style={{
@@ -42,11 +61,14 @@ const NodeHeadModal = ({ onClose, currentNodeType, changeType }: { onClose: () =
             marginBottom: "20px",
           }}
         >
-          <h2 style={{ fontSize: "18px", margin: 0, color: "black" }}>Change Node</h2>
+          <h2 style={{ fontSize: "18px", margin: 0, color: "black" }}>
+            Change Node
+          </h2>
           <button
             onClick={onClose}
             style={{
               background: "none",
+              color: "black",
               border: "none",
               fontSize: "16px",
               cursor: "pointer",
@@ -71,9 +93,9 @@ const NodeHeadModal = ({ onClose, currentNodeType, changeType }: { onClose: () =
         />
         <div
           style={{
-            maxHeight: "300px", // Set the maximum height for the items list
-            overflowY: "auto", // Enable vertical scrolling for overflow
-            paddingRight: "10px", // Add padding for better scrollbar visibility
+            maxHeight: "300px",
+            overflowY: "auto",
+            paddingRight: "10px",
           }}
         >
           {filteredItems.length > 0 ? (
@@ -103,9 +125,7 @@ const NodeHeadModal = ({ onClose, currentNodeType, changeType }: { onClose: () =
               </div>
             ))
           ) : (
-            <p style={{ textAlign: "center", color: "#999" }}>
-              No items found
-            </p>
+            <p style={{ textAlign: "center", color: "#999" }}>No items found</p>
           )}
         </div>
       </div>
