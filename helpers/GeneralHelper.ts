@@ -43,7 +43,6 @@ export const convertSpacesToUnderscore = (input: string) => {
   
   const newInput = input.replace(" ", "_");
 
-  console.log(newInput[0]);
   if(newInput[0] == "_"){
     return newInput.slice(1)
   }
