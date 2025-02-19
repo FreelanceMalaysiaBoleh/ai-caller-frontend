@@ -65,7 +65,7 @@ const Index = () => {
     return (
         <MainLayout>
             <>
-                <button onClick={() => console.log(nodes, edges)}>Test</button>
+                {/* <button onClick={() => console.log(nodes, edges)}>Test</button> */}
                 <Modal open={isModalOpen} onOk={() => setIsModalOpen(false)} onCancel={() => setIsModalOpen(false)}>
                     <div style={{ height: "70px", display: "flex", alignItems: "center" }}>
                         <p>Caller flow has been saved successfully</p>
