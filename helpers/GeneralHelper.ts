@@ -40,5 +40,17 @@ export const encodeFileToBase64 = (file: File): Promise<string> => {
 };
 
 export const convertSpacesToUnderscore = (input: string) => {
-  return input.replace(" ", "_");
+  
+  const newInput = input.replace(" ", "_");
+
+  console.log(newInput[0]);
+  if(newInput[0] == "_"){
+    return newInput.slice(1)
+  }
+
+  if(newInput[newInput.length - 1] == "_"){
+    return newInput.slice(0, newInput.length - 1)
+  }
+
+  return newInput
 }
