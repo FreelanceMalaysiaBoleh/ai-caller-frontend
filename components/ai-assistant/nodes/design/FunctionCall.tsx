@@ -4,6 +4,7 @@ import SourceConnector from '../SourceConnector';
 import TargetConnector from '../TargetConnector';
 import NodeDropdown from '../../NodeDropdown';
 import NodeHead from '../NodeHead';
+import { convertSpacesToUnderscore } from '@/helpers/GeneralHelper';
 
 type FunctionEntry = {
   key: string;
@@ -152,7 +153,7 @@ const FunctionCall: React.FC<NodeProps> = ({ id, data, type }) => {
                   type="text"
                   placeholder="Key"
                   value={field.key}
-                  onChange={(e) => handleFieldChange(index, 'key', e.target.value)}
+                  onChange={(e) => handleFieldChange(index, 'key', convertSpacesToUnderscore(e.target.value))}
                   style={{
                     width: "20%",
                     padding: '5px',
