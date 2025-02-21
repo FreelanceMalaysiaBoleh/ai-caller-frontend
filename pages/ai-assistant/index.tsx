@@ -43,6 +43,7 @@ const Index = () => {
     }, [])
 
     const handleSaveWorkflow = async () => {
+        // console.log(nodes, edges);
         const results = await saveWorkflow(nodes, edges, workflow, agent?._id || "", token);
 
         if (results.success) {
