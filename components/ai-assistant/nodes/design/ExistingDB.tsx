@@ -10,7 +10,7 @@ import { useDatabaseConnections } from '@/hooks/data-management/useDatabaseConne
 const ExistingDB: React.FC<NodeProps> = ({ id, data, type }) => {
     const [isConnectedSource, setIsConnectedSource] = useState(false);
     const [openModal, setOpenModal] = useState(false);
-    const [value, setValue] = useState(data.selectedDB || "");
+    const [value, setValue] = useState(data.selectedDB._id || "");
 
     const { dbconnections } = useDatabaseConnections();
 
@@ -34,7 +34,8 @@ const ExistingDB: React.FC<NodeProps> = ({ id, data, type }) => {
 
     const handleDBSelect = (selectedDB: string) => {
         setValue(selectedDB);
-        data.selectedDB = selectedDB;
+        const selectedConnection = dbconnections?.find((item) => item._id == selectedDB)
+        data.selectedDB = selectedConnection;
     };
 
     return (
