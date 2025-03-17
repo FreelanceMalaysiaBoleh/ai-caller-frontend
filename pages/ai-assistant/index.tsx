@@ -30,17 +30,19 @@ const Index = () => {
         const getStatus = async () => {
             const res = await getPipelineStatus(workflowId || "", token)
 
+            console.log(res);
             if ((res as ErrorResponse).error) {
                 const errResponse = res as ErrorResponse;
                 setErrorPipeline(errResponse.error)
             } else {
                 const response = res as SuccessResponse
                 setPipelineStatus(response.status);
+                setErrorPipeline("");
             }
         }
 
         getStatus();
-    }, [])
+    }, [workflowId])
 
     const handleSaveWorkflow = async () => {
         // console.log(nodes, edges);

@@ -14,12 +14,15 @@ type PipelineResponse = SuccessResponse | ErrorResponse;
 
 const startPipeline = async (workflowId: string, token: string | null): Promise<PipelineResponse> => {
 
+  const test = `${token}`;
+  console.log(test);
   try {
     const response = await axios.post<SuccessResponse>(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/workflows/pipeline/start/${workflowId}`,
+      {},
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${test}`,
         },
       }
     );
@@ -50,7 +53,7 @@ const startPipeline = async (workflowId: string, token: string | null): Promise<
 };
 
 const getPipelineStatus = async (workflowId: string, token: string | null): Promise<PipelineResponse> => {
-
+  console.log("id:", workflowId);
   try {
     const response = await axios.get<SuccessResponse>(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/workflows/pipeline/status/${workflowId}`,
@@ -91,6 +94,7 @@ const stopPipeline = async (workflowId: string, token: string | null): Promise<P
   try {
     const response = await axios.post<SuccessResponse>(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/workflows/pipeline/stop/${workflowId}`,
+      {},
       {
         headers: {
           Authorization: `Bearer ${token}`,
