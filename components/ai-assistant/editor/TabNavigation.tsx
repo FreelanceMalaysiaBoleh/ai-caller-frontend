@@ -27,7 +27,7 @@ const TabNavigation = ({
 
     const handleStartPipeline = async () => {
         setErrorPipeline("")
-        if (pipelineStatus == "stopped") {
+        if (pipelineStatus == "stopped" || pipelineStatus == "not_started") {
             const res = await startPipeline(workflowId, token)
 
             if ((res as ErrorResponse).error) {
@@ -59,6 +59,7 @@ const TabNavigation = ({
     const handleStopPipeline = async () => {
         setErrorPipeline("")
         if (pipelineStatus == "running") {
+            setPipelineStatus("stopping");
             const res = await stopPipeline(workflowId, token)
 
             if ((res as ErrorResponse).error) {
@@ -212,7 +213,7 @@ const TabNavigation = ({
                 }}
 
             >
-                Status: {pipelineStatus.charAt(0).toUpperCase() + pipelineStatus.slice(1)}
+                Status: {`${pipelineStatus.charAt(0).toUpperCase() + pipelineStatus.slice(1)}`.replace("_", " ")}
             </div>
         </div>
     );

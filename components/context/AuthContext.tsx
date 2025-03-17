@@ -16,7 +16,7 @@ const AuthContext = ({ children }: { children: React.ReactNode }) => {
 
     const checkAuth = async () => {
       const res = await getAgents(token);
-
+      console.log("Auth", res)
       if (!res.success) {
         dispatch(removeToken());
         router.push("/login");
