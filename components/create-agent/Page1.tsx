@@ -45,7 +45,8 @@ const Page1 = ({
                         subtext="Select the language your agent will mostly use"
                         register={register}
                         errors={errors}
-                        options={["Auto", "English", "Spanish", "Arabic"]}
+                        // options={["Auto", "English", "Spanish", "Arabic"]}
+                        options={["English"]}
                     />
                 </div>
             </div>
@@ -64,7 +65,8 @@ const Page1 = ({
                         subtext="Select what voice your agent will use"
                         register={register}
                         errors={errors}
-                        options={["Professional Male", "Professional Female"]}
+                        options={[ "Professional Female"]}
+                        // options={["Professional Male", "Professional Female"]}
                     />
                 </div>
                 <div style={{
