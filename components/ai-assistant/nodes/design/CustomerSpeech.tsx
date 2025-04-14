@@ -43,7 +43,7 @@ const CustomerSpeech: React.FC<NodeProps> = ({ id, data, type }) => {
                 <TargetConnector isConnected={data.isConnectedTarget} />
                 <div style={{ marginRight: "auto", marginLeft: 5, width: "90%" }}>
                 </div>
-                <SourceConnector isConnected={isConnectedSource} />
+                <SourceConnector isConnected={data.isConnectedSource ||isConnectedSource} />
             </div>
 
             {/* Output handle */}

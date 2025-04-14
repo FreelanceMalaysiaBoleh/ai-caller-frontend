@@ -162,7 +162,7 @@ const DBConnection: React.FC<NodeProps> = ({ id, data }) => {
           </div>
         </div>
 
-        <SourceConnector isConnected={isConnectedSource} />
+        <SourceConnector isConnected={data.isConnectedSource ||isConnectedSource} />
       </div>
 
       {/* Output handle */}

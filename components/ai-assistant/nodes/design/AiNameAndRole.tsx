@@ -9,7 +9,7 @@ const AiNameAndRole: React.FC<NodeProps> = ({ id, data, type }) => {
     // State to manage editable fields
     const [name, setName] = useState(data.name || "");
     const [role, setRole] = useState(data.role || "");
-    const [isConnectedSource, setIsConnectedSource] = useState(false);
+    const [isConnectedSource, setIsConnectedSource] = useState(data.isConnectedSource || false);
 
     const handleConnectSource = useCallback(
         (params: Connection) => {
