@@ -4,9 +4,13 @@ import { FieldErrors, FormProvider, UseFormRegister } from "react-hook-form";
 import useProfileForm, { profileDetailsFields, ProfileDetailsFormType } from "@/hooks/profile/useProfileForm";
 // import { Switch } from "antd";
 import { FaCheckCircle } from "react-icons/fa";
+import { responsiveValue, useScreenSize } from "@/context/ViewportContext";
 
 const ProfileDetails = () => {
   const { register, errors, form, handleSubmitForm } = useProfileForm();
+  const size = useScreenSize();
+
+  const layout: "row" | "column" = responsiveValue(size, "column", "row", "row") as "row" | "column";
   // const [emailPasswordCheck, setEmailPasswordCheck] = useState(false);
   // const [mobileCheck, setMobileCheck] = useState(false);
   // const [emailOTPCheck, setEmailOTPCheck] = useState(false);
@@ -46,13 +50,12 @@ const ProfileDetails = () => {
       <div style={{ marginBottom: "10px" }}></div>
       <div style={{
         width: "100%",
-        height: "100%",
         backgroundColor: "#3E3E3E",
         borderRadius: 10,
         display: "flex",
         flexDirection: "column",
         alignItems: "start",
-        padding: "10px 20px"
+        padding: "10px 20px 50px 20px"
       }}>
         {/* <ProfileImageUpload /> */}
 
@@ -61,7 +64,7 @@ const ProfileDetails = () => {
             <form onSubmit={handleSubmitForm}>
               <div>
                 <div style={{ display: "flex", flexDirection: "row", gap: 40 }}>
-                  <div style={{ width: "50%", display: "flex", flexDirection: "column" }}>
+                  <div style={{ width: responsiveValue(size, "90%", "50%", "50%"), display: "flex", flexDirection: "column" }}>
                     <FormInput
                       label={"Mobile Number"}
                       placeholder="+60XXXXXXX"
@@ -93,7 +96,7 @@ const ProfileDetails = () => {
                         errors={errors}
                       />
                     </div>
-{/* 
+                    {/* 
                     <div style={{ marginBottom: "15px" }}>
                       <FormInput
                         label={"Company/Corporate/Legal Name"}
@@ -155,7 +158,12 @@ const ProfileDetails = () => {
                   </div>
                 </div> */}
 
-                <div style={{ width: "100%", display: "flex", marginTop: "40px" }}>
+                <div style={{
+                  width: "100%",
+                  display: "flex",
+                  flexDirection: layout,
+                  marginTop: "40px"
+                }}>
                   <button
                     type="submit"
                     style={{
@@ -165,6 +173,7 @@ const ProfileDetails = () => {
                       border: "none",
                       borderRadius: "5px",
                       cursor: "pointer",
+                      marginBottom: responsiveValue(size, 10, 0, 0)
                     }}
                   >
                     <p id="biggersmall">Cancel</p>
@@ -179,7 +188,7 @@ const ProfileDetails = () => {
                       border: "none",
                       borderRadius: "5px",
                       cursor: "pointer",
-                      marginLeft: "auto"
+                      marginLeft: responsiveValue(size, 0, "auto", "auto")
                     }}
                   >
                     <p id="biggersmall">Save</p>

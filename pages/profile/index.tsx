@@ -1,16 +1,27 @@
 import MainLayout from "@/components/general/MainLayout";
 import ProfileDetails from "@/components/profile/ProfileDetails";
 import TelephonySettings from "@/components/profile/TelephonySettings";
+import { responsiveValue, useScreenSize} from "@/context/ViewportContext";
 
 const ProfileDetail = () => {
 
+  const size = useScreenSize();
+  const layout: "row" | "column" = responsiveValue(size, "column", "column","row") as "row" | "column";
+
   return (
     <MainLayout>
-      <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "row", gap: "20px" }}>
-        <div style={{ width: "40%", height: "75%", maxHeight: "600px" }}>
+      <div style={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        flexDirection: layout,
+        gap: "20px",
+        paddingBottom: 20,
+      }}>
+        <div style={{ width: responsiveValue(size, "90%", "90%","40%") }}>
           <ProfileDetails />
         </div>
-        <div style={{ width: "55%", height: "70%" }}>
+        <div style={{ width: responsiveValue(size, "100%", "100%","40%")}}>
           <TelephonySettings />
         </div>
       </div>
