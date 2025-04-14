@@ -4,12 +4,14 @@ import logo from "../../public/images/logo.png"
 import { removeToken } from '@/redux/authSlice';
 import { useDispatch } from 'react-redux';
 import { useGetAgent } from '@/hooks/agent/useGetAgent';
+import { useScreenSize } from '@/context/ViewportContext';
 
 const { Header } = Layout;
 
 const AppHeader = () => {
     const dispatch = useDispatch();
     const { agent } = useGetAgent();
+    const size = useScreenSize();
 
     return (
         <Header
@@ -24,23 +26,56 @@ const AppHeader = () => {
                 paddingTop: "10px"
             }}
         >
-            <Image src={logo} width={158} height={30} alt={"logo"} />
-            <div
-                style={{
-                    borderLeft: "2px solid white",
-                    height: 30,
-                    marginLeft: 25,
-                    marginRight: 25,
-                }}
-            ></div>
-            <h2>{agent ? `${agent.name}`: "No agent created"}</h2>
+            {
+                size == "small"
+                    ?
+                    <Image
+                        src={logo}
+                        width={111}
+                        height={21}
+                        alt={"logo"}
+                    />
+                    :
+                    <Image
+                        src={logo}
+                        width={158}
+                        height={30}
+                        alt={"logo"}
+                    />
+            }
+
+            {
+                size == "small"
+                    ?
+                    <></>
+                    :
+                    <>
+                        <div
+                            style={{
+                                borderLeft: "2px solid white",
+                                height: 30,
+                                marginLeft: 25,
+                                marginRight: 25,
+                            }}
+                        ></div>
+                        <h2>{agent ? `${agent.name}` : "No agent created"}</h2>
+                    </>
+            }
+
             <div style={{
                 display: "flex",
                 flexDirection: "column",
                 lineHeight: 1,
                 marginLeft: "auto",
             }}>
-                <h2>Omantel Telecommunications</h2>
+                {
+                size == "small"
+                    ?
+                    <></>
+                    :
+                    <h2>Omantel Telecommunications</h2>
+                }
+                
                 <button
                     onClick={() => {
                         dispatch(removeToken());

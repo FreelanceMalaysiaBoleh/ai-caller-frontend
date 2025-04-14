@@ -83,7 +83,7 @@ const UseFile: React.FC<NodeProps> = ({ id, data, type }) => {
                         <p id="biggersmall">Select File</p>
                     </button>
                 </div>
-                <SourceConnector isConnected={isConnectedSource} />
+                <SourceConnector isConnected={data.isConnectedSource || isConnectedSource} />
             </div>
 
             {/* Output handle */}

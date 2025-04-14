@@ -10,6 +10,7 @@ import AuthContext from "@/components/context/AuthContext";
 import { Provider } from "react-redux";
 import { store, persistor } from "../redux/store"
 import { PersistGate } from "redux-persist/integration/react";
+import { ViewportProvider } from "@/context/ViewportContext";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -28,9 +29,11 @@ export default function App({ Component, pageProps }: AppProps) {
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <AuthContext>
-            <DndProvider backend={HTML5Backend}>
-              <Component {...pageProps} />
-            </DndProvider>
+            <ViewportProvider>
+              <DndProvider backend={HTML5Backend}>
+                <Component {...pageProps} />
+              </DndProvider>
+            </ViewportProvider>
           </AuthContext>
         </PersistGate>
       </Provider>

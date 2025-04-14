@@ -3,7 +3,8 @@ import { useCallback, useState } from "react";
 import SourceConnector from "../SourceConnector";
 
 //key: .initiate
-const Initiate: React.FC<NodeProps> = ({ id }) => {
+const Initiate: React.FC<NodeProps> = ({ id, data }) => {
+    // const [isConnected, setIsConnected] = useState(data.isConnected || false);
     const [isConnected, setIsConnected] = useState(false);
 
     const handleConnect = useCallback(
@@ -15,7 +16,6 @@ const Initiate: React.FC<NodeProps> = ({ id }) => {
         },
         [id]
     );
-
 
     return (
         <div
@@ -44,8 +44,8 @@ const Initiate: React.FC<NodeProps> = ({ id }) => {
                 display: "flex",
 
             }}>
-                <p style={{ fontSize: "14px", marginRight: "auto" }}>Runtime</p>
-                <SourceConnector isConnected={isConnected} />
+                <p style={{ fontSize: "14px", marginRight: "auto" }}>Runtime {data.runtime}</p>
+                <SourceConnector isConnected={data.isConnectedSource || isConnected} />
             </div>
             <Handle
                 type="source"

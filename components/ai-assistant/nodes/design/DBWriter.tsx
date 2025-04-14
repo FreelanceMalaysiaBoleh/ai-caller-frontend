@@ -91,7 +91,7 @@ const DBWriterComponent: React.FC<NodeProps> = ({ id, data, type }) => {
                     </div>
                 </div>
 
-                <SourceConnector isConnected={isConnectedSource} />
+                <SourceConnector isConnected={data.isConnectedSource ||isConnectedSource} />
             </div>
 
             {/* Output handle */}

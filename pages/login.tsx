@@ -9,6 +9,7 @@ import Image from "next/image";
 import GedeekIcon from "@/public/images/GEDEEK_BIG.png"
 import { useDispatch } from "react-redux";
 import { setToken } from "@/redux/authSlice";
+import { responsiveValue, useScreenSize } from "@/context/ViewportContext";
 
 // Validation schema for username and password
 const loginSchema = yup.object().shape({
@@ -23,6 +24,7 @@ const LoginForm = () => {
   const router = useRouter();
 
   const dispatch = useDispatch();
+  const size = useScreenSize();
 
   const {
     register,
@@ -63,14 +65,20 @@ const LoginForm = () => {
           justifyContent: "center",
         }}
       >
-        <div style={{
-          flex: 1,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: 'center'
-        }}>
-          <Image src={GedeekIcon.src} alt="mongo icon" height={76} width={400} />
-        </div>
+        {
+          size == "large" || size == "medium"
+            ?
+            <div style={{
+              flex: 1,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: 'center'
+            }}>
+              <Image src={GedeekIcon.src} alt="mongo icon" height={76} width={400} />
+            </div>
+            :
+            <></>
+        }
         <div style={{
           flex: 1,
           width: "100%",
@@ -78,12 +86,12 @@ const LoginForm = () => {
           flexDirection: "column",
           alignItems: "center"
         }}>
-          <h2 style={{ fontSize: "34px", marginBottom: "10px" }}>Login to Your Account</h2>
+          <h2 style={{ fontSize: responsiveValue(size, "25px", "34px", "34px") , marginBottom: "10px" }}>Login to Your Account</h2>
 
           <div style={{
             backgroundColor: "#3e3e3e",
             padding: "30px 30px",
-            width: "50%",
+            width: responsiveValue(size, "90%", "80%", "50%"),
             borderRadius: "10px"
           }}>
             <form onSubmit={handleSubmit(onSubmit)} className="login-form">

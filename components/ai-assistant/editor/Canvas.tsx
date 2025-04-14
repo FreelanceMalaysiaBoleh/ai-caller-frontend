@@ -26,6 +26,22 @@ export const initialNodes: Node[] = [
 
 export const initialEdges: Edge[] = [];
 
+function markConnections(nodes: Node[], edges: Edge[]): Node[] {
+  return nodes.map((node) => {
+    const isSource = edges.some((edge) => edge.source === node.id);
+    const isTarget = edges.some((edge) => edge.target === node.id);
+
+    return {
+      ...node,
+      data: {
+        ...node.data,
+        ...(isSource && { isConnectedSource: true }),
+        ...(isTarget && { isConnectedTarget: true }),
+      },
+    };
+  });
+}
+
 type CanvasProps = {
   workflow?: WorkFlowType
   isLoading: boolean
@@ -110,21 +126,18 @@ const Canvas = ({
     }),
   }), [nodes, reactFlowInstance]);
 
-
-
-  // useEffect(() => {
-  //   console.log("save workflow", saveLock)
-  //   if (nodes.length > 0 && nodes.length % 4 === 0 && saveLock != nodes.length) {
-  //     handleSaveWorkflow();
-  //     setSaveLock(nodes.length)
-  //   }
-
-  // }, [nodes]);
-
   useEffect(() => {
+
     if (workflow) {
-      setNodes(workflow?.nodes)
-      setEdges(workflow?.edges)
+      if(workflow.nodes.length > 0){
+        const newNodes = markConnections(workflow.nodes, workflow.edges);
+        console.log(newNodes);
+        setNodes(newNodes)
+        setEdges(workflow?.edges)
+      }else{
+        setNodes(initialNodes);
+        setEdges(initialEdges);
+      }
     }
   }, [workflow])
 

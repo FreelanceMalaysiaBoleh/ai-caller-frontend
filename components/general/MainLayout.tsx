@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react'
 import SidebarNav from '../dashboard/SidebarNav';
 import { Layout } from 'antd';
 import AppHeader from '../dashboard/AppHeader';
+import { responsiveValue, useScreenSize } from '@/context/ViewportContext';
 const { Content } = Layout;
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
 
     const [collapsed, setCollapsed] = useState(false);
+    const size = useScreenSize();
     
     useEffect(() => {
         // Only access localStorage on the client
@@ -27,11 +29,18 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
             minHeight: '100vh',
         }}>
             <AppHeader />
+            {
+            size == "small"
+            ?
+            <></>
+            :
             <SidebarNav collapsed={collapsed} setCollapsed={setCollapsed} toggleCollapse={toggleCollapse} />
+
+            }
             <Layout style={{
                 marginTop: 70,
-                paddingLeft: collapsed ? 100 : 400,
-                paddingRight: 100
+                paddingLeft: responsiveValue(size, 25 , collapsed ? 100 : 400, collapsed ? 100 : 400),
+                paddingRight: responsiveValue(size, 25 , collapsed ? 100 : 400, 100)
             }}>
                 <Content style={{
                     backgroundColor: "#2C2C2C",

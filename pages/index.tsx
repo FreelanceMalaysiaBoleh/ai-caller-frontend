@@ -1,4 +1,5 @@
 import MainLayout from "@/components/general/MainLayout";
+import { responsiveValue, useScreenSize } from "@/context/ViewportContext";
 import { useGetAgent } from "@/hooks/agent/useGetAgent";
 
 // import { useCallRecords } from "@/hooks/useCallRecords";
@@ -11,6 +12,9 @@ export default function Home() {
 
   const [isHovered, setIsHovered] = useState(false);
   const { agent } = useGetAgent();
+  const size = useScreenSize();
+
+  console.log(size);
 
   // const { ticketList } = useTicketList();
   // const ticketList = ticketssample;
@@ -29,7 +33,7 @@ export default function Home() {
 
       <div style={{ marginBottom: "10px" }}></div>
       <div style={{
-        width: "75%",
+        width: responsiveValue(size, "100%", "75%", "75%"),
         height: agent ? "" : "65%",
         backgroundColor: "#3E3E3E",
         borderRadius: 10,
@@ -44,40 +48,40 @@ export default function Home() {
               <table style={{ width: "100%", border: "none" }}>
                 <tbody style={{ color: "white", border: "none" }}>
                   <tr>
-                    <td style={{ fontSize: "20px", fontWeight: "bold", padding: "8px" }}>Name:</td>
-                    <td style={{ fontSize: "20px", padding: "8px" }}>{agent.name}</td>
+                    <td style={{ fontSize: responsiveValue(size, 14, 18, 20), fontWeight: "bold", padding: "8px" }}>Name:</td>
+                    <td style={{ fontSize: responsiveValue(size, 14, 18, 20), padding: "8px" }}>{agent.name}</td>
                   </tr>
                   <tr>
-                    <td style={{ fontSize: "20px", fontWeight: "bold", padding: "8px" }}>Language:</td>
-                    <td style={{ fontSize: "20px", padding: "8px" }}>{agent.language}</td>
+                    <td style={{ fontSize: responsiveValue(size, 14, 18, 20), fontWeight: "bold", padding: "8px" }}>Language:</td>
+                    <td style={{ fontSize: responsiveValue(size, 14, 18, 20), padding: "8px" }}>{agent.language}</td>
                   </tr>
                   <tr>
-                    <td style={{ fontSize: "20px", fontWeight: "bold", padding: "8px" }}>Voice:</td>
-                    <td style={{ fontSize: "20px", padding: "8px" }}>{agent.voice}</td>
+                    <td style={{ fontSize: responsiveValue(size, 14, 18, 20), fontWeight: "bold", padding: "8px" }}>Voice:</td>
+                    <td style={{ fontSize: responsiveValue(size, 14, 18, 20), padding: "8px" }}>{agent.voice}</td>
                   </tr>
                   <tr>
-                    <td style={{ fontSize: "20px", fontWeight: "bold", padding: "8px" }}>Phone Number:</td>
-                    <td style={{ fontSize: "20px", padding: "8px" }}>{agent.phone_number}</td>
+                    <td style={{ fontSize: responsiveValue(size, 14, 18, 20), fontWeight: "bold", padding: "8px" }}>Phone Number:</td>
+                    <td style={{ fontSize: responsiveValue(size, 14, 18, 20), padding: "8px" }}>{agent.phone_number}</td>
                   </tr>
                   <tr>
-                    <td style={{ fontSize: "20px", fontWeight: "bold", padding: "8px" }}>Agent Type:</td>
-                    <td style={{ fontSize: "20px", padding: "8px" }}>{agent.agent_type}</td>
+                    <td style={{ fontSize: responsiveValue(size, 14, 18, 20), fontWeight: "bold", padding: "8px" }}>Agent Type:</td>
+                    <td style={{ fontSize: responsiveValue(size, 14, 18, 20), padding: "8px" }}>{agent.agent_type}</td>
                   </tr>
                   <tr>
-                    <td style={{ fontSize: "20px", fontWeight: "bold", padding: "8px" }}>Goal:</td>
-                    <td style={{ fontSize: "20px", padding: "8px" }}>{agent.goal}</td>
+                    <td style={{ fontSize: responsiveValue(size, 14, 18, 20), fontWeight: "bold", padding: "8px" }}>Goal:</td>
+                    <td style={{ fontSize: responsiveValue(size, 14, 18, 20), padding: "8px" }}>{agent.goal}</td>
                   </tr>
                   <tr>
-                    <td style={{ fontSize: "20px", fontWeight: "bold", padding: "8px" }}>Tone:</td>
-                    <td style={{ fontSize: "20px", padding: "8px" }}>{agent.tone}</td>
+                    <td style={{ fontSize: responsiveValue(size, 14, 18, 20), fontWeight: "bold", padding: "8px" }}>Tone:</td>
+                    <td style={{ fontSize: responsiveValue(size, 14, 18, 20), padding: "8px" }}>{agent.tone}</td>
                   </tr>
                   <tr>
-                    <td style={{ fontSize: "20px", fontWeight: "bold", padding: "8px" }}>Blueprint Flow:</td>
-                    <td style={{ fontSize: "20px", padding: "8px" }}>{agent.blueprint_flow}</td>
+                    <td style={{ fontSize: responsiveValue(size, 14, 18, 20), fontWeight: "bold", padding: "8px" }}>Blueprint Flow:</td>
+                    <td style={{ fontSize: responsiveValue(size, 14, 18, 20), padding: "8px" }}>{agent.blueprint_flow}</td>
                   </tr>
                   <tr>
-                    <td style={{ fontSize: "20px", fontWeight: "bold", padding: "8px" }}>Workflow ID:</td>
-                    <td style={{ fontSize: "20px", padding: "8px" }}>{agent.workflow_id}</td>
+                    <td style={{ fontSize: responsiveValue(size, 14, 18, 20), fontWeight: "bold", padding: "8px" }}>Workflow ID:</td>
+                    <td style={{ fontSize: responsiveValue(size, 14, 18, 20), padding: "8px" }}>{agent.workflow_id}</td>
                   </tr>
                 </tbody>
               </table>
