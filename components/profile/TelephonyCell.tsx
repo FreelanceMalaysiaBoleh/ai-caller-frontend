@@ -3,6 +3,7 @@ import { FormInput, TelephoneFieldErrors } from "./TelephonySettings";
 import { BsFloppy } from "react-icons/bs";
 import { FaTrash } from "react-icons/fa";
 import { TelephoningFormType } from "@/hooks/profile/useTelephoneForm";
+import { responsiveValue, useScreenSize } from "@/context/ViewportContext";
 
 
 const TelephonyCell = ({
@@ -16,6 +17,8 @@ const TelephonyCell = ({
   register: UseFormRegister<TelephoningFormType>,
   errors: TelephoneFieldErrors;
 }) => {
+  const size = useScreenSize();
+  const layout: "row" | "column" = responsiveValue(size, "column", "row", "row") as "row" | "column";
 
   return (
     <div style={{
@@ -25,16 +28,22 @@ const TelephonyCell = ({
       borderRadius: 10,
       display: "flex",
       flexDirection: "column",
-      alignItems: "start",
+      alignItems: responsiveValue(size, "center", "start", "start") as "center" | "start",
       padding: "15px 25px",
       marginBottom: "25px"
     }}>
 
       <div style={{ width: "100%" }}>
 
-        <div style={{ display: "flex", flexDirection: "row" }}>
-          <div style={{ width: "35%", marginRight: 40 }}>
-            <h2 style={{ fontSize: "16px", marginBottom: "20px" }}>Basic Details:</h2>
+        <div style={{ display: "flex", flexDirection: layout }}>
+          <div style={{ width: responsiveValue(size, "90%", "35%", "35%"), marginRight: 40 }}>
+            <div style={{display: "flex", flexDirection: "row"}}>
+              <h2 style={{ fontSize: "16px", marginBottom: "20px" }}>Basic Details:</h2>
+              <div style={{ cursor: "pointer", height: 25, marginLeft: "auto" }}>
+                <FaTrash size={20} color="white" onClick={() => { handleRemoveTelephone(index) }} />
+              </div>
+            </div>
+
             <FormInput
               label={"Display Name"}
               index={index}
@@ -57,7 +66,7 @@ const TelephonyCell = ({
             <h2 style={{ fontSize: "16px", marginBottom: "20px" }}>Connection States: <span style={{ color: "#25BB00" }}>Connected</span></h2>
           </div>
 
-          <div style={{ width: "55%", marginRight: 10 }}>
+          <div style={{ width: responsiveValue(size, "90%", "55%", "55%"), marginRight: 10 }}>
             <div style={{ display: "flex", flexDirection: "row", alignItems: "center", marginBottom: "20px" }}>
               <h2 style={{ fontSize: "16px", marginRight: "auto" }}>SIP Configuration:</h2>
               <BsFloppy size={20} color="white" />
@@ -106,9 +115,15 @@ const TelephonyCell = ({
             <div style={{ marginBottom: "40px" }}></div>
           </div>
 
-          <div style={{ cursor: "pointer", height: 25 }}>
-            <FaTrash size={20} color="white" onClick={() => { handleRemoveTelephone(index) }} />
-          </div>
+          {
+            size == "small"
+              ?
+              <></>
+              :
+              <div style={{ cursor: "pointer", height: 25 }}>
+                <FaTrash size={20} color="white" onClick={() => { handleRemoveTelephone(index) }} />
+              </div>
+          }
         </div>
       </div>
     </div>

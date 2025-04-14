@@ -51,11 +51,14 @@ export const ViewportProvider = ({ children }: { children: React.ReactNode }) =>
     }, []);
 
     useEffect(() => {
+        console.log(width);
         if (width < MOBILE) {
             dispatch(updateViewSize("small"))
         } else if (width < TABLET) {
+            console.log("medium screen")
             dispatch(updateViewSize("medium"))
         } else {
+            console.log("large screen")
             dispatch(updateViewSize("large"))
         }
     }, [width])
