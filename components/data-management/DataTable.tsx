@@ -1,3 +1,4 @@
+import { useScreenSize } from "@/context/ViewportContext";
 import { FileData } from "@/hooks/data-management/useGetAllFiles";
 import { Dispatch, SetStateAction } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
@@ -5,6 +6,7 @@ import { AiOutlineEdit } from "react-icons/ai";
 
 const DataTable = ({ files, checkedFiles, setCheckFiles }: { files: FileData[], checkedFiles: string[], setCheckFiles: Dispatch<SetStateAction<string[]>> }) => {
 
+  const size = useScreenSize();
   const handleCheckboxChange = (key: string) => {
     setCheckFiles((prev) =>
       prev.includes(key) ? prev.filter((row) => row !== key) : [...prev, key]
@@ -41,7 +43,7 @@ const DataTable = ({ files, checkedFiles, setCheckFiles }: { files: FileData[], 
               width: "20%",
             }}
           >
-            <h2 style={{ margin: 0 }}>File Name</h2>
+            <h2 style={{ margin: 0, fontSize: size == "large" ? 20 : 14 }}>File Name</h2>
           </th>
           <th
             style={{
@@ -52,7 +54,7 @@ const DataTable = ({ files, checkedFiles, setCheckFiles }: { files: FileData[], 
               width: "20%",
             }}
           >
-            <h2 style={{ margin: 0 }}>Content Description</h2>
+            <h2 style={{ margin: 0, fontSize: size == "large" ? 20 : 14 }}>Content Description</h2>
           </th>
           <th
             style={{
@@ -63,7 +65,7 @@ const DataTable = ({ files, checkedFiles, setCheckFiles }: { files: FileData[], 
               width: "20%",
             }}
           >
-            <h2 style={{ margin: 0 }}>Keywords or Labels</h2>
+            <h2 style={{ margin: 0, fontSize: size == "large" ? 20 : 14 }}>Keywords or Labels</h2>
           </th>
           <th
             style={{
@@ -74,7 +76,7 @@ const DataTable = ({ files, checkedFiles, setCheckFiles }: { files: FileData[], 
               width: "10%",
             }}
           >
-            <h2 style={{ margin: 0 }}>Topic</h2>
+            <h2 style={{ margin: 0, fontSize: size == "large" ? 20 : 14 }}>Topic</h2>
           </th>
           <th
             style={{
@@ -84,7 +86,7 @@ const DataTable = ({ files, checkedFiles, setCheckFiles }: { files: FileData[], 
               width: "10%",
             }}
           >
-            <h2 style={{ margin: 0 }}>States</h2>
+            <h2 style={{ margin: 0, fontSize: size == "large" ? 20 : 14 }}>States</h2>
           </th>
           <th
             style={{
@@ -131,7 +133,7 @@ const DataTable = ({ files, checkedFiles, setCheckFiles }: { files: FileData[], 
                 borderBottom: "none",
               }}
             >
-              <p style={{ margin: 0, fontSize: "16px" }}>{data.file_path}</p>
+              <p style={{ margin: 0, fontSize: "16px" }}>{data.file_path.length > 40 ? data.file_path.slice(0, 40) + "..." : ""}</p>
             </td>
             <td
               style={{

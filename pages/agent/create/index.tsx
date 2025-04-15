@@ -1,11 +1,13 @@
 import AgentForm from "@/components/create-agent/AgentForm";
 import MainLayout from "@/components/general/MainLayout";
+import { responsiveValue, useScreenSize } from "@/context/ViewportContext";
 import { Dispatch, SetStateAction, useState } from "react";
 import { TiTick } from "react-icons/ti";
 
 const CreateAgent = () => {
 
     const [page, setPage] = useState<number>(1);
+    const size = useScreenSize();
 
     return (
         <MainLayout>
@@ -17,10 +19,10 @@ const CreateAgent = () => {
             <div style={{ marginBottom: "10px" }}></div>
 
             <div style={{
-                width: "80%",
+                width: size == "large" ? "80%" : "100%",
                 paddingTop: 20,
-                paddingLeft: 45,
-                paddingRight: 45,
+                paddingLeft: responsiveValue(size, 10, 20, 45),
+                paddingRight: responsiveValue(size, 10, 20, 45),
                 paddingBottom: 20,
                 backgroundColor: "#3e3e3e",
                 borderRadius: 10,
@@ -34,11 +36,14 @@ const CreateAgent = () => {
 }
 
 const BreadCrumbComponent = ({ page, setPage }: { page: number, setPage: Dispatch<SetStateAction<number>> }) => {
+    const size = useScreenSize();
+
     return (
         <div
             style={{
                 display: 'flex',
-                alignItems: 'center',
+                flexDirection: size == "small" ? "column" : "row",
+                alignItems: size == "small" ? "start" : 'center',
                 justifyContent: 'space-between',
                 width: '100%',
             }}
@@ -52,14 +57,21 @@ const BreadCrumbComponent = ({ page, setPage }: { page: number, setPage: Dispatc
                 active={page == 1}
                 complete={page == 2 || page == 3}
             />
-            <div
-                style={{
-                    flex: 1,
-                    height: 2,
-                    backgroundColor: '#909090',
-                    margin: '0 10px',
-                }}
-            ></div>
+            {
+                size == "small"
+                    ?
+                    <></>
+                    :
+                    <div
+                        style={{
+                            flex: 1,
+                            height: 2,
+                            backgroundColor: '#909090',
+                            margin: '0 10px',
+                        }}
+                    ></div>
+            }
+
             <BreadCrumbItem
                 text="Main Customize"
                 subText="Setup Your Agent"
@@ -68,14 +80,20 @@ const BreadCrumbComponent = ({ page, setPage }: { page: number, setPage: Dispatc
                 active={page == 2}
                 complete={page == 3}
             />
-            <div
-                style={{
-                    flex: 1,
-                    height: 2,
-                    backgroundColor: '#909090',
-                    margin: '0 10px',
-                }}
-            ></div>
+            {
+                size == "small"
+                    ?
+                    <></>
+                    :
+                    <div
+                        style={{
+                            flex: 1,
+                            height: 2,
+                            backgroundColor: '#909090',
+                            margin: '0 10px',
+                        }}
+                    ></div>
+            }
             <BreadCrumbItem
                 text="Summary"
                 subText="Review and payment"
@@ -96,35 +114,39 @@ const BreadCrumbItem = ({
     complete,
     onClickTab
 }: { text: string, subText: string, index: number, active: boolean, complete: boolean, onClickTab: () => void }) => {
+    const size = useScreenSize();
 
     return (
         <>
-            <div style={{
-                borderRadius: "50%",
-                backgroundColor: active ? "#F73587" : complete ? "#1eb700" : "#909090",
-                width: "38px",
-                height: "38px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                cursor: "pointer"
-            }}
-                onClick={onClickTab}
-            >
-                {
-                    complete
-                        ?
-                        <TiTick color="#3e3e3e" size={25} />
-                        :
-                        <p id="medium">{index}</p>
-                }
+            <div style={{ display: "flex", flexDirection: "row" }}>
+                <div style={{
+                    borderRadius: "50%",
+                    backgroundColor: active ? "#F73587" : complete ? "#1eb700" : "#909090",
+                    width: "38px",
+                    height: "38px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    cursor: "pointer",
+                    marginBottom: size == "small" ? "10px" : 0
+                }}
+                    onClick={onClickTab}
+                >
+                    {
+                        complete
+                            ?
+                            <TiTick color="#3e3e3e" size={25} />
+                            :
+                            <p id="medium">{index}</p>
+                    }
 
-            </div>
-            <div style={{
-                marginLeft: 15
-            }}>
-                <p id="medium">{text}</p>
-                <p id="small">{subText}</p>
+                </div>
+                <div style={{
+                    marginLeft: 15
+                }}>
+                    <p id="medium">{text}</p>
+                    <p id="small">{subText}</p>
+                </div>
             </div>
         </>
     )

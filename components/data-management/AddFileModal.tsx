@@ -4,6 +4,7 @@ import { TbArrowBackUp } from "react-icons/tb";
 import ImageUpload from "../create-agent/ImageUpload";
 import { FieldErrors, FormProvider, UseFormRegister } from "react-hook-form";
 import useAddFileModal, { addFilefields, AddFileTypes } from "@/hooks/data-management/useAddFileModal";
+import { useScreenSize } from "@/context/ViewportContext";
 
 interface ModalProps {
   open: boolean;
@@ -13,6 +14,7 @@ interface ModalProps {
 const AddFileModal = ({ open, setOpen }: ModalProps) => {
   const closeModal = () => setOpen(false);
   const [file, setFile] = useState<File | undefined>();
+  const size = useScreenSize();
 
   const { register, errors, form, handleSubmitForm, isLoading } = useAddFileModal(file);
 
@@ -43,11 +45,22 @@ const AddFileModal = ({ open, setOpen }: ModalProps) => {
     padding: 20
   };
 
+  const modalStyleMobile = {
+    width: "950px",
+    height: "100%",
+    backgroundColor: "#3e3e3e",
+    borderRadius: "10px",
+    padding: 20,
+    overflowY: "scroll" 
+  }
+
+  const layout = size == "small" ? "column" : "row";
+
   return (
     <div>
       {open && (
         <div onClick={closeModal} style={overlayStyle}>
-          <div onClick={handleContentClick} style={modalStyle}>
+          <div onClick={handleContentClick} style={size == "small" ? modalStyleMobile : modalStyle}>
             <div style={{
               display: 'flex',
               flexDirection: "row",
@@ -86,7 +99,14 @@ const AddFileModal = ({ open, setOpen }: ModalProps) => {
                 justifyContent: 'center', // Centers this item in the available space
                 flexGrow: 1, // Allows this item to take the available space and center it
               }}>
-                <RiFileAddFill size={30} color="#FFF" style={{ marginRight: "10px" }} />
+                {
+                  size == "small"
+                    ?
+                    <></>
+                    :
+                    <RiFileAddFill size={30} color="#FFF" style={{ marginRight: "10px" }} />
+                }
+
                 <h2 style={{ color: "#A7A7A7", fontSize: "18px", textAlign: "center" }}>Upload file and fill the details</h2>
               </div>
               <div style={{
@@ -100,12 +120,13 @@ const AddFileModal = ({ open, setOpen }: ModalProps) => {
               <form onSubmit={handleSubmitForm}>
                 <div style={{
                   display: "flex",
-                  flexDirection: "row",
+                  flexDirection: layout,
                   marginTop: "20px"
                 }}>
                   <div style={{
                     flex: 1,
-                    marginRight: "25px"
+                    marginRight: "25px",
+                    width: "100%"
                   }}>
                     <FormInput
                       label="File Description"
@@ -130,11 +151,12 @@ const AddFileModal = ({ open, setOpen }: ModalProps) => {
 
                 <div style={{
                   display: "flex",
-                  flexDirection: "row",
+                  flexDirection: layout,
                 }}>
                   <div style={{
                     flex: 1,
-                    marginRight: "25px"
+                    marginRight: "25px",
+                    width: "100%"
                   }}>
                     <FormInput
                       label="Tags"
@@ -156,7 +178,7 @@ const AddFileModal = ({ open, setOpen }: ModalProps) => {
                   </div>
                 </div>
 
-                <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "start" }}>
+                <div style={{ marginTop: size == "small" ? 20 : 0, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "start" }}>
                   <button
                     type="submit"
                     disabled={isLoading}

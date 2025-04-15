@@ -1,5 +1,6 @@
 import React, { useState, ChangeEvent } from "react";
 import AvatarDefault from "../../public/images/avatar_default.png";
+import { useScreenSize } from "@/context/ViewportContext";
 
 interface ImageUploadType {
     styleType?: 1 | 2,
@@ -16,6 +17,8 @@ const ImageUpload = ({
 }: ImageUploadType) => {
     const [avatar, setAvatar] = useState<string>(AvatarDefault.src);
     const [fileName, setFileName] = useState<string>(customLabel);
+    const size = useScreenSize();
+
 
     const formatChecker = (format: string, formats: Array<string>) => {
         return formats.includes(format);
@@ -105,13 +108,28 @@ const ImageUpload = ({
                 </label>
 
                 {/* Display File Name */}
-                <p id="small" style={{ marginLeft: "20px", color: styleType == 1 ? "white" : "#C9C9C9" }}>
-                    {fileName}
-                </p>
+                {
+                    size == "small"
+                        ?
+                        <></>
+                        :
+                        <p id="small" style={{ marginLeft: "20px", color: styleType == 1 ? "white" : "#C9C9C9" }}>
+                            {fileName}
+                        </p>
+                }
+
             </div>
-            <p id="small" style={{ marginTop: 12, color: "#C9C9C9" }}>
-                Accepted formats pdf, csv, txt, json
-            </p>
+            {
+                size == "small"
+                    ?
+                    <p id="small" style={{ color: styleType == 1 ? "white" : "#C9C9C9" }}>
+                        {fileName}
+                    </p>
+                    :
+                    <p id="small" style={{ marginTop: 12, color: "#C9C9C9" }}>
+                        Accepted formats pdf, csv, txt, json
+                    </p>
+            }
         </div>
     );
 };

@@ -69,32 +69,34 @@ const AppHeader = () => {
                 marginLeft: "auto",
             }}>
                 {
-                size == "small"
-                    ?
-                    <></>
-                    :
-                    <h2>Omantel Telecommunications</h2>
-                }
-                
-                <button
-                    onClick={() => {
-                        dispatch(removeToken());
-                        window.location.reload();
-                    }}
-                    style={{
-                        all: "unset",
-                        cursor: "pointer",
-                    }}
-                >
-                    <p
+                    size == "small"
+                        ?
+                        <></>
+                        :
+                        <>
+                            <h2>Omantel Telecommunications</h2>
+                            <button
+                                onClick={() => {
+                                    dispatch(removeToken());
+                                    window.location.reload();
+                                }}
+                                style={{
+                                    all: "unset",
+                                    cursor: "pointer",
+                                }}
+                            >
+                                <p
 
-                        style={{
-                            fontSize: "18px",
-                            color: "#909090",
-                            textDecoration: "underline",
-                            cursor: "pointer"
-                        }}>Logout</p>
-                </button>
+                                    style={{
+                                        fontSize: "18px",
+                                        color: "#909090",
+                                        textDecoration: "underline",
+                                        cursor: "pointer"
+                                    }}>Logout</p>
+                            </button>
+                        </>
+
+                }
             </div>
             <div
                 style={{

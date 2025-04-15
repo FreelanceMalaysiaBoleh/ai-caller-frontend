@@ -16,8 +16,8 @@ export default function DataManagement() {
 
       <div style={{ marginBottom: "10px" }}></div>
       <div style={{
-        width: "75%",
-        height: "65%",
+        maxWidth: "600px",
+        minHeight: "250px",
         backgroundColor: "#3E3E3E",
         borderRadius: 10,
         display: "flex",

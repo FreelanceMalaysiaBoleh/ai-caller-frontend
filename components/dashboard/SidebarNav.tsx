@@ -16,17 +16,19 @@ const { Sider } = Layout;
 const SidebarNav = ({ collapsed, setCollapsed, toggleCollapse }: { collapsed: boolean, setCollapsed: React.Dispatch<React.SetStateAction<boolean>>, toggleCollapse: () => void }) => {
 
     const router = useRouter();
-
+    
     const ItemText = ({ text, isSelected }: { text: string, isSelected: boolean }) => {
         return <h2 style={{
             color: isSelected ? "#FFFFFF" : "#909090"
         }}>{text}</h2>
     }
 
+
     return (
         <Sider
             width={345}
             style={{
+                zIndex: 99,
                 minHeight: '100vh',
                 backgroundColor: "#313B00",
                 position: "fixed"

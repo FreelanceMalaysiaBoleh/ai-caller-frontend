@@ -10,6 +10,7 @@ import GedeekIcon from "@/public/images/GEDEEK_BIG.png"
 import { useDispatch } from "react-redux";
 import { setToken } from "@/redux/authSlice";
 import { responsiveValue, useScreenSize } from "@/context/ViewportContext";
+import logo from "../public/images/logo.png"
 
 // Validation schema for username and password
 const loginSchema = yup.object().shape({
@@ -61,7 +62,7 @@ const LoginForm = () => {
           width: "100%",
           display: "flex",
           flexDirection: "row",
-          alignItems: "center",
+          alignItems: size == "small" ? "start" : "center",
           justifyContent: "center",
         }}
       >
@@ -79,6 +80,7 @@ const LoginForm = () => {
             :
             <></>
         }
+
         <div style={{
           flex: 1,
           width: "100%",
@@ -86,15 +88,32 @@ const LoginForm = () => {
           flexDirection: "column",
           alignItems: "center"
         }}>
-          <h2 style={{ fontSize: responsiveValue(size, "25px", "34px", "34px") , marginBottom: "10px" }}>Login to Your Account</h2>
 
-          <div style={{
-            backgroundColor: "#3e3e3e",
-            padding: "30px 30px",
-            width: responsiveValue(size, "90%", "80%", "50%"),
-            borderRadius: "10px"
-          }}>
-            <form onSubmit={handleSubmit(onSubmit)} className="login-form">
+          {
+            size == "small"
+              ?
+              <div style={{ marginTop: 50, marginBottom: 45 }}>
+                <Image
+                  src={logo}
+                  width={120}
+                  height={23}
+                  alt={"logo"}
+                />
+              </div>
+              :
+              <></>
+          }
+
+
+          <h2 style={{ fontSize: responsiveValue(size, "20px", "34px", "34px"), marginBottom: "10px" }}>Login to Your Account</h2>
+          <form onSubmit={handleSubmit(onSubmit)} className="login-form" style={{ width: responsiveValue(size, "90%", "80%", "50%") }}>
+            <div style={{
+              backgroundColor: "#3e3e3e",
+              padding: responsiveValue(size, "25px 15px 100px", "30px 30px", "30px 30px"),
+
+              borderRadius: "10px"
+            }}>
+
               <FormInput
                 label="Email"
                 field="username"
@@ -114,27 +133,34 @@ const LoginForm = () => {
 
               <p style={{ color: "white", textDecoration: "underline", fontSize: "12px", marginTop: "15px" }}>Forgot your password?</p>
 
-              <div style={{ paddingTop: "200px", width: "100%", display: "flex", alignItems: "center", justifyContent: 'center' }}>
-                <button
-                  type="submit"
-                  style={{
-                    marginLeft: '5px',
-                    padding: '15px 70px',
-                    borderRadius: '5px',
-                    border: 'none',
-                    background: isHovered
-                      ? "linear-gradient(to right, #FF89B2, #7AA3F8)"
-                      : "linear-gradient(to right, #F73587, #7AA3F8)",
-                    color: 'white',
-                    cursor: 'pointer',
-                    fontSize: "14px",
-                  }}
-                  onMouseEnter={() => setIsHovered(true)}
-                  onMouseLeave={() => setIsHovered(false)}
-                >
-                  Login
-                </button>
-              </div>
+              {
+                size == "small"
+                  ?
+                  <></>
+                  :
+                  <div style={{ paddingTop: "200px", width: "100%", display: "flex", alignItems: "center", justifyContent: 'center' }}>
+                    <button
+                      type="submit"
+                      style={{
+                        marginLeft: '5px',
+                        padding: '15px 70px',
+                        borderRadius: '5px',
+                        border: 'none',
+                        background: isHovered
+                          ? "linear-gradient(to right, #FF89B2, #7AA3F8)"
+                          : "linear-gradient(to right, #F73587, #7AA3F8)",
+                        color: 'white',
+                        cursor: 'pointer',
+                        fontSize: "14px",
+                      }}
+                      onMouseEnter={() => setIsHovered(true)}
+                      onMouseLeave={() => setIsHovered(false)}
+                    >
+                      Login
+                    </button>
+                  </div>
+              }
+
 
 
               {
@@ -144,8 +170,42 @@ const LoginForm = () => {
                   :
                   <></>
               }
-            </form>
-          </div>
+
+            </div>
+
+            {
+              size == "small"
+                ?
+                <div style={{ paddingTop: "20px", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: 'center' }}>
+                  <button
+                    type="submit"
+                    style={{
+                      marginLeft: '5px',
+                      padding: '15px 70px',
+                      borderRadius: '5px',
+                      border: 'none',
+                      background: isHovered
+                        ? "linear-gradient(to right, #FF89B2, #7AA3F8)"
+                        : "linear-gradient(to right, #F73587, #7AA3F8)",
+                      color: 'white',
+                      cursor: 'pointer',
+                      fontSize: "14px",
+                    }}
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
+                  >
+                    Login
+                  </button>
+
+                  <p style={{
+                    fontSize: 12,
+                    marginTop: 15,
+                  }}>Login with OTP</p>
+                </div>
+                :
+                <></>
+            }
+          </form>
         </div>
       </div>
     </Layout >

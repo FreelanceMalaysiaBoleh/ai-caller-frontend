@@ -14,8 +14,6 @@ export default function Home() {
   const { agent } = useGetAgent();
   const size = useScreenSize();
 
-  console.log(size);
-
   // const { ticketList } = useTicketList();
   // const ticketList = ticketssample;
 
@@ -35,11 +33,12 @@ export default function Home() {
       <div style={{
         width: responsiveValue(size, "100%", "75%", "75%"),
         height: agent ? "" : "65%",
+        minHeight: "300px",
         backgroundColor: "#3E3E3E",
         borderRadius: 10,
         display: "flex",
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
       }}>
         {
           agent
@@ -91,6 +90,7 @@ export default function Home() {
               style={{
                 width: "30%",
                 height: "40%",
+                minHeight: "100px",
                 backgroundColor: isHovered ? "#FF89B2" : "#F73587",
                 borderRadius: 10,
                 display: "flex",
