@@ -18,10 +18,10 @@ const ProfileDetail = () => {
         gap: "20px",
         paddingBottom: 20,
       }}>
-        <div style={{ width: responsiveValue(size, "90%", "90%","40%") }}>
+        <div style={{ width: responsiveValue(size, "100%", "90%","40%") }}>
           <ProfileDetails />
         </div>
-        <div style={{ width: responsiveValue(size, "100%", "100%","40%")}}>
+        <div style={{ width: responsiveValue(size, "100%", "100%","60%")}}>
           <TelephonySettings />
         </div>
       </div>

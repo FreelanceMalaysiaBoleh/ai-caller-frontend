@@ -1,5 +1,6 @@
 import { FieldErrors, UseFormRegister, UseFormReturn } from "react-hook-form";
 import { AgentFormTypes, FormInput, FormSelect } from "./AgentForm";
+import { useScreenSize } from "@/context/ViewportContext";
 
 const Page2 = ({
     register,
@@ -13,16 +14,21 @@ const Page2 = ({
     setPage: (index: number) => void
 
 }) => {
+
+    const size = useScreenSize();
+    const layout = size == "small" ? "column" : "row";
+
     return (
         <>
             <div style={{
                 display: "flex",
-                flexDirection: "row",
+                flexDirection: layout,
                 marginTop: "60px"
             }}>
                 <div style={{
                     flex: 1,
-                    marginRight: "25px"
+                    marginRight: "25px",
+                    width: "100%"
                 }}>
                     <FormInput
                         label="Agent Type"
@@ -48,11 +54,12 @@ const Page2 = ({
 
             <div style={{
                 display: "flex",
-                flexDirection: "row",
+                flexDirection: layout,
             }}>
                 <div style={{
                     flex: 1,
-                    marginRight: "25px"
+                    marginRight: "25px",
+                    width: "100%"
                 }}>
                     <FormSelect
                         label="Goal"
@@ -66,7 +73,7 @@ const Page2 = ({
                 <div style={{
                     flex: 1
                 }}>
-                     <FormSelect
+                    <FormSelect
                         label="Select Blueprint Flow"
                         field="blueprint_flow"
                         subtext="Select what customized behavior or create one later."
@@ -108,6 +115,7 @@ const Page2 = ({
                     }}
                     onClick={() => {
                         setPage(1);
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
                     }}
                 >
                     <p id="biggersmall">Back</p>
@@ -125,6 +133,7 @@ const Page2 = ({
                     }}
                     onClick={() => {
                         setPage(3);
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
                     }}
                 >
                     <p id="biggersmall">Next</p>

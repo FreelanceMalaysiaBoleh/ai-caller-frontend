@@ -103,6 +103,7 @@ const DatabaseDataListing = ({ title, data, databaseId, collectionName, refreshD
           flexWrap: "wrap",
           gap: "20px",
           padding: "20px",
+          minHeight: "350px"
         }}
       >
         {
