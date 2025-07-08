@@ -7,6 +7,7 @@ import {
     MessageOutlined,
     MenuUnfoldOutlined,
     MenuFoldOutlined,
+    TeamOutlined,
 } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import { TbArrowBackUp } from 'react-icons/tb';
@@ -68,6 +69,14 @@ const SidebarNav = ({ collapsed, setCollapsed, toggleCollapse }: { collapsed: bo
                     style={{ marginBottom: 20 }}
                 >
                     <ItemText text="Dashboard" isSelected={router.asPath === "/"} />
+                </Menu.Item>
+                <Menu.Item
+                    onClick={() => router.push("/agent")}
+                    key="/"
+                    icon={<TeamOutlined />}
+                    style={{ marginBottom: 20 }}
+                >
+                    <ItemText text="Create Agent" isSelected={router.asPath === "/agent"} />
                 </Menu.Item>
                 <Menu.Item
                     onClick={() => router.push("/ai-assistant")}

@@ -15,9 +15,9 @@ export const useScreenSize = (): ViewSizes => {
 
 export const responsiveValue = (
     size: ViewSizes,
-    small: string | number,
-    medium: string | number,
-    large: string | number
+    small: string | number | boolean,
+    medium: string | number | boolean,
+    large: string | number | boolean
 ) => {
     switch (size) {
         case "small":
