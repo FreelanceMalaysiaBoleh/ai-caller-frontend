@@ -25,7 +25,7 @@ const Index = () => {
     const [errorPipeline, setErrorPipeline] = useState("");
     const token = useGetToken();
 
-
+    console.log("workflow id: ",  workflowId)
     useEffect(() => {
         const getStatus = async () => {
             const res = await getPipelineStatus(workflowId || "", token)

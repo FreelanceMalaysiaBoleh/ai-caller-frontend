@@ -1,5 +1,6 @@
 import AiNameAndRole from "@/components/ai-assistant/nodes/design/AiNameAndRole";
 import APIExecutor from "@/components/ai-assistant/nodes/design/APIExecutor";
+import AuthenticatorNode from "@/components/ai-assistant/nodes/design/Authenticator";
 import Boundaries from "@/components/ai-assistant/nodes/design/Boundaries";
 import CustomerSpeech from "@/components/ai-assistant/nodes/design/CustomerSpeech";
 import DBConnection from "@/components/ai-assistant/nodes/design/DBConnection";
@@ -29,6 +30,7 @@ const apiExecutor = "API Executor"
 const dbConnection = "DB Connection"
 const useFile = "Use File"
 const existingDB = "Existing DB"
+const authenticator = "Authenticator"
 
 //2. add it into the constant for easy query
 export const NodeType = {
@@ -43,7 +45,8 @@ export const NodeType = {
     apiExecutor: apiExecutor,
     dbConnection: dbConnection,
     useFile: useFile,
-    existingDB: existingDB
+    existingDB: existingDB,
+    authenticator: authenticator
 }
 
 //3. register the new node for ReactFlow, import the component from "design"
@@ -59,7 +62,8 @@ export const NodeTypes = {
     [NodeType.apiExecutor]: APIExecutor,
     [NodeType.dbConnection]: DBConnection,
     [NodeType.useFile]: UseFile,
-    [NodeType.existingDB]: ExistingDB
+    [NodeType.existingDB]: ExistingDB,
+    [NodeType.authenticator]: AuthenticatorNode,
 };
 
 export const NodeItems = [
@@ -74,4 +78,5 @@ export const NodeItems = [
     { title: dbConnection, value: dbConnection },
     { title: useFile, value: useFile },
     { title: existingDB, value: existingDB },
+    { title: authenticator, value: authenticator },
 ];
