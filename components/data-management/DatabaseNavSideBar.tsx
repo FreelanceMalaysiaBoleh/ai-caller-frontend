@@ -32,7 +32,6 @@ const DatabaseNavSideBar = ({ data, refreshData }: { data: Connection[], refresh
     setExpanded((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
-
   const handleDropdownClick = (dbId: string) => {
     setOpenDropdown((prev) => (prev === dbId ? null : dbId)); // Toggle per database
   };
@@ -45,7 +44,6 @@ const DatabaseNavSideBar = ({ data, refreshData }: { data: Connection[], refresh
 
     router.push(`?${queryParams}`, undefined, { shallow: true });
   };
-
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -77,7 +75,7 @@ const DatabaseNavSideBar = ({ data, refreshData }: { data: Connection[], refresh
       <AddCollectionModal open={openCollection} setOpen={setOpenCollection} databaseId={databaseId} />
 
       <div style={{ display: "flex", flexDirection: "row", justifyContent: "start", alignItems: "center", padding: "0px 20px" }}>
-        <h2 style={{ fontWeight: "bold", fontSize: responsiveValue(size, "10px", "16px", "20px") }}>Connections ({data.length})</h2>
+        <h2 style={{ fontWeight: "bold", fontSize: responsiveValue(size, "10px", "16px", "20px") as string }}>Connections ({data.length})</h2>
         <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
           <FaPlus
             size={15}

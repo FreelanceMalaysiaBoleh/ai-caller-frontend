@@ -35,11 +35,11 @@ export default function DataManagementDetail() {
               <h1 style={{
                 color: "#B5B5B5",
                 fontWeight: "normal",
-                fontSize: responsiveValue(size, 14, 18, 24),
+                fontSize: responsiveValue(size, 14, 18, 24) as number,
               }} >AI DATA CENTER - <span style={{ color: "white" }}>{databaseName}</span></h1>
               <p style={{
                 color: "#B5B5B5",
-                fontSize: responsiveValue(size, 10, 14, 18),
+                fontSize: responsiveValue(size, 10, 14, 18) as number,
               }}>Here you can view and add new data</p>
             </div>
             {
@@ -52,11 +52,11 @@ export default function DataManagementDetail() {
               <h1 style={{
                 color: "#B5B5B5",
                 fontWeight: "normal",
-                fontSize: responsiveValue(size, 14, 18, 24),
+                fontSize: responsiveValue(size, 14, 18, 24) as number,
               }} >21.6k Data</h1>
               <p style={{
                 color: "#B5B5B5",
-                fontSize: responsiveValue(size, 8, 10, 12),
+                fontSize: responsiveValue(size, 8, 10, 12) as number,
               }}>Syncing with gedeek cloud...</p>
             </div>
           </div>

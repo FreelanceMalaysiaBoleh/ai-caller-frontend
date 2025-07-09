@@ -64,7 +64,7 @@ const ProfileDetails = () => {
             <form onSubmit={handleSubmitForm}>
               <div>
                 <div style={{ display: "flex", flexDirection: "row", gap: 40 }}>
-                  <div style={{ width: responsiveValue(size, "90%", "50%", "50%"), display: "flex", flexDirection: "column" }}>
+                  <div style={{ width: responsiveValue(size, "90%", "50%", "50%") as string, display: "flex", flexDirection: "column" }}>
                     <FormInput
                       label={"Mobile Number"}
                       placeholder="+60XXXXXXX"
@@ -173,7 +173,7 @@ const ProfileDetails = () => {
                       border: "none",
                       borderRadius: "5px",
                       cursor: "pointer",
-                      marginBottom: responsiveValue(size, 10, 0, 0)
+                      marginBottom: responsiveValue(size, 10, 0, 0) as number
                     }}
                   >
                     <p id="biggersmall">Cancel</p>
@@ -188,7 +188,7 @@ const ProfileDetails = () => {
                       border: "none",
                       borderRadius: "5px",
                       cursor: "pointer",
-                      marginLeft: responsiveValue(size, 0, "auto", "auto")
+                      marginLeft: responsiveValue(size, 0, "auto", "auto") as string | number
                     }}
                   >
                     <p id="biggersmall">Save</p>

@@ -18,7 +18,7 @@ export const responsiveValue = (
     small: string | number | boolean,
     medium: string | number | boolean,
     large: string | number | boolean
-) => {
+): string | number | boolean => {
     switch (size) {
         case "small":
             return small;

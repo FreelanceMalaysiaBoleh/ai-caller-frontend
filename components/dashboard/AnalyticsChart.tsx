@@ -37,11 +37,6 @@ const AnalyticsChart: React.FC<AnalyticsChartProps> = ({ data, onPeriodChange })
     color: "white"
   };
 
-  const subtitleStyle = {
-    fontSize: responsiveValue(size, 12, 12, 12) as number,
-    color: "#CCCCCC",
-    marginBottom: "15px"
-  };
 
   const handlePeriodChange = (value: string) => {
     setSelectedPeriod(value);

@@ -47,8 +47,8 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
             }
             <Layout style={{
                 marginTop: 70,
-                paddingLeft: responsiveValue(size, 20, 100, collapsed ? 100 : 400),
-                paddingRight: responsiveValue(size, 20, 50, 100),
+                paddingLeft: responsiveValue(size, 20, 100, collapsed ? 100 : 400) as number,
+                paddingRight: responsiveValue(size, 20, 50, 100) as number,
             }}>
                 <Content style={{
                     backgroundColor: "#2C2C2C",

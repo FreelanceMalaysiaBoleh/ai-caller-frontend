@@ -36,7 +36,7 @@ const TelephonyCell = ({
       <div style={{ width: "100%" }}>
 
         <div style={{ display: "flex", flexDirection: layout }}>
-          <div style={{ width: responsiveValue(size, "90%", "35%", "35%"), marginRight: 40 }}>
+          <div style={{ width: responsiveValue(size, "90%", "35%", "35%") as string, marginRight: 40 }}>
             <div style={{display: "flex", flexDirection: "row"}}>
               <h2 style={{ fontSize: "16px", marginBottom: "20px" }}>Basic Details:</h2>
               <div style={{ cursor: "pointer", height: 25, marginLeft: "auto" }}>
@@ -66,7 +66,7 @@ const TelephonyCell = ({
             <h2 style={{ fontSize: "16px", marginBottom: "20px" }}>Connection States: <span style={{ color: "#25BB00" }}>Connected</span></h2>
           </div>
 
-          <div style={{ width: responsiveValue(size, "90%", "55%", "55%"), marginRight: 10 }}>
+          <div style={{ width: responsiveValue(size, "90%", "55%", "55%") as string, marginRight: 10 }}>
             <div style={{ display: "flex", flexDirection: "row", alignItems: "center", marginBottom: "20px" }}>
               <h2 style={{ fontSize: "16px", marginRight: "auto" }}>SIP Configuration:</h2>
               <BsFloppy size={20} color="white" />

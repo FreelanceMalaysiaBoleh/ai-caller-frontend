@@ -105,11 +105,11 @@ const LoginForm = () => {
           }
 
 
-          <h2 style={{ fontSize: responsiveValue(size, "20px", "34px", "34px"), marginBottom: "10px" }}>Login to Your Account</h2>
-          <form onSubmit={handleSubmit(onSubmit)} className="login-form" style={{ width: responsiveValue(size, "90%", "80%", "50%") }}>
+          <h2 style={{ fontSize: responsiveValue(size, "20px", "34px", "34px") as string, marginBottom: "10px" }}>Login to Your Account</h2>
+          <form onSubmit={handleSubmit(onSubmit)} className="login-form" style={{ width: responsiveValue(size, "90%", "80%", "50%") as string }}>
             <div style={{
               backgroundColor: "#3e3e3e",
-              padding: responsiveValue(size, "25px 15px 100px", "30px 30px", "30px 30px"),
+              padding: responsiveValue(size, "25px 15px 100px", "30px 30px", "30px 30px") as string,
 
               borderRadius: "10px"
             }}>
