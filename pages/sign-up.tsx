@@ -54,8 +54,8 @@ const SignUpForm = () => {
       console.log("results: ", result);
       // Check if registration was successful
       router.push("/login");
-    } catch (e: any) {
-      setError(e.message || "Registration failed. Please try again.");
+    } catch (e: unknown) {
+      setError((e as { message: string }).message || "Registration failed. Please try again.");
       console.log(e);
     }
   };
