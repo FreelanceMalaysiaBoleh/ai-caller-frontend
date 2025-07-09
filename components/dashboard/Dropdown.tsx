@@ -31,15 +31,17 @@ const Dropdown: React.FC<DropdownProps> = ({
   const selectedOption = options.find(option => option.value === selectedValue);
   const displayText = selectedOption ? selectedOption.label : placeholder;
 
-  const baseStyle = {
-    fontSize: responsiveValue(size, 12, 12, 12),
+  const fontSize = responsiveValue(size, 12, 12, 12) as number;
+
+  const baseStyle: React.CSSProperties = {
+    fontSize: fontSize,
     color: "#CCCCCC",
     cursor: disabled ? "not-allowed" : "pointer",
     padding: variant === 'compact' ? "3px 8px" : "5px 10px",
     border: "1px solid rgba(255, 255, 255, 0.3)",
     borderRadius: "5px",
     minWidth: minWidth,
-    textAlign: "center" as const,
+    textAlign: "center",
     backgroundColor: isOpen ? "rgba(255, 255, 255, 0.1)" : "transparent",
     opacity: disabled ? 0.5 : 1,
     transition: "all 0.2s ease"
@@ -84,7 +86,7 @@ const Dropdown: React.FC<DropdownProps> = ({
               style={{
                 padding: variant === 'compact' ? "6px 10px" : "8px 12px",
                 cursor: "pointer",
-                fontSize: responsiveValue(size, 12, 14, 16),
+                fontSize: responsiveValue(size, 12, 14, 16) as number,
                 color: selectedValue === option.value ? "#F73587" : "#CCCCCC",
                 backgroundColor: selectedValue === option.value ? "rgba(247, 53, 135, 0.1)" : "transparent",
                 borderBottom: index < options.length - 1 ? "1px solid rgba(255, 255, 255, 0.1)" : "none",

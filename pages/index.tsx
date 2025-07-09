@@ -112,69 +112,6 @@ export default function Dashboard() {
     console.log("Updated Language Data:", language);
   };
 
-  const dummyUsageData1 = {
-    percentage_arabic: 65,
-    percentage_change: 15,
-    percentage_change_arabic: 8,
-    percentage_change_eng: 22,
-    percentage_eng: 35,
-    period: "this_month",
-    total_characters: 2847592
-  };
-
-  const dummyCallsData1 = {
-    inbound_calls: 1247,
-    inbound_percentage: 73,
-    outbound_calls: 462,
-    outbound_percentage: 27,
-    period: "this_month",
-    total_calls: 1709
-  };
-
-  const dummyLanguageData1 = [
-    {
-      color: "#F73587",
-      language: "English",
-      percentage: 60
-    },
-    {
-      color: "#7B68EE",
-      language: "Arabic",
-      percentage: 30
-    },
-    {
-      color: "#FF8A65",
-      language: "French",
-      percentage: 10
-    }
-  ];
-
-  const dummyRecentCallsData3 = [
-    {
-      user: "Quick Caller 1",
-      user_id: "user_009",
-      minutes: 5,
-      calls: 1,
-      date: "2025-01-08",
-      time: "17:30"
-    },
-    {
-      user: "Brief Contact",
-      user_id: "user_010",
-      minutes: 12,
-      calls: 2,
-      date: "2025-01-08",
-      time: "16:45"
-    },
-    {
-      user: "Short Session",
-      user_id: "user_011",
-      minutes: 8,
-      calls: 1,
-      date: "2025-01-08",
-      time: "15:20"
-    }
-  ];
 
   return (
     <MainLayout>
@@ -200,7 +137,7 @@ export default function Dashboard() {
         />
         {/* On desktop (large screens), add the table here */}
         <div style={{
-          display: responsiveValue(size, "none", "none", "block") as any
+          display: responsiveValue(size, "none", "none", "block") as string
         }}>
           <RecentCallsTable
             data={frequentCallersData}
@@ -212,7 +149,7 @@ export default function Dashboard() {
 
       {/* Second row for mobile/tablet: Recent Calls Table */}
       <div style={{
-        display: responsiveValue(size, "block", "block", "none") as any,
+        display: responsiveValue(size, "block", "block", "none") as string,
         marginBottom: "20px"
       }}>
         <RecentCallsTable

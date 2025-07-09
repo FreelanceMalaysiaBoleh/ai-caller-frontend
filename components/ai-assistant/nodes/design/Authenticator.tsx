@@ -28,13 +28,6 @@ type AuthenticatorData = {
   verification_fields: string[];
 };
 
-const databaseTypeOptions = [
-  { value: 'mysql', label: 'MySQL' },
-  { value: 'postgresql', label: 'PostgreSQL' },
-  { value: 'sqlite', label: 'SQLite' },
-  { value: 'mongodb', label: 'MongoDB' },
-];
-
 //key: .authenticator
 const AuthenticatorNode: React.FC<NodeProps> = ({ id, data, type }) => {
   const [isConnectedSource, setIsConnectedSource] = useState(false);

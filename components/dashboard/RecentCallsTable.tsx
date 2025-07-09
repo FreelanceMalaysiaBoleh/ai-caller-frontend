@@ -1,12 +1,4 @@
-import { useState } from "react";
 import { responsiveValue, useScreenSize } from "@/context/ViewportContext";
-import Dropdown from "./Dropdown";
-
-const periodOptions = [
-  { value: "this_week", label: "This week" },
-  { value: "this_month", label: "This month" },
-  { value: "this_year", label: "This year" },
-];
 
 interface RecentCallsTableProps {
   data?: Array<{
@@ -20,9 +12,8 @@ interface RecentCallsTableProps {
   onPeriodChange?: (period: string) => void;
 }
 
-const RecentCallsTable: React.FC<RecentCallsTableProps> = ({ data, onPeriodChange }) => {
+const RecentCallsTable: React.FC<RecentCallsTableProps> = ({ data }) => {
   const size = useScreenSize();
-  const [selectedPeriod, setSelectedPeriod] = useState("this_year");
 
   const cardStyle = {
     backgroundColor: "transparent",
@@ -38,20 +29,6 @@ const RecentCallsTable: React.FC<RecentCallsTableProps> = ({ data, onPeriodChang
     fontWeight: "regular",
     marginBottom: "10px",
     color: "white"
-  };
-
-  const subtitleStyle = {
-    fontSize: responsiveValue(size, 12, 12, 12) as number,
-    color: "#CCCCCC",
-    marginBottom: "15px"
-  };
-
-  const handlePeriodChange = (value: string) => {
-    setSelectedPeriod(value);
-    if (onPeriodChange) {
-      onPeriodChange(value);
-    }
-    console.log("Selected period:", value);
   };
 
   // Transform API data to display format
@@ -86,7 +63,7 @@ const RecentCallsTable: React.FC<RecentCallsTableProps> = ({ data, onPeriodChang
           minWidth="130px"
         /> */}
       </div>
-      
+
       <table style={{ width: "100%", borderCollapse: "collapse", marginTop: "15px" }}>
         <thead>
           <tr style={{ borderBottom: "1px solid #555" }}>
@@ -100,11 +77,11 @@ const RecentCallsTable: React.FC<RecentCallsTableProps> = ({ data, onPeriodChang
         <tbody>
           {!hasData ? (
             <tr>
-              <td colSpan={5} style={{ 
-                padding: "20px", 
-                textAlign: "center", 
-                color: "#CCCCCC", 
-                fontSize: "14px" 
+              <td colSpan={5} style={{
+                padding: "20px",
+                textAlign: "center",
+                color: "#CCCCCC",
+                fontSize: "14px"
               }}>
                 No recent calls available
               </td>

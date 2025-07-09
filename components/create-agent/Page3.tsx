@@ -24,11 +24,11 @@ const Page3 = ({ errors }: {
         errors && Object.keys(errors).length > 0
           ?
           <div>
-            <h2 style={{ fontSize: responsiveValue(size, "20px", "30px", "30px") }}>Information incomplete, please go back to fill in the required fields</h2>
-            <p style={{ fontSize: responsiveValue(size, "15px", "30px", "30px"), marginTop: "10px" }}>{getErrorMessage(errors)}</p>
+            <h2 style={{ fontSize: responsiveValue(size, "20px", "30px", "30px") as string }}>Information incomplete, please go back to fill in the required fields</h2>
+            <p style={{ fontSize: responsiveValue(size, "15px", "30px", "30px") as string, marginTop: "10px" }}>{getErrorMessage(errors)}</p>
           </div>
           :
-          <h2 style={{ fontSize: responsiveValue(size, "20px", "30px", "30px") }}>Please make sure all required fields are provided. Click on &quot;Complete&quot; to create your new AI agent</h2>
+          <h2 style={{ fontSize: responsiveValue(size, "20px", "30px", "30px") as string }}>Please make sure all required fields are provided. Click on &quot;Complete&quot; to create your new AI agent</h2>
       }
 
       <div style={{

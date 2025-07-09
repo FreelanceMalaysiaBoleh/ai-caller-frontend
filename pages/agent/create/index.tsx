@@ -21,8 +21,8 @@ const CreateAgent = () => {
             <div style={{
                 width: size == "large" ? "80%" : "100%",
                 paddingTop: 20,
-                paddingLeft: responsiveValue(size, 10, 20, 45),
-                paddingRight: responsiveValue(size, 10, 20, 45),
+                paddingLeft: responsiveValue(size, 10, 20, 45) as string,
+                paddingRight: responsiveValue(size, 10, 20, 45) as string,
                 paddingBottom: 20,
                 backgroundColor: "#3e3e3e",
                 borderRadius: 10,
