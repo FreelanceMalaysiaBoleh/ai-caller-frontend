@@ -10,7 +10,7 @@ import GedeekIcon from "@/public/images/GEDEEK_BIG.png"
 import { useDispatch } from "react-redux";
 import { setToken } from "@/redux/authSlice";
 import { responsiveValue, useScreenSize } from "@/context/ViewportContext";
-import logo from "../public/images/logo.png"
+import logo from "../../public/images/logo.png"
 
 // Validation schema for username and password
 const loginSchema = yup.object().shape({
@@ -110,9 +110,35 @@ const LoginForm = () => {
             <div style={{
               backgroundColor: "#3e3e3e",
               padding: responsiveValue(size, "25px 15px 100px", "30px 30px", "30px 30px") as string,
-
               borderRadius: "10px"
             }}>
+
+              {/* Login with OTP button at the top */}
+              <div style={{ 
+                display: "flex", 
+                justifyContent: "flex-end", 
+                marginBottom: "20px",
+              }}>
+                <button
+                  type="button"
+                  style={{
+                    background: "none",
+                    border: "none",
+                    color: "white",
+                    textDecoration: "underline",
+                    cursor: "pointer",
+                    fontSize: "14px",
+                    padding: 0
+                  }}
+                  onClick={() => {
+                    // Add your OTP login logic here
+                    router.push("/login/otp")
+                    console.log("Login with OTP clicked");
+                  }}
+                >
+                  Login with OTP
+                </button>
+              </div>
 
               <FormInput
                 label="Email"
@@ -132,6 +158,25 @@ const LoginForm = () => {
               />
 
               <p style={{ color: "white", textDecoration: "underline", fontSize: "12px", marginTop: "15px" }}>Forgot your password?</p>
+              
+              <button
+                type="button"
+                style={{
+                  background: "none",
+                  border: "none",
+                  color: "white",
+                  textDecoration: "underline",
+                  cursor: "pointer",
+                  fontSize: "12px",
+                  padding: 0,
+                  marginTop: "10px"
+                }}
+                onClick={() => {
+                  router.push("/sign-up");
+                }}
+              >
+                Sign Up
+              </button>
 
               {
                 size == "small"
@@ -160,8 +205,6 @@ const LoginForm = () => {
                     </button>
                   </div>
               }
-
-
 
               {
                 error
@@ -196,11 +239,6 @@ const LoginForm = () => {
                   >
                     Login
                   </button>
-
-                  <p style={{
-                    fontSize: 12,
-                    marginTop: 15,
-                  }}>Login with OTP</p>
                 </div>
                 :
                 <></>
