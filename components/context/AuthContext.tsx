@@ -23,17 +23,21 @@ const AuthContext = ({ children }: { children: React.ReactNode }) => {
       }
     }
 
-    if (router.asPath.includes("login")) {
+    if (router.asPath.includes("login") || router.asPath.includes("sign-up")) {
+      console.log("has sign-up")
       if (token) {
         router.push("/")
       }
     } else {
+      console.log("no sign-up")
       if (!token) {
         router.push("/login")
       }
     }
 
-    checkAuth();
+    if (!(router.asPath.includes("login") || router.asPath.includes("sign-up"))) {
+      checkAuth();
+    }
   }, [token])
 
 
